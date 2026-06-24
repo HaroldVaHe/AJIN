@@ -1,0 +1,239 @@
+{
+  "common": {
+    "siteName": "AJIN",
+    "siteFullName": "AJIN — Integral Legal Advisory",
+    "tagline": "We protect your rights with specialized legal counsel, transparent processes, and technology that streamlines every procedure.",
+    "whatsapp": "WhatsApp",
+    "schedule": "Schedule Consultation",
+    "requestAdvice": "Request Legal Advice",
+    "learnMore": "Learn More",
+    "readMore": "Read More",
+    "send": "Send",
+    "sending": "Sending...",
+    "successMessage": "Message sent successfully. We will contact you soon.",
+    "errorMessage": "Error sending message. Please try again.",
+    "requiredField": "This field is required",
+    "invalidEmail": "Invalid email",
+    "invalidPhone": "Invalid phone number",
+    "address": "Calle 12 # 13-26, Chia, Cundinamarca.",
+    "phone": "+57 350 4338533",
+    "email": "clientesajin@gmail.com",
+    "nav": {
+      "home": "Home",
+      "about": "About Us",
+      "services": "Services",
+      "blog": "Blog",
+      "powers": "Powers of Attorney",
+      "contact": "Contact"
+    },
+    "footer": {
+      "rights": "All rights reserved.",
+      "privacy": "Privacy Policy",
+      "terms": "Terms & Conditions",
+      "description": "Comprehensive legal advisory for individuals and companies in Colombia."
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Comprehensive Legal Advisory for Individuals and Companies",
+      "subtitle": "We protect your rights with specialized legal counsel, transparent processes, and technology that streamlines every procedure.",
+      "requestAdvice": "Request Legal Advice",
+      "schedule": "Schedule Consultation"
+    },
+    "services": {
+      "title": "Our Services",
+      "subtitle": "We offer specialized legal advisory in the following areas",
+      "laboral": "Labor Law",
+      "familia": "Family Law",
+      "civil": "Civil Law",
+      "comercial": "Commercial Law",
+      "administrativo": "Administrative Law",
+      "laboralDesc": "Terminations, settlements, workplace harassment, lawsuits and more.",
+      "familiaDesc": "Divorces, custody, alimony, visitation rights and more.",
+      "civilDesc": "Contracts, property, obligations and more.",
+      "comercialDesc": "Company incorporation, commercial contracts, SAS and more.",
+      "administrativoDesc": "Government procedures, licenses, state contracting and more."
+    },
+    "benefits": {
+      "title": "Why choose AJIN?",
+      "quick": "Fast Response",
+      "quickDesc": "Response within 24 business hours.",
+      "experience": "Legal Experience",
+      "experienceDesc": "Over 15 years of experience in corporate law and litigation.",
+      "transparent": "Transparent Processes",
+      "transparentDesc": "Clear fees from the start, no surprises.",
+      "personalized": "Personalized Assistance",
+      "personalizedDesc": "Every case is unique. Receive dedicated attention."
+    },
+    "cases": {
+      "title": "Common Cases",
+      "despido": "Wrongful Termination",
+      "liquidacion": "Labor Settlements",
+      "divorcio": "Divorces",
+      "custodia": "Child Custody",
+      "contratos": "Contracts",
+      "cobro": "Debt Collection"
+    },
+    "cta": {
+      "title": "Need legal guidance?",
+      "subtitle": "Schedule a consultation today and receive personalized advice."
+    }
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Learn more about AJIN and our team",
+    "history": {
+      "title": "Our History",
+      "content": "AJIN was born from the conviction that justice should be accessible to everyone. Founded by a team of attorneys with experience in litigation and corporate law, our firm has grown to become a benchmark for comprehensive legal advisory in Colombia. We combine traditional legal knowledge with cutting-edge technology to offer a more agile, transparent, and efficient service."
+    },
+    "mission": {
+      "title": "Mission",
+      "content": "To provide high-quality comprehensive legal advisory, using technology to make the defense of the rights of our individuals and companies more accessible and efficient."
+    },
+    "vision": {
+      "title": "Vision",
+      "content": "To be the leading law firm in Colombia in the integration of technology and legal service, recognized for our excellence, transparency, and commitment to the client."
+    },
+    "values": {
+      "title": "Values",
+      "integrity": "Integrity",
+      "integrityDesc": "We act with honesty and ethics in every case.",
+      "excellence": "Excellence",
+      "excellenceDesc": "We pursue the highest quality in our service.",
+      "innovation": "Innovation",
+      "innovationDesc": "We integrate technology to improve the legal experience.",
+      "commitment": "Commitment",
+      "commitmentDesc": "We defend our clients' interests with dedication."
+    }
+  },
+  "services": {
+    "title": "Legal Services",
+    "subtitle": "We offer specialized legal advisory in the following areas",
+    "consultation": "Request a Consultation",
+    "laboral": {
+      "title": "Labor Law",
+      "items": ["Wrongful termination", "Labor settlements", "Workplace harassment", "Labor lawsuits", "Employment contracts", "Social benefits"]
+    },
+    "familia": {
+      "title": "Family Law",
+      "items": ["Divorces", "Child custody", "Alimony", "Visitation rights", "Successions", "Common-law marriages"]
+    },
+    "civil": {
+      "title": "Civil Law",
+      "items": ["Contracts", "Properties", "Obligations", "Civil liability", "Leases", "Horizontal property"]
+    },
+    "comercial": {
+      "title": "Commercial Law",
+      "items": ["Company incorporation", "Commercial contracts", "SAS corporations", "Intellectual property", "Mergers and acquisitions", "Debt collection"]
+    },
+    "administrativo": {
+      "title": "Administrative Law",
+      "items": ["State contracting", "Licenses and permits", "Government procedures", "Tax law", "Fiscal responsibility", "Constitutional actions"]
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "We are ready to help you. Contact us today.",
+    "form": {
+      "name": "Full Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+57 300 123 4567",
+      "area": "Legal Area",
+      "areaPlaceholder": "Select an area",
+      "areas": {
+        "laboral": "Labor Law",
+        "familia": "Family Law",
+        "civil": "Civil Law",
+        "comercial": "Commercial Law",
+        "administrativo": "Administrative Law",
+        "general": "General Inquiry"
+      },
+      "message": "Description",
+      "messagePlaceholder": "Describe your case or inquiry",
+      "submit": "Send Message",
+      "requiredField": "This field is required",
+      "invalidEmail": "Invalid email",
+      "invalidPhone": "Invalid phone number",
+      "sending": "Sending..."
+    }
+  },
+  "powers": {
+    "title": "Powers of Attorney",
+    "subtitle": "We generate customized powers of attorney for legal and administrative procedures.",
+    "form": {
+      "name": "Full Name",
+      "namePlaceholder": "First and last names",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+57 300 123 4567",
+      "description": "Power of Attorney Description",
+      "descriptionPlaceholder": "Describe the type of power you need and for what purpose",
+      "submit": "Request Power of Attorney",
+      "requiredField": "This field is required",
+      "invalidEmail": "Invalid email",
+      "invalidPhone": "Invalid phone number",
+      "sending": "Sending..."
+    },
+    "info": {
+      "title": "Types of Powers of Attorney",
+      "general": "General Power of Attorney",
+      "generalDesc": "For representation in multiple acts and procedures.",
+      "special": "Special Power of Attorney",
+      "specialDesc": "For a specific and determined act.",
+      "judicial": "Judicial Power of Attorney",
+      "judicialDesc": "For representation in judicial proceedings.",
+      "administrative": "Administrative Power of Attorney",
+      "administrativeDesc": "For procedures before public entities."
+    }
+  },
+  "seo": {
+    "home": {
+      "title": "AJIN — Comprehensive Legal Advisory in Bogotá",
+      "description": "Specialized legal advisory in labor, civil, family, and commercial law in Bogotá. Request a consultation with AJIN."
+    },
+    "about": {
+      "title": "About Us | AJIN — Comprehensive Legal Advisory",
+      "description": "Learn about the history, mission, vision, and values of AJIN, your comprehensive legal advisory firm in Bogotá."
+    },
+    "services": {
+      "title": "Legal Services | AJIN — Comprehensive Legal Advisory",
+      "description": "We offer labor, family, civil, commercial, and administrative law services. Comprehensive legal advisory in Bogotá."
+    },
+    "laboral": {
+      "title": "Labor Lawyers in Bogotá | AJIN",
+      "description": "Labor law specialists in Bogotá. Terminations, settlements, workplace harassment, and lawsuits. Consult AJIN."
+    },
+    "familia": {
+      "title": "Family Lawyers in Bogotá | AJIN",
+      "description": "Family law specialists in Bogotá. Divorces, custody, alimony, and visitation rights. Consult AJIN."
+    },
+    "civil": {
+      "title": "Civil Lawyers in Bogotá | AJIN",
+      "description": "Civil law specialists in Bogotá. Contracts, properties, obligations. Consult AJIN."
+    },
+    "comercial": {
+      "title": "Commercial Lawyers in Bogotá | AJIN",
+      "description": "Commercial law specialists in Bogotá. Company incorporation, contracts, SAS. Consult AJIN."
+    },
+    "administrativo": {
+      "title": "Administrative Lawyers in Bogotá | AJIN",
+      "description": "Administrative law specialists in Bogotá. State contracting, licenses, procedures. Consult AJIN."
+    },
+    "contact": {
+      "title": "Contact | AJIN — Comprehensive Legal Advisory",
+      "description": "Contact us for personalized legal advisory. We are in Bogotá."
+    },
+    "powers": {
+      "title": "Powers of Attorney | AJIN — Comprehensive Legal Advisory",
+      "description": "We generate customized powers of attorney for legal and administrative procedures in Colombia."
+    },
+    "blog": {
+      "title": "Legal Blog | AJIN — Comprehensive Legal Advisory",
+      "description": "Articles and news on labor, family, civil, commercial, and administrative law in Colombia."
+    }
+  }
+}

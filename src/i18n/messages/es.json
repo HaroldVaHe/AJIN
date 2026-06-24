@@ -1,0 +1,239 @@
+{
+  "common": {
+    "siteName": "AJIN",
+    "siteFullName": "AJIN — Asesoría Jurídica Integral",
+    "tagline": "Protegemos sus derechos con asesoría legal especializada, procesos transparentes y tecnología que agiliza cada trámite.",
+    "whatsapp": "WhatsApp",
+    "schedule": "Agendar Consulta",
+    "requestAdvice": "Solicitar Asesoría",
+    "learnMore": "Conoce más",
+    "readMore": "Leer más",
+    "send": "Enviar",
+    "sending": "Enviando...",
+    "successMessage": "Mensaje enviado con éxito. Nos pondremos en contacto pronto.",
+    "errorMessage": "Error al enviar el mensaje. Intente de nuevo.",
+    "requiredField": "Este campo es requerido",
+    "invalidEmail": "Correo electrónico inválido",
+    "invalidPhone": "Teléfono inválido",
+    "address": "Calle 12 # 13-26, Chia, Cundinamarca.",
+    "phone": "+57 350 4338533",
+    "email": "clientesajin@gmail.com",
+    "nav": {
+      "home": "Inicio",
+      "about": "Nosotros",
+      "services": "Servicios",
+      "blog": "Blog",
+      "powers": "Poderes",
+      "contact": "Contacto"
+    },
+    "footer": {
+      "rights": "Todos los derechos reservados.",
+      "privacy": "Política de Privacidad",
+      "terms": "Términos y Condiciones",
+      "description": "Asesoría jurídica integral para personas y empresas en Colombia."
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Asesoría Jurídica Integral para Personas y Empresas",
+      "subtitle": "Protegemos sus derechos con asesoría legal especializada, procesos transparentes y tecnología que agiliza cada trámite.",
+      "requestAdvice": "Solicitar Asesoría",
+      "schedule": "Agendar Consulta"
+    },
+    "services": {
+      "title": "Nuestros Servicios",
+      "subtitle": "Ofrecemos asesoría jurídica especializada en las siguientes áreas",
+      "laboral": "Derecho Laboral",
+      "familia": "Derecho de Familia",
+      "civil": "Derecho Civil",
+      "comercial": "Derecho Comercial",
+      "administrativo": "Derecho Administrativo",
+      "laboralDesc": "Despidos, liquidaciones, acoso laboral, demandas y más.",
+      "familiaDesc": "Divorcios, custodia, alimentos, visitas y más.",
+      "civilDesc": "Contratos, propiedades, obligaciones y más.",
+      "comercialDesc": "Constitución de empresas, contratos comerciales, SAS y más.",
+      "administrativoDesc": "Trámites gubernamentales, licencias, contratación estatal y más."
+    },
+    "benefits": {
+      "title": "¿Por qué elegir AJIN?",
+      "quick": "Atención Rápida",
+      "quickDesc": "Respuesta en menos de 24 horas hábiles.",
+      "experience": "Experiencia Jurídica",
+      "experienceDesc": "Más de 15 años de experiencia en derecho corporativo y litigio.",
+      "transparent": "Procesos Transparentes",
+      "transparentDesc": "Honorarios claros desde el inicio, sin sorpresas.",
+      "personalized": "Asistencia Personalizada",
+      "personalizedDesc": "Cada caso es único. Recibe atención dedicada."
+    },
+    "cases": {
+      "title": "Casos Frecuentes",
+      "despido": "Despidos Injustificados",
+      "liquidacion": "Liquidaciones Laborales",
+      "divorcio": "Divorcios",
+      "custodia": "Custodia de Menores",
+      "contratos": "Contratos",
+      "cobro": "Cobro de Cartera"
+    },
+    "cta": {
+      "title": "¿Necesita orientación jurídica?",
+      "subtitle": "Agende una consulta hoy mismo y reciba asesoría personalizada."
+    }
+  },
+  "about": {
+    "title": "Nosotros",
+    "subtitle": "Conozca más sobre AJIN y nuestro equipo",
+    "history": {
+      "title": "Nuestra Historia",
+      "content": "AJIN nació de la convicción de que la justicia debe ser accesible para todos. Fundada por un equipo de abogados con experiencia en litigio y derecho corporativo, nuestra firma ha crecido hasta convertirse en un referente de asesoría jurídica integral en Colombia. Combinamos el conocimiento legal tradicional con tecnología de vanguardia para ofrecer un servicio más ágil, transparente y eficiente."
+    },
+    "mission": {
+      "title": "Misión",
+      "content": "Brindar asesoría jurídica integral de alta calidad, utilizando tecnología para hacer más accesible y eficiente la defensa de los derechos de nuestras personas y empresas."
+    },
+    "vision": {
+      "title": "Visión",
+      "content": "Ser la firma jurídica líder en Colombia en la integración de tecnología y servicio legal, reconocida por nuestra excelencia, transparencia y compromiso con el cliente."
+    },
+    "values": {
+      "title": "Valores",
+      "integrity": "Integridad",
+      "integrityDesc": "Actuamos con honestidad y ética en cada caso.",
+      "excellence": "Excelencia",
+      "excellenceDesc": "Buscamos la más alta calidad en nuestro servicio.",
+      "innovation": "Innovación",
+      "innovationDesc": "Integramos tecnología para mejorar la experiencia legal.",
+      "commitment": "Compromiso",
+      "commitmentDesc": "Defendemos los intereses de nuestros clientes con dedicación."
+    }
+  },
+  "services": {
+    "title": "Servicios Jurídicos",
+    "subtitle": "Ofrecemos asesoría jurídica especializada en las siguientes áreas",
+    "consultation": "Solicitar una Consulta",
+    "laboral": {
+      "title": "Derecho Laboral",
+      "items": ["Despidos injustificados", "Liquidaciones laborales", "Acoso laboral", "Demandas laborales", "Contratos de trabajo", "Prestaciones sociales"]
+    },
+    "familia": {
+      "title": "Derecho de Familia",
+      "items": ["Divorcios", "Custodia de menores", "Alimentos", "Régimen de visitas", "Sucesiones", "Uniones maritales de hecho"]
+    },
+    "civil": {
+      "title": "Derecho Civil",
+      "items": ["Contratos", "Propiedades", "Obligaciones", "Responsabilidad civil", "Arrendamientos", "Propiedad horizontal"]
+    },
+    "comercial": {
+      "title": "Derecho Comercial",
+      "items": ["Constitución de empresas", "Contratos comerciales", "Sociedades SAS", "Propiedad intelectual", "Fusiones y adquisiciones", "Cobro de cartera"]
+    },
+    "administrativo": {
+      "title": "Derecho Administrativo",
+      "items": ["Contratación estatal", "Licencias y permisos", "Trámites gubernamentales", "Derecho tributario", "Responsabilidad fiscal", "Acciones constitucionales"]
+    }
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "Estamos listos para ayudarle. Contáctenos hoy.",
+    "form": {
+      "name": "Nombre",
+      "namePlaceholder": "Su nombre",
+      "email": "Correo Electrónico",
+      "emailPlaceholder": "su@correo.com",
+      "phone": "Teléfono",
+      "phonePlaceholder": "+57 300 123 4567",
+      "area": "Área Jurídica",
+      "areaPlaceholder": "Seleccione un área",
+      "areas": {
+        "laboral": "Derecho Laboral",
+        "familia": "Derecho de Familia",
+        "civil": "Derecho Civil",
+        "comercial": "Derecho Comercial",
+        "administrativo": "Derecho Administrativo",
+        "general": "Consulta General"
+      },
+      "message": "Descripción",
+      "messagePlaceholder": "Describa su caso o consulta",
+      "submit": "Enviar Mensaje",
+      "requiredField": "Este campo es requerido",
+      "invalidEmail": "Correo electrónico inválido",
+      "invalidPhone": "Teléfono inválido",
+      "sending": "Enviando..."
+    }
+  },
+  "powers": {
+    "title": "Poderes",
+    "subtitle": "Generamos poderes personalizados para trámites legales y administrativos.",
+    "form": {
+      "name": "Nombre Completo",
+      "namePlaceholder": "Nombres y apellidos",
+      "email": "Correo Electrónico",
+      "emailPlaceholder": "su@correo.com",
+      "phone": "Teléfono",
+      "phonePlaceholder": "+57 300 123 4567",
+      "description": "Descripción del Poder",
+      "descriptionPlaceholder": "Describa el tipo de poder que necesita y para qué trámite",
+      "submit": "Solicitar Poder",
+      "requiredField": "Este campo es requerido",
+      "invalidEmail": "Correo electrónico inválido",
+      "invalidPhone": "Teléfono inválido",
+      "sending": "Enviando..."
+    },
+    "info": {
+      "title": "Tipos de Poderes",
+      "general": "Poder General",
+      "generalDesc": "Para representación en múltiples actos y gestiones.",
+      "special": "Poder Especial",
+      "specialDesc": "Para un acto o gestión específica y determinada.",
+      "judicial": "Poder Judicial",
+      "judicialDesc": "Para representación en procesos judiciales.",
+      "administrative": "Poder Administrativo",
+      "administrativeDesc": "Para trámites ante entidades públicas."
+    }
+  },
+  "seo": {
+    "home": {
+      "title": "AJIN — Asesoría Jurídica Integral en Bogotá",
+      "description": "Asesoría jurídica especializada en derecho laboral, civil, familiar y comercial en Bogotá. Solicite una consulta con AJIN."
+    },
+    "about": {
+      "title": "Nosotros | AJIN — Asesoría Jurídica Integral",
+      "description": "Conozca la historia, misión, visión y valores de AJIN, su firma de asesoría jurídica integral en Bogotá."
+    },
+    "services": {
+      "title": "Servicios Jurídicos | AJIN — Asesoría Jurídica Integral",
+      "description": "Ofrecemos servicios de derecho laboral, familiar, civil, comercial y administrativo. Asesoría jurídica integral en Bogotá."
+    },
+    "laboral": {
+      "title": "Abogados Laborales en Bogotá | AJIN",
+      "description": "Especialistas en derecho laboral en Bogotá. Despidos, liquidaciones, acoso laboral y demandas. Consulte con AJIN."
+    },
+    "familia": {
+      "title": "Abogados de Familia en Bogotá | AJIN",
+      "description": "Especialistas en derecho de familia en Bogotá. Divorcios, custodia, alimentos y visitas. Consulte con AJIN."
+    },
+    "civil": {
+      "title": "Abogados Civiles en Bogotá | AJIN",
+      "description": "Especialistas en derecho civil en Bogotá. Contratos, propiedades, obligaciones. Consulte con AJIN."
+    },
+    "comercial": {
+      "title": "Abogados Comerciales en Bogotá | AJIN",
+      "description": "Especialistas en derecho comercial en Bogotá. Constitución de empresas, contratos, SAS. Consulte con AJIN."
+    },
+    "administrativo": {
+      "title": "Abogados Administrativos en Bogotá | AJIN",
+      "description": "Especialistas en derecho administrativo en Bogotá. Contratación estatal, licencias, trámites. Consulte con AJIN."
+    },
+    "contact": {
+      "title": "Contacto | AJIN — Asesoría Jurídica Integral",
+      "description": "Contáctenos para recibir asesoría jurídica personalizada. Estamos en Bogotá."
+    },
+    "powers": {
+      "title": "Poderes Legales | AJIN — Asesoría Jurídica Integral",
+      "description": "Generamos poderes personalizados para trámites legales y administrativos en Colombia."
+    },
+    "blog": {
+      "title": "Blog Jurídico | AJIN — Asesoría Jurídica Integral",
+      "description": "Artículos y noticias sobre derecho laboral, familiar, civil, comercial y administrativo en Colombia."
+    }
+  }
+}

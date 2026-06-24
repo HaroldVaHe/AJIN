@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ajin-black: #000000;
+  --color-ajin-green: #8EC83F;
+  --color-ajin-green-dark: #6DA82A;
+  --color-ajin-green-light: #A8D86A;
+  --color-ajin-white: #FFFFFF;
+  --color-ajin-gray-50: #F5F5F5;
+  --color-ajin-gray-100: #E8E8E8;
+  --color-ajin-gray-200: #D0D0D0;
+  --color-ajin-gray-300: #A0A0A0;
+  --color-ajin-gray-400: #808080;
+  --color-ajin-gray-500: #606060;
+  --color-ajin-gray-600: #404040;
+  --color-ajin-gray-700: #303030;
+  --color-ajin-gray-800: #202020;
+  --color-ajin-gray-900: #101010;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-ajin-gray-800 antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer components {
+  .section-padding {
+    @apply px-4 py-16 md:px-6 md:py-24 lg:px-8;
+  }
+
+  .container-ajin {
+    @apply mx-auto max-w-7xl;
+  }
+}
+
+.prose {
+  --tw-prose-body: theme('colors.ajin.gray.600');
+  --tw-prose-headings: theme('colors.ajin.black');
+  --tw-prose-links: theme('colors.ajin.green');
+  --tw-prose-bold: theme('colors.ajin.black');
+  --tw-prose-counters: theme('colors.ajin.gray.400');
+  --tw-prose-bullets: theme('colors.ajin.green');
+  --tw-prose-hr: theme('colors.ajin.gray.100');
+  --tw-prose-quotes: theme('colors.ajin.gray.600');
+  --tw-prose-quote-borders: theme('colors.ajin.green');
+  --tw-prose-captions: theme('colors.ajin.gray.400');
+  --tw-prose-code: theme('colors.ajin.black');
+  --tw-prose-pre-code: theme('colors.ajin.gray.100');
+  --tw-prose-pre-bg: theme('colors.ajin.black');
+}
+
+.prose h2 { @apply text-2xl font-bold mt-10 mb-4; }
+.prose h3 { @apply text-xl font-bold mt-8 mb-3; }
+.prose p { @apply mb-4 leading-relaxed; }
+.prose ul { @apply mb-4 list-disc pl-6; }
+.prose ol { @apply mb-4 list-decimal pl-6; }
+.prose li { @apply mb-1; }
+.prose a { @apply text-ajin-green font-medium hover:text-ajin-green-dark transition-colors; }
+.prose strong { @apply font-bold; }
+.prose blockquote { @apply border-l-4 border-ajin-green pl-4 italic my-6; }
+.prose hr { @apply my-8 border-ajin-gray-100; }
+.prose code { @apply bg-ajin-gray-50 rounded px-1.5 py-0.5 text-sm font-mono; }
+.prose pre { @apply bg-ajin-black text-ajin-gray-100 rounded-xl p-4 overflow-x-auto mb-6; }
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
