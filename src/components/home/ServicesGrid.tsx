@@ -16,7 +16,7 @@ export default function ServicesGrid() {
   const ts = useTranslations('services');
 
   return (
-    <Section className="bg-ajin-gray-50">
+    <Section className="bg-ajin-surface/50">
       <SectionHeader title={t('title')} subtitle={t('subtitle')} />
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {serviceGroups.map((group) => {
@@ -28,10 +28,10 @@ export default function ServicesGrid() {
                   <Icon size={24} />
                 </div>
                 <h3 className="text-xl font-bold">{t(group.id)}</h3>
-                <p className="mt-2 text-sm text-ajin-gray-400">{t(`${group.id}Desc`)}</p>
+                <p className="mt-2 text-sm text-ajin-gray-300">{t(`${group.id}Desc`)}</p>
                 <ul className="mt-4 space-y-1.5">
                   {group.items.slice(0, 4).map((_, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm text-ajin-gray-500">
+                    <li key={i} className="flex items-center gap-2 text-sm text-ajin-gray-400">
                       <span className="h-1 w-1 rounded-full bg-ajin-green shrink-0" />
                       {ts(`${group.id}.items.${i}`)}
                     </li>

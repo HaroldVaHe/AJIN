@@ -33,7 +33,7 @@ export default function Hero() {
                 </Button>
               </Link>
               <Link href="/contacto">
-                <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-black">
+                <Button variant="outline" size="lg">
                   {t('schedule')}
                 </Button>
               </Link>

@@ -48,10 +48,10 @@ export default async function ServicesPage({
                     <Icon size={24} />
                   </div>
                   <h3 className="text-xl font-bold">{t(group.titleKey)}</h3>
-                  <p className="mt-2 text-sm text-ajin-gray-400">{s(`${group.id}.description`)}</p>
+                  <p className="mt-2 text-sm text-ajin-gray-300">{s(`${group.id}.description`)}</p>
                   <ul className="mt-4 space-y-2">
                     {group.items.map((_, i) => (
-                      <li key={i} className="flex items-center gap-2 text-sm text-ajin-gray-500">
+                      <li key={i} className="flex items-center gap-2 text-sm text-ajin-gray-400">
                         <span className="h-1 w-1 rounded-full bg-ajin-green shrink-0" />
                         {s(`${group.id}.items.${i}`)}
                       </li>
@@ -66,7 +66,7 @@ export default async function ServicesPage({
             );
           })}
         </div>
-        <p className="mt-12 text-center text-lg text-ajin-gray-500">{s('moreServices')}</p>
+        <p className="mt-12 text-center text-lg text-ajin-gray-400">{s('moreServices')}</p>
       </Section>
     </>
   );

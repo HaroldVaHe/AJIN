@@ -52,7 +52,7 @@ export default async function BlogPage({
                   <p className="text-sm text-ajin-gray-400 line-clamp-3 mb-4 flex-1">
                     {post.description}
                   </p>
-                  <div className="flex items-center justify-between text-xs text-ajin-gray-400 pt-4 border-t border-ajin-gray-100">
+                  <div className="flex items-center justify-between text-xs text-ajin-gray-400 pt-4 border-t border-ajin-gray-700">
                     <div className="flex items-center gap-3">
                       <span className="flex items-center gap-1">
                         <Calendar size={12} />

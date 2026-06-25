@@ -52,14 +52,14 @@ export default async function ServiceDetailPage({
               {group.items.map((_, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <CheckCircle className="text-ajin-green shrink-0 mt-0.5" size={20} />
-                  <span className="text-ajin-gray-600">{t(`items.${i}`)}</span>
+                  <span className="text-ajin-gray-200">{t(`items.${i}`)}</span>
                 </div>
               ))}
             </div>
           </div>
-          <div className="bg-ajin-gray-50 rounded-2xl p-8">
+          <div className="bg-ajin-surface rounded-2xl p-8">
             <h3 className="text-xl font-bold mb-4">{d('needHelp')}</h3>
-            <p className="text-ajin-gray-500 mb-6">
+            <p className="text-ajin-gray-300 mb-6">
               {d('teamReady')}
             </p>
             <Link href="/contacto">

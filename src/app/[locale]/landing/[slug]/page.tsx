@@ -66,14 +66,14 @@ export default async function LandingPage({
               {Array.from({ length: count }, (_, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <CheckCircle className="text-ajin-green shrink-0 mt-0.5" size={20} />
-                  <span className="text-ajin-gray-600">{t(`items.${i}`)}</span>
+                  <span className="text-ajin-gray-200">{t(`items.${i}`)}</span>
                 </div>
               ))}
             </div>
           </div>
-          <div className="bg-ajin-gray-50 rounded-2xl p-8">
+          <div className="bg-ajin-surface rounded-2xl p-8">
             <h3 className="text-xl font-bold mb-4">{d('needHelp')}</h3>
-            <p className="text-ajin-gray-500 mb-6">
+            <p className="text-ajin-gray-300 mb-6">
               {d('teamReady')}
             </p>
             <Link href="/contacto">
@@ -86,10 +86,10 @@ export default async function LandingPage({
         </div>
       </Section>
 
-      <Section className="bg-ajin-gray-50 text-center">
+      <Section className="bg-ajin-surface/50 text-center">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-2xl font-bold mb-4">{d('trustTitle')}</h2>
-          <p className="text-ajin-gray-500 mb-8">
+          <p className="text-ajin-gray-300 mb-8">
             {d('trustDesc')}
           </p>
           <Link href="/contacto">

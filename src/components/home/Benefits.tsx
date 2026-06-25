@@ -26,7 +26,7 @@ export default function Benefits() {
                 <Icon size={32} />
               </div>
               <h3 className="text-lg font-bold">{t(benefit.key)}</h3>
-              <p className="mt-2 text-sm text-ajin-gray-400">{t(`${benefit.key}Desc`)}</p>
+              <p className="mt-2 text-sm text-ajin-gray-300">{t(`${benefit.key}Desc`)}</p>
             </div>
           );
         })}

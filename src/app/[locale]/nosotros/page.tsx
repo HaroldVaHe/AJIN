@@ -45,7 +45,7 @@ export default async function AboutPage({
         <div className="grid gap-12 lg:grid-cols-2">
           <div>
             <h2 className="text-2xl font-bold mb-4">{t('history.title')}</h2>
-            <p className="text-ajin-gray-500 leading-relaxed">{t('history.content')}</p>
+            <p className="text-ajin-gray-300 leading-relaxed">{t('history.content')}</p>
           </div>
           <div className="grid gap-6">
             <Card hover={false} className="border-l-4 border-l-ajin-green">
@@ -53,20 +53,20 @@ export default async function AboutPage({
                 <Target className="text-ajin-green" size={24} />
                 <h3 className="text-xl font-bold">{t('mission.title')}</h3>
               </div>
-              <p className="text-ajin-gray-500">{t('mission.content')}</p>
+              <p className="text-ajin-gray-300">{t('mission.content')}</p>
             </Card>
             <Card hover={false} className="border-l-4 border-l-ajin-green">
               <div className="flex items-center gap-3 mb-2">
                 <Eye className="text-ajin-green" size={24} />
                 <h3 className="text-xl font-bold">{t('vision.title')}</h3>
               </div>
-              <p className="text-ajin-gray-500">{t('vision.content')}</p>
+              <p className="text-ajin-gray-300">{t('vision.content')}</p>
             </Card>
           </div>
         </div>
       </Section>
 
-      <Section className="bg-ajin-gray-50">
+      <Section className="bg-ajin-surface/50">
         <SectionHeader title={t('values.title')} />
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {valuesConfig.map((v) => {
@@ -77,7 +77,7 @@ export default async function AboutPage({
                   <Icon size={28} />
                 </div>
                 <h3 className="text-lg font-bold">{t(`values.${v.key}`)}</h3>
-                <p className="mt-2 text-sm text-ajin-gray-400">{t(`values.${v.key}Desc`)}</p>
+                <p className="mt-2 text-sm text-ajin-gray-300">{t(`values.${v.key}Desc`)}</p>
               </Card>
             );
           })}

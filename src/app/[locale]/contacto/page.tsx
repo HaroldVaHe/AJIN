@@ -44,12 +44,12 @@ export default async function ContactPage({
                 <ContactItem icon={Clock} label={t('form.scheduleLabel')} value={t('form.scheduleValue')} />
               </div>
             </div>
-            <div className="relative rounded-2xl overflow-hidden h-[350px] bg-ajin-gray-100 shadow-sm border border-ajin-gray-200">
+            <div className="relative rounded-2xl overflow-hidden h-[350px] bg-ajin-surface shadow-sm border border-ajin-gray-700">
               <a
                 href="https://maps.app.goo.gl/jWZxs9ED1DQqqXwL7"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute top-4 right-4 z-20 bg-ajin-gray-50/95 backdrop-blur-sm rounded-lg px-3 py-2 shadow-md hover:shadow-lg transition-all flex items-center gap-2 text-sm font-medium hover:bg-ajin-gray-100"
+                className="absolute top-4 right-4 z-20 bg-ajin-bg/95 backdrop-blur-sm rounded-lg px-3 py-2 shadow-md hover:shadow-lg transition-all flex items-center gap-2 text-sm font-medium hover:bg-ajin-surface"
               >
                 <ExternalLink size={16} />
                 {t('form.openInMaps')}
@@ -84,7 +84,7 @@ function ContactItem({ icon: Icon, label, value }: { icon: React.ElementType; la
       </div>
       <div>
         <p className="text-xs text-ajin-gray-400 uppercase tracking-wider">{label}</p>
-        <p className="font-medium text-ajin-gray-700">{value}</p>
+        <p className="font-medium text-ajin-gray-100">{value}</p>
       </div>
     </div>
   );

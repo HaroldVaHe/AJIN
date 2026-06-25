@@ -32,9 +32,9 @@ export default async function PowersPage({
   return (
     <>
       <section className="bg-ajin-black py-20 md:py-32">
-        <div className="container-ajin px-4">
+        <div className="container-ajin px-4 text-center">
           <PowersTitle />
-          <p className="mt-4 text-lg text-ajin-gray-300 max-w-2xl"><PowersSubtitle /></p>
+          <p className="mt-4 text-lg text-ajin-gray-300 max-w-2xl mx-auto"><PowersSubtitle /></p>
         </div>
       </section>
 
@@ -71,7 +71,7 @@ export default async function PowersPage({
 
 async function PowersTitle() {
   const t = await getTranslations('powers');
-  return <h1 className="text-4xl font-bold text-white md:text-5xl lg:text-6xl">{t('title')}</h1>;
+  return <h1 className="text-4xl font-bold text-white md:text-5xl lg:text-6xl text-center">{t('title')}</h1>;
 }
 async function PowersSubtitle() {
   const t = await getTranslations('powers');

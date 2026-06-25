@@ -1,103 +1,86 @@
 import { cn } from '@/lib/utils';
-import { InputHTMLAttributes, TextareaHTMLAttributes, forwardRef } from 'react';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   error?: string;
 }
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, label, error, id, ...props }, ref) => {
-    return (
-      <div className="space-y-1">
-        <label htmlFor={id} className="block text-sm font-medium text-ajin-gray-700">
-          {label}
-        </label>
-        <input
-          id={id}
-          ref={ref}
-          className={cn(
-            'w-full rounded-xl border border-ajin-gray-200 px-4 py-2.5 text-sm',
-            'focus:border-ajin-green focus:ring-2 focus:ring-ajin-green/20 focus:outline-none',
-            'placeholder:text-ajin-gray-300',
-            error && 'border-red-500 focus:border-red-500 focus:ring-red-500/20',
-            className
-          )}
-          {...props}
-        />
-        {error && <p className="text-xs text-red-500">{error}</p>}
-      </div>
-    );
-  }
-);
-Input.displayName = 'Input';
+export function Input({ label, error, id, className, ...props }: InputProps) {
+  return (
+    <div>
+      <label htmlFor={id} className="block text-sm font-medium text-ajin-gray-200 mb-1.5">
+        {label}
+      </label>
+      <input
+        id={id}
+        className={cn(
+          'w-full rounded-xl border border-ajin-gray-700 bg-ajin-surface px-4 py-2.5 text-sm text-ajin-gray-100 placeholder:text-ajin-gray-500 focus:border-ajin-green focus:ring-2 focus:ring-ajin-green/20 focus:outline-none',
+          error && 'border-red-500 focus:border-red-500 focus:ring-red-500/20',
+          className
+        )}
+        {...props}
+      />
+      {error && <p className="mt-1 text-xs text-red-400">{error}</p>}
+    </div>
+  );
+}
 
-interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label: string;
   error?: string;
 }
 
-export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, label, error, id, ...props }, ref) => {
-    return (
-      <div className="space-y-1">
-        <label htmlFor={id} className="block text-sm font-medium text-ajin-gray-700">
-          {label}
-        </label>
-        <textarea
-          id={id}
-          ref={ref}
-          className={cn(
-            'w-full rounded-xl border border-ajin-gray-200 px-4 py-2.5 text-sm min-h-[120px]',
-            'focus:border-ajin-green focus:ring-2 focus:ring-ajin-green/20 focus:outline-none',
-            'placeholder:text-ajin-gray-300 resize-y',
-            error && 'border-red-500 focus:border-red-500 focus:ring-red-500/20',
-            className
-          )}
-          {...props}
-        />
-        {error && <p className="text-xs text-red-500">{error}</p>}
-      </div>
-    );
-  }
-);
-Textarea.displayName = 'Textarea';
-
-interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
-  label: string;
-  error?: string;
-  options: { value: string; label: string }[];
+export function Textarea({ label, error, id, className, ...props }: TextareaProps) {
+  return (
+    <div>
+      <label htmlFor={id} className="block text-sm font-medium text-ajin-gray-200 mb-1.5">
+        {label}
+      </label>
+      <textarea
+        id={id}
+        className={cn(
+          'w-full rounded-xl border border-ajin-gray-700 bg-ajin-surface px-4 py-2.5 text-sm text-ajin-gray-100 placeholder:text-ajin-gray-500 focus:border-ajin-green focus:ring-2 focus:ring-ajin-green/20 focus:outline-none min-h-[120px]',
+          error && 'border-red-500 focus:border-red-500 focus:ring-red-500/20',
+          className
+        )}
+        {...props}
+      />
+      {error && <p className="mt-1 text-xs text-red-400">{error}</p>}
+    </div>
+  );
 }
 
-import { SelectHTMLAttributes } from 'react';
+interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  label: string;
+  error?: string;
+  children?: React.ReactNode;
+  options?: { value: string; label: string }[];
+}
 
-export const Select = forwardRef<HTMLSelectElement, SelectProps>(
-  ({ className, label, error, id, options, ...props }, ref) => {
-    return (
-      <div className="space-y-1">
-        <label htmlFor={id} className="block text-sm font-medium text-ajin-gray-700">
-          {label}
-        </label>
-        <select
-          id={id}
-          ref={ref}
-          className={cn(
-            'w-full rounded-xl border border-ajin-gray-200 px-4 py-2.5 text-sm',
-            'focus:border-ajin-green focus:ring-2 focus:ring-ajin-green/20 focus:outline-none',
-            error && 'border-red-500 focus:border-red-500 focus:ring-red-500/20',
-            className
-          )}
-          {...props}
-        >
-          {options.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
-        {error && <p className="text-xs text-red-500">{error}</p>}
-      </div>
-    );
-  }
-);
-Select.displayName = 'Select';
+export function Select({ label, error, id, children, options, className, ...props }: SelectProps) {
+  return (
+    <div>
+      <label htmlFor={id} className="block text-sm font-medium text-ajin-gray-200 mb-1.5">
+        {label}
+      </label>
+      <select
+        id={id}
+        className={cn(
+          'w-full rounded-xl border border-ajin-gray-700 bg-ajin-surface px-4 py-2.5 text-sm text-ajin-gray-100 focus:border-ajin-green focus:ring-2 focus:ring-ajin-green/20 focus:outline-none',
+          error && 'border-red-500 focus:border-red-500 focus:ring-red-500/20',
+          className
+        )}
+        {...props}
+      >
+        {options
+          ? options.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))
+          : children}
+      </select>
+      {error && <p className="mt-1 text-xs text-red-400">{error}</p>}
+    </div>
+  );
+}
