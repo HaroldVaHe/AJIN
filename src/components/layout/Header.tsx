@@ -40,7 +40,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-ajin-gray-100 bg-white/95 backdrop-blur-sm">
+      <header className="sticky top-0 z-50 border-b border-ajin-gray-200 bg-ajin-gray-50/95 backdrop-blur-sm">
         <div className="container-ajin flex h-16 items-center justify-between px-4">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-xl font-bold tracking-tight">
@@ -104,7 +104,7 @@ export default function Header() {
       </header>
 
       {mobileOpen && (
-        <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100dvh', backgroundColor: '#ffffff', zIndex: 40, display: 'flex', flexDirection: 'column' }}>
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100dvh', backgroundColor: '#F5F5F5', zIndex: 40, display: 'flex', flexDirection: 'column' }}>
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingTop: '64px', paddingLeft: '16px', paddingRight: '16px', paddingBottom: '24px', overflowY: 'auto' }}>
             <nav style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {navItems.map((item) => {

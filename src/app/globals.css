@@ -24,7 +24,7 @@
   }
 
   body {
-    @apply bg-white text-ajin-gray-800 antialiased;
+    @apply bg-ajin-gray-50 text-ajin-gray-800 antialiased;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 }

@@ -49,7 +49,7 @@ export default async function ContactPage({
                 href="https://maps.app.goo.gl/jWZxs9ED1DQqqXwL7"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute top-4 right-4 z-20 bg-white/95 backdrop-blur-sm rounded-lg px-3 py-2 shadow-md hover:shadow-lg transition-all flex items-center gap-2 text-sm font-medium hover:bg-white"
+                className="absolute top-4 right-4 z-20 bg-ajin-gray-50/95 backdrop-blur-sm rounded-lg px-3 py-2 shadow-md hover:shadow-lg transition-all flex items-center gap-2 text-sm font-medium hover:bg-ajin-gray-100"
               >
                 <ExternalLink size={16} />
                 {t('form.openInMaps')}
