@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { Section } from '@/components/ui/Section';
 import { getPost, getAllSlugs } from '@/lib/blog';
-import { Calendar, Clock, User, ArrowLeft } from 'lucide-react';
+import { Calendar, Clock, ArrowLeft } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -18,6 +19,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
+  const t = await getTranslations({ locale, namespace: 'blog' });
   try {
     const post = getPost(slug, locale);
     return {
@@ -31,7 +33,7 @@ export async function generateMetadata({
       },
     };
   } catch {
-    return { title: 'Artículo no encontrado' };
+    return { title: t('notFound') };
   }
 }
 
@@ -41,6 +43,7 @@ export default async function BlogPostPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
+  const t = await getTranslations({ locale, namespace: 'blog' });
 
   let post;
   try {
@@ -58,7 +61,7 @@ export default async function BlogPostPage({
             className="inline-flex items-center gap-2 text-sm text-ajin-green hover:text-ajin-green-dark mb-6 transition-colors"
           >
             <ArrowLeft size={16} />
-            Volver al Blog
+            {t('backToBlog')}
           </Link>
           <div className="flex items-center gap-3 text-sm text-ajin-gray-400 mb-4">
             <span className="rounded-full bg-ajin-green/10 text-ajin-green px-3 py-1 font-medium">

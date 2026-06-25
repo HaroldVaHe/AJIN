@@ -21,10 +21,10 @@ export async function generateMetadata({
   // Base metadata — will be overridden per page
   return {
     title: {
-      default: 'AJIN — Asesoría Jurídica Integral',
+      default: 'AJIN — Asesoría Jurídica Inmobiliaria y Notarial',
       template: '%s | AJIN',
     },
-    description: 'Asesoría jurídica especializada en derecho laboral, civil, familiar y comercial en Bogotá.',
+    description: 'Asesoría jurídica especializada en inmobiliario, notarial, familia y corporativo en Bogotá.',
     icons: {
       icon: '/icons/favicon.ico',
     },

@@ -1,86 +1,56 @@
-export interface ServiceItem {
+export interface ServiceGroup {
   id: string;
+  slug: string;
   titleKey: string;
   descriptionKey: string;
-  href: string;
   icon: string;
   items: string[];
 }
 
-export const services: ServiceItem[] = [
-  {
-    id: 'laboral',
-    titleKey: 'services.laboral.title',
-    descriptionKey: 'home.services.laboralDesc',
-    href: '/servicios/derecho-laboral',
-    icon: 'Briefcase',
-    items: [
-      'Despidos injustificados',
-      'Liquidaciones laborales',
-      'Acoso laboral',
-      'Demandas laborales',
-      'Contratos de trabajo',
-      'Prestaciones sociales',
-    ],
-  },
+export const serviceGroups: ServiceGroup[] = [
   {
     id: 'familia',
+    slug: 'familia-sucesiones',
     titleKey: 'services.familia.title',
-    descriptionKey: 'home.services.familiaDesc',
-    href: '/servicios/derecho-familia',
+    descriptionKey: 'services.familia.description',
     icon: 'Heart',
     items: [
       'Divorcios',
-      'Custodia de menores',
-      'Alimentos',
-      'Régimen de visitas',
       'Sucesiones',
-      'Uniones maritales de hecho',
+      'Testamentos',
+      'Demandas de familia',
+      'Liquidación de sociedad conyugal',
+      'Procesos de apoyo (antes Interdicción)',
+      'Cancelaciones de patrimonio',
     ],
   },
   {
-    id: 'civil',
-    titleKey: 'services.civil.title',
-    descriptionKey: 'home.services.civilDesc',
-    href: '/servicios/derecho-civil',
-    icon: 'FileText',
+    id: 'inmobiliario',
+    slug: 'inmobiliario',
+    titleKey: 'services.inmobiliario.title',
+    descriptionKey: 'services.inmobiliario.description',
+    icon: 'Home',
     items: [
-      'Contratos',
-      'Propiedades',
-      'Obligaciones',
-      'Responsabilidad civil',
-      'Arrendamientos',
-      'Propiedad horizontal',
+      'Ventas',
+      'Arriendos',
+      'Avalúos',
+      'Englobes y desenglobes',
+      'División material',
+      'Promesas de compraventa',
+      'Préstamos sobre hipoteca',
     ],
   },
   {
     id: 'comercial',
+    slug: 'comercial-corporativo',
     titleKey: 'services.comercial.title',
-    descriptionKey: 'home.services.comercialDesc',
-    href: '/servicios/derecho-comercial',
-    icon: 'Building2',
+    descriptionKey: 'services.comercial.description',
+    icon: 'Briefcase',
     items: [
-      'Constitución de empresas',
-      'Contratos comerciales',
-      'Sociedades SAS',
-      'Propiedad intelectual',
-      'Fusiones y adquisiciones',
-      'Cobro de cartera',
-    ],
-  },
-  {
-    id: 'administrativo',
-    titleKey: 'services.administrativo.title',
-    descriptionKey: 'home.services.administrativoDesc',
-    href: '/servicios/derecho-administrativo',
-    icon: 'Shield',
-    items: [
-      'Contratación estatal',
-      'Licencias y permisos',
-      'Trámites gubernamentales',
-      'Derecho tributario',
-      'Responsabilidad fiscal',
-      'Acciones constitucionales',
+      'Liquidación de sociedades',
+      'Contratos',
+      'Poderes',
+      'Derechos de petición',
     ],
   },
 ];

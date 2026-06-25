@@ -1,9 +1,11 @@
 {
   "common": {
     "siteName": "AJIN",
-    "siteFullName": "AJIN — Integral Legal Advisory",
-    "tagline": "We protect your rights with specialized legal counsel, transparent processes, and technology that streamlines every procedure.",
+    "siteFullName": "AJIN — Real Estate and Notarial Legal Advisory",
+    "tagline": "Expert legal counsel in real estate, notarial services, family law, and corporate matters with transparent processes and personalized attention.",
     "whatsapp": "WhatsApp",
+    "whatsappMessage": "Hello, I would like to schedule a consultation with AJIN.",
+    "whatsappAria": "Contact via WhatsApp",
     "schedule": "Schedule Consultation",
     "requestAdvice": "Request Legal Advice",
     "learnMore": "Learn More",
@@ -30,36 +32,37 @@
       "rights": "All rights reserved.",
       "privacy": "Privacy Policy",
       "terms": "Terms & Conditions",
-      "description": "Comprehensive legal advisory for individuals and companies in Colombia."
+      "description": "Real estate and notarial legal advisory for individuals and companies in Colombia.",
+      "links": "Links",
+      "dataProtection": "Data Protection"
     }
   },
   "home": {
     "hero": {
-      "title": "Comprehensive Legal Advisory for Individuals and Companies",
-      "subtitle": "We protect your rights with specialized legal counsel, transparent processes, and technology that streamlines every procedure.",
+      "title": "Real Estate and Notarial Legal Advisory for Individuals and Companies",
+      "subtitle": "Expert legal counsel in real estate, notarial services, family law, and corporate matters with transparent processes and personalized attention.",
+      "badge": "Real Estate and Notarial Legal Advisory",
+      "imageAlt": "Scales of justice - AJIN Real Estate and Notarial Legal Advisory",
       "requestAdvice": "Request Legal Advice",
       "schedule": "Schedule Consultation"
     },
     "services": {
       "title": "Our Services",
       "subtitle": "We offer specialized legal advisory in the following areas",
-      "laboral": "Labor Law",
-      "familia": "Family Law",
-      "civil": "Civil Law",
-      "comercial": "Commercial Law",
-      "administrativo": "Administrative Law",
-      "laboralDesc": "Terminations, settlements, workplace harassment, lawsuits and more.",
-      "familiaDesc": "Divorces, custody, alimony, visitation rights and more.",
-      "civilDesc": "Contracts, property, obligations and more.",
-      "comercialDesc": "Company incorporation, commercial contracts, SAS and more.",
-      "administrativoDesc": "Government procedures, licenses, state contracting and more."
+      "familia": "Family & Successions",
+      "inmobiliario": "Real Estate Law",
+      "comercial": "Commercial & Corporate",
+      "learnMore": "Learn More",
+      "familiaDesc": "Divorces, successions, wills, family lawsuits and more.",
+      "inmobiliarioDesc": "Sales, leases, appraisals, property mergers, mortgage loans and more.",
+      "comercialDesc": "Company liquidation, contracts, powers of attorney, petition rights and more."
     },
     "benefits": {
       "title": "Why choose AJIN?",
       "quick": "Fast Response",
       "quickDesc": "Response within 24 business hours.",
       "experience": "Legal Experience",
-      "experienceDesc": "Over 15 years of experience in corporate law and litigation.",
+      "experienceDesc": "Over 20 years of experience in corporate law and litigation.",
       "transparent": "Transparent Processes",
       "transparentDesc": "Clear fees from the start, no surprises.",
       "personalized": "Personalized Assistance",
@@ -67,16 +70,17 @@
     },
     "cases": {
       "title": "Common Cases",
-      "despido": "Wrongful Termination",
-      "liquidacion": "Labor Settlements",
       "divorcio": "Divorces",
-      "custodia": "Child Custody",
+      "sucesion": "Successions",
+      "venta": "Real Estate Sales",
+      "arriendo": "Leases",
       "contratos": "Contracts",
-      "cobro": "Debt Collection"
+      "poderes": "Powers of Attorney"
     },
     "cta": {
       "title": "Need legal guidance?",
-      "subtitle": "Schedule a consultation today and receive personalized advice."
+      "subtitle": "Schedule a consultation today and receive personalized advice.",
+      "ctaButton": "Request Consultation"
     }
   },
   "about": {
@@ -84,11 +88,11 @@
     "subtitle": "Learn more about AJIN and our team",
     "history": {
       "title": "Our History",
-      "content": "AJIN was born from the conviction that justice should be accessible to everyone. Founded by a team of attorneys with experience in litigation and corporate law, our firm has grown to become a benchmark for comprehensive legal advisory in Colombia. We combine traditional legal knowledge with cutting-edge technology to offer a more agile, transparent, and efficient service."
+      "content": "AJIN was born from the conviction that justice should be accessible to everyone. Founded by a team of attorneys with experience in real estate, notarial, and corporate law, our firm has grown to become a benchmark for real estate and notarial legal advisory in Colombia. We combine traditional legal knowledge with cutting-edge technology to offer a more agile, transparent, and efficient service."
     },
     "mission": {
       "title": "Mission",
-      "content": "To provide high-quality comprehensive legal advisory, using technology to make the defense of the rights of our individuals and companies more accessible and efficient."
+      "content": "To provide high-quality real estate and notarial legal advisory, using technology to make the defense of the rights of our individuals and companies more accessible and efficient."
     },
     "vision": {
       "title": "Vision",
@@ -110,25 +114,24 @@
     "title": "Legal Services",
     "subtitle": "We offer specialized legal advisory in the following areas",
     "consultation": "Request a Consultation",
-    "laboral": {
-      "title": "Labor Law",
-      "items": ["Wrongful termination", "Labor settlements", "Workplace harassment", "Labor lawsuits", "Employment contracts", "Social benefits"]
-    },
+    "includes": "Services including:",
+    "needHelp": "Need legal advice in this area?",
+    "teamReady": "Our team of specialized attorneys is ready to handle your case.",
+    "moreServices": "And much more... Contact us to learn about all our services.",
     "familia": {
-      "title": "Family Law",
-      "items": ["Divorces", "Child custody", "Alimony", "Visitation rights", "Successions", "Common-law marriages"]
+      "title": "Family & Successions",
+      "description": "Comprehensive advisory in family law, successions, wills, and support processes.",
+      "items": ["Divorces", "Successions", "Wills", "Family lawsuits", "Marital property liquidation", "Support processes (formerly Guardianship)", "Asset cancellations"]
     },
-    "civil": {
-      "title": "Civil Law",
-      "items": ["Contracts", "Properties", "Obligations", "Civil liability", "Leases", "Horizontal property"]
+    "inmobiliario": {
+      "title": "Real Estate Law",
+      "description": "Specialized legal management in real estate, property contracts, and appraisals.",
+      "items": ["Sales", "Leases", "Appraisals", "Property mergers and divisions", "Material division", "Promissory purchase agreements", "Mortgage loans"]
     },
     "comercial": {
-      "title": "Commercial Law",
-      "items": ["Company incorporation", "Commercial contracts", "SAS corporations", "Intellectual property", "Mergers and acquisitions", "Debt collection"]
-    },
-    "administrativo": {
-      "title": "Administrative Law",
-      "items": ["State contracting", "Licenses and permits", "Government procedures", "Tax law", "Fiscal responsibility", "Constitutional actions"]
+      "title": "Commercial & Corporate",
+      "description": "Legal advisory for companies in liquidation, contracts, powers of attorney and more.",
+      "items": ["Company liquidation", "Contracts", "Powers of attorney", "Petition rights"]
     }
   },
   "contact": {
@@ -144,11 +147,9 @@
       "area": "Legal Area",
       "areaPlaceholder": "Select an area",
       "areas": {
-        "laboral": "Labor Law",
-        "familia": "Family Law",
-        "civil": "Civil Law",
-        "comercial": "Commercial Law",
-        "administrativo": "Administrative Law",
+        "familia": "Family & Successions",
+        "inmobiliario": "Real Estate Law",
+        "comercial": "Commercial & Corporate",
         "general": "General Inquiry"
       },
       "message": "Description",
@@ -160,7 +161,15 @@
       "sending": "Sending...",
       "successTitle": "Message sent",
       "successMessage": "We will contact you soon.",
-      "errorMessage": "Error sending. Please try again."
+      "errorMessage": "Error sending. Please try again.",
+      "infoTitle": "Contact Information",
+      "addressLabel": "Address",
+      "phoneLabel": "Phone",
+      "emailLabel": "Email",
+      "scheduleLabel": "Hours",
+      "scheduleValue": "Mon - Fri: 8:30 AM - 5:00 PM / Sat: 9:00 AM - 12:00 PM",
+      "openInMaps": "Open in Maps",
+      "mapTitle": "AJIN Location"
     }
   },
   "powers": {
@@ -196,50 +205,200 @@
       "administrativeDesc": "For procedures before public entities."
     }
   },
+  "landing": {
+    "laboral": {
+      "title": "Labor Lawyers in Bogotá",
+      "description": "We are your labor law firm in Bogotá with extensive experience in terminations, settlements, and labor lawsuits.",
+      "items": ["Wrongful termination", "Labor settlements", "Workplace harassment", "Labor lawsuits", "Employment contracts", "Collective bargaining"]
+    },
+    "despido": {
+      "title": "Lawyer for Wrongful Termination",
+      "description": "If you were unfairly dismissed, our attorneys will help you claim your compensation and labor rights.",
+      "items": ["Free case evaluation", "Compensation calculation", "Legal representation", "Employer negotiation", "Labor lawsuit"]
+    },
+    "divorcio": {
+      "title": "Divorce Lawyer in Bogotá",
+      "description": "Divorce specialists in Bogotá. Mutual agreement and contentious. Agile and transparent processes.",
+      "items": ["Mutual agreement divorce", "Contentious divorce", "Marital property liquidation", "Custody and alimony", "Complete advisory"]
+    },
+    "empresas": {
+      "title": "Legal Advisory for Companies",
+      "description": "Real estate and notarial legal advisory for companies in Bogotá. SAS incorporation, contracts, regulatory compliance.",
+      "items": ["SAS company incorporation", "Commercial contracts", "Legal due diligence", "Intellectual property", "Debt collection"]
+    },
+    "cobro": {
+      "title": "Debt Collection Lawyer",
+      "description": "Recover your delinquent portfolio with our attorneys specialized in judicial and pre-judicial collection in Bogotá.",
+      "items": ["Pre-judicial collection", "Executive lawsuit", "Garnishment and seizures", "Payment agreements", "Portfolio recovery"]
+    },
+    "includes": "Our services include:",
+    "needHelp": "Need help with this matter?",
+    "teamReady": "Our team is ready to handle your case. Request a consultation today.",
+    "requestConsultation": "Request Consultation",
+    "trustTitle": "Trust AJIN",
+    "trustDesc": "With over 15 years of experience, we are your trusted legal ally in Bogotá. Transparent processes, personalized attention, and effective results.",
+    "contactUs": "Contact Us"
+  },
+  "blog": {
+    "title": "Legal Blog",
+    "description": "Articles and news on real estate, notarial, family, and corporate law in Colombia.",
+    "comingSoon": "New articles coming soon.",
+    "backToBlog": "Back to Blog",
+    "notFound": "Article not found"
+  },
   "seo": {
     "home": {
-      "title": "AJIN — Comprehensive Legal Advisory in Bogotá",
-      "description": "Specialized legal advisory in labor, civil, family, and commercial law in Bogotá. Request a consultation with AJIN."
+      "title": "AJIN — Real Estate and Notarial Legal Advisory in Bogotá",
+      "description": "Real estate and notarial legal advisory in family and successions, real estate law, and corporate law in Bogotá. Request a consultation with AJIN."
     },
     "about": {
-      "title": "About Us | AJIN — Comprehensive Legal Advisory",
-      "description": "Learn about the history, mission, vision, and values of AJIN, your comprehensive legal advisory firm in Bogotá."
+      "title": "About Us | AJIN — Real Estate and Notarial Legal Advisory",
+      "description": "Learn about the history, mission, vision, and values of AJIN, your real estate and notarial legal advisory firm in Bogotá."
     },
     "services": {
-      "title": "Legal Services | AJIN — Comprehensive Legal Advisory",
-      "description": "We offer labor, family, civil, commercial, and administrative law services. Comprehensive legal advisory in Bogotá."
-    },
-    "laboral": {
-      "title": "Labor Lawyers in Bogotá | AJIN",
-      "description": "Labor law specialists in Bogotá. Terminations, settlements, workplace harassment, and lawsuits. Consult AJIN."
+      "title": "Legal Services | AJIN — Real Estate and Notarial Legal Advisory",
+      "description": "We offer family and successions, real estate law, commercial and corporate services. Real estate and notarial legal advisory in Bogotá."
     },
     "familia": {
-      "title": "Family Lawyers in Bogotá | AJIN",
-      "description": "Family law specialists in Bogotá. Divorces, custody, alimony, and visitation rights. Consult AJIN."
+      "title": "Family & Successions Lawyers in Bogotá | AJIN",
+      "description": "Family law specialists in Bogotá. Divorces, successions, wills, and support processes. Consult AJIN."
     },
-    "civil": {
-      "title": "Civil Lawyers in Bogotá | AJIN",
-      "description": "Civil law specialists in Bogotá. Contracts, properties, obligations. Consult AJIN."
+    "inmobiliario": {
+      "title": "Real Estate Lawyers in Bogotá | AJIN",
+      "description": "Real estate law specialists in Bogotá. Sales, leases, appraisals, property mergers, mortgage loans. Consult AJIN."
     },
     "comercial": {
-      "title": "Commercial Lawyers in Bogotá | AJIN",
-      "description": "Commercial law specialists in Bogotá. Company incorporation, contracts, SAS. Consult AJIN."
-    },
-    "administrativo": {
-      "title": "Administrative Lawyers in Bogotá | AJIN",
-      "description": "Administrative law specialists in Bogotá. State contracting, licenses, procedures. Consult AJIN."
+      "title": "Commercial & Corporate Lawyers in Bogotá | AJIN",
+      "description": "Commercial law specialists in Bogotá. Company liquidation, contracts, powers of attorney. Consult AJIN."
     },
     "contact": {
-      "title": "Contact | AJIN — Comprehensive Legal Advisory",
-      "description": "Contact us for personalized legal advisory. We are in Bogotá."
+      "title": "Contact | AJIN — Real Estate and Notarial Legal Advisory",
+      "description": "Contact us for real estate and notarial legal advisory. We are in Bogotá."
     },
     "powers": {
-      "title": "Powers of Attorney | AJIN — Comprehensive Legal Advisory",
-      "description": "We generate customized powers of attorney for legal and administrative procedures in Colombia."
+      "title": "Powers of Attorney | AJIN — Real Estate and Notarial Legal Advisory",
+      "description": "We generate customized powers of attorney for real estate, notarial, and administrative procedures in Colombia."
     },
     "blog": {
-      "title": "Legal Blog | AJIN — Comprehensive Legal Advisory",
-      "description": "Articles and news on labor, family, civil, commercial, and administrative law in Colombia."
+      "title": "Legal Blog | AJIN — Real Estate and Notarial Legal Advisory",
+      "description": "Articles and news on real estate, notarial, family, and corporate law in Colombia."
+    },
+    "privacy": {
+      "title": "Privacy Policy | AJIN",
+      "description": "Learn about our personal data processing policy and privacy protection."
+    },
+    "terms": {
+      "title": "Terms & Conditions | AJIN",
+      "description": "Terms and conditions of use of the AJIN Real Estate and Notarial Legal Advisory website."
+    },
+    "dataProtection": {
+      "title": "Personal Data Protection | AJIN",
+      "description": "Personal data processing policy and ARCO rights under Colombian Law 1581 of 2012."
     }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "subtitle": "Commitment to protecting your personal data",
+    "lastUpdated": "Last updated: June 2025",
+    "sections": [
+      {
+        "title": "1. Introduction",
+        "content": "At AJIN Real Estate and Notarial Legal Advisory ('AJIN'), we are committed to protecting your privacy and ensuring that your personal data is processed in accordance with Law 1581 of 2012 and its regulatory decrees. This Privacy Policy describes how we collect, use, store, and protect your personal information when you use our services or interact with our website."
+      },
+      {
+        "title": "2. Data we collect",
+        "content": "We may collect the following personal information: full names, identification document, email address, phone number, physical address, information about your case or legal inquiry, and any other information you voluntarily provide through our contact forms, email, WhatsApp, or any other communication channel."
+      },
+      {
+        "title": "3. Purpose of processing",
+        "content": "Your personal data will be processed for the following purposes: (a) to respond to your legal advisory requests, inquiries, or services; (b) to contact you for follow-up on your case; (c) to send information about our services and legal news, with prior authorization; (d) to comply with legal and regulatory obligations; (e) to improve our services and user experience on our website."
+      },
+      {
+        "title": "4. ARCO Rights",
+        "content": "Under Law 1581 of 2012, you have the following rights over your personal data: Access (to know what data we hold and how we process it), Update (to request correction of inaccurate data), Rectification (to modify incorrect data), Suppression (to request deletion of your data when no longer needed for the described purposes). To exercise these rights, send your request to clientesajin@gmail.com with the subject 'ARCO Rights'."
+      },
+      {
+        "title": "5. Data security",
+        "content": "AJIN implements reasonable technical, administrative, and physical security measures to protect your personal data against unauthorized access, loss, destruction, or alteration. However, no Internet transmission is completely secure, so we cannot guarantee the absolute security of information transmitted through our website."
+      },
+      {
+        "title": "6. Data transfer",
+        "content": "We do not share your personal data with unrelated third parties, except when necessary to comply with legal obligations, protect our rights, or with your express authorization. We may share information with judicial or administrative authorities when required by law."
+      },
+      {
+        "title": "7. Use of cookies",
+        "content": "Our website may use cookies and similar technologies to improve user experience, analyze site traffic, and personalize content. By continuing to browse our site, you consent to the use of cookies in accordance with this policy. You can configure your browser to reject cookies, but this may affect site functionality."
+      },
+      {
+        "title": "8. Contact",
+        "content": "If you have questions about this Privacy Policy or wish to exercise your ARCO rights, you can contact us at: Email: clientesajin@gmail.com, Phone: +57 350 4338533, Address: Calle 12 # 13-26, Chía, Cundinamarca."
+      }
+    ]
+  },
+  "terms": {
+    "title": "Terms & Conditions",
+    "subtitle": "General conditions of use of the AJIN website",
+    "lastUpdated": "Last updated: June 2025",
+    "sections": [
+      {
+        "title": "1. Acceptance of terms",
+        "content": "By accessing and using the AJIN Real Estate and Notarial Legal Advisory website, you agree to these Terms & Conditions. If you do not agree with any of these terms, please do not use our website. AJIN reserves the right to modify these terms at any time, with changes effective upon publication on the site."
+      },
+      {
+        "title": "2. Services",
+        "content": "AJIN offers legal advisory services in real estate, notarial, family and successions, commercial and corporate law. The information provided on this website is for informational purposes only and does not constitute legal advice. To receive specific legal advice, you must contact us and formalize a professional relationship."
+      },
+      {
+        "title": "3. Intellectual property",
+        "content": "All content on this website, including text, images, logos, graphics, and design, is the property of AJIN or its licensors and is protected by intellectual property laws. Unauthorized reproduction, distribution, modification, or use of the content is prohibited without the prior written consent of AJIN."
+      },
+      {
+        "title": "4. Limitation of liability",
+        "content": "AJIN shall not be liable for direct, indirect, incidental, or consequential damages arising from the use or inability to use this website. The information provided on the site is offered 'as is,' without warranties of accuracy, completeness, or currency. The user assumes responsibility for the use they make of the information provided."
+      },
+      {
+        "title": "5. Third-party links",
+        "content": "This website may contain links to third-party websites. AJIN has no control over the content or privacy practices of such sites and assumes no responsibility for them. We recommend reading the privacy policies and terms of use of any third-party website you visit."
+      },
+      {
+        "title": "6. Applicable law",
+        "content": "These Terms & Conditions are governed by the laws of the Republic of Colombia. Any dispute related to these terms shall be submitted to the competent courts of the city of Bogotá, D.C., Colombia."
+      },
+      {
+        "title": "7. Contact",
+        "content": "For any questions about these Terms & Conditions, you can contact us at: clientesajin@gmail.com or phone +57 350 4338533."
+      }
+    ]
+  },
+  "dataProtection": {
+    "title": "Personal Data Protection",
+    "subtitle": "Personal data processing policy and ARCO rights",
+    "lastUpdated": "Last updated: June 2025",
+    "sections": [
+      {
+        "title": "What is personal data?",
+        "content": "Personal data is any information linked or that may be associated with an identified or identifiable natural person. This includes, among others, names, identification documents, address, phone number, email address, financial information, and data related to your legal or judicial situation."
+      },
+      {
+        "title": "Data controller",
+        "content": "AJIN Real Estate and Notarial Legal Advisory, with address at Calle 12 # 13-26, Chía, Cundinamarca, is the data controller responsible for processing your personal data. For any inquiries, you can contact us at clientesajin@gmail.com."
+      },
+      {
+        "title": "Your ARCO rights",
+        "content": "As a data subject, you have the following rights: (i) Access: to know what personal data we hold and how we process it; (ii) Update: to request correction of inaccurate or incomplete data; (iii) Rectification: to modify your data when incorrect; (iv) Suppression: to request deletion of your data when no longer necessary; (v) Revocation: to revoke authorization for data processing."
+      },
+      {
+        "title": "How to exercise your rights",
+        "content": "To exercise your ARCO rights, you must send a written request to clientesajin@gmail.com stating: (a) your full name and identification document; (b) the right you wish to exercise; (c) a clear and precise description of your request; (d) contact information to receive the response. AJIN will respond to your request within a maximum of 15 business days, extendable by an additional 15 days when circumstances warrant."
+      },
+      {
+        "title": "Procedure for inquiries and complaints",
+        "content": "The procedure is as follows: (1) The data subject submits their inquiry or complaint through the available channel (email). (2) AJIN acknowledges receipt within 5 business days. (3) The response will be issued within a maximum of 15 business days from the date of receipt. (4) If it is not possible to respond within that timeframe, the data subject will be informed of the reasons for the delay and the expected response date."
+      },
+      {
+        "title": "Validity and modifications",
+        "content": "AJIN reserves the right to modify this policy at any time. Modifications will be published on this website and will take effect upon publication. We recommend periodically reviewing this page to stay informed about how we protect your personal data."
+      }
+    ]
   }
 }

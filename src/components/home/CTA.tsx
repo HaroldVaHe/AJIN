@@ -23,7 +23,7 @@ export default function CTA() {
         </p>
         <Link href="/contacto" className="mt-8">
           <Button variant="secondary" size="lg">
-            Agendar Consulta
+            {t('ctaButton')}
             <ArrowRight size={20} className="ml-2" />
           </Button>
         </Link>

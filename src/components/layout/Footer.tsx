@@ -15,11 +15,9 @@ export default function Footer() {
   ];
 
   const serviceLinks = [
-    { href: '/servicios/derecho-laboral', key: 'services.laboral.title' },
-    { href: '/servicios/derecho-familia', key: 'services.familia.title' },
-    { href: '/servicios/derecho-civil', key: 'services.civil.title' },
-    { href: '/servicios/derecho-comercial', key: 'services.comercial.title' },
-    { href: '/servicios/derecho-administrativo', key: 'services.administrativo.title' },
+    { href: '/servicios/familia-sucesiones', key: 'services.familia.title' },
+    { href: '/servicios/inmobiliario', key: 'services.inmobiliario.title' },
+    { href: '/servicios/comercial-corporativo', key: 'services.comercial.title' },
   ];
 
   return (
@@ -59,7 +57,7 @@ export default function Footer() {
 
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-ajin-gray-200 mb-4">
-              Links
+              {t('common.footer.links')}
             </h3>
             <ul className="space-y-3">
               {navLinks.map((link) => (
@@ -103,11 +101,14 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} AJIN. {t('common.footer.rights')}
           </p>
           <div className="flex gap-4">
-            <Link href="/" className="text-xs text-ajin-gray-400 hover:text-ajin-green transition-colors">
+            <Link href="/privacidad" className="text-xs text-ajin-gray-400 hover:text-ajin-green transition-colors">
               {t('common.footer.privacy')}
             </Link>
-            <Link href="/" className="text-xs text-ajin-gray-400 hover:text-ajin-green transition-colors">
+            <Link href="/terminos" className="text-xs text-ajin-gray-400 hover:text-ajin-green transition-colors">
               {t('common.footer.terms')}
+            </Link>
+            <Link href="/datos-personales" className="text-xs text-ajin-gray-400 hover:text-ajin-green transition-colors">
+              {t('common.footer.dataProtection')}
             </Link>
           </div>
         </div>

@@ -36,12 +36,12 @@ export default async function ContactPage({
           <ContactForm />
           <div className="space-y-8">
             <div>
-              <h3 className="text-lg font-bold mb-4">Información de Contacto</h3>
+              <h3 className="text-lg font-bold mb-4">{t('form.infoTitle')}</h3>
               <div className="space-y-4">
-                <ContactItem icon={MapPin} label="Dirección" value={c('address')} />
-                <ContactItem icon={Phone} label="Teléfono" value={c('phone')} />
-                <ContactItem icon={Mail} label="Email" value={c('email')} />
-                <ContactItem icon={Clock} label="Horario" value={<>Lun - Vie: 8:30 AM - 5:00 PM<br />Sáb: 9:00 AM - 12:00 PM</>}/>
+                <ContactItem icon={MapPin} label={t('form.addressLabel')} value={c('address')} />
+                <ContactItem icon={Phone} label={t('form.phoneLabel')} value={c('phone')} />
+                <ContactItem icon={Mail} label={t('form.emailLabel')} value={c('email')} />
+                <ContactItem icon={Clock} label={t('form.scheduleLabel')} value={t('form.scheduleValue')} />
               </div>
             </div>
             <div className="relative rounded-2xl overflow-hidden h-[350px] bg-ajin-gray-100 shadow-sm border border-ajin-gray-200">
@@ -52,16 +52,15 @@ export default async function ContactPage({
                 className="absolute top-4 right-4 z-20 bg-white/95 backdrop-blur-sm rounded-lg px-3 py-2 shadow-md hover:shadow-lg transition-all flex items-center gap-2 text-sm font-medium hover:bg-white"
               >
                 <ExternalLink size={16} />
-                Abrir en Maps
+                {t('form.openInMaps')}
               </a>
 
               <div className="absolute top-4 left-11 z-20 bg-ajin-transparent text-black rounded-lg px-3 py-1 shadow-md flex items-center gap-2 font-medium text-[10px] padding-[0px]">
                 <MapPin size={16} color="red" />
-             
               </div>
 
               <iframe
-                title="Ubicación AJIN"
+                title={t('form.mapTitle')}
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3975.4583979607696!2d-74.06465848940852!3d4.862587840212426!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f8756b5a83819%3A0xf7d70214b9b4e686!2sAJIN!5e0!3m2!1ses-419!2sco!4v1782342593844!5m2!1ses-419!2sco"
                 className="w-full h-full"
                 style={{ border: 0 }}

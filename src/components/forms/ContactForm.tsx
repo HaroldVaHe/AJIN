@@ -91,11 +91,9 @@ export default function ContactForm() {
         error={errors.area?.message}
         options={[
           { value: '', label: t('areaPlaceholder') },
-          { value: 'laboral', label: t('areas.laboral') },
           { value: 'familia', label: t('areas.familia') },
-          { value: 'civil', label: t('areas.civil') },
+          { value: 'inmobiliario', label: t('areas.inmobiliario') },
           { value: 'comercial', label: t('areas.comercial') },
-          { value: 'administrativo', label: t('areas.administrativo') },
           { value: 'general', label: t('areas.general') },
         ]}
         {...register('area', { required: t('requiredField') })}

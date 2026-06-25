@@ -1,9 +1,11 @@
 {
   "common": {
     "siteName": "AJIN",
-    "siteFullName": "AJIN — Asesoría Jurídica Integral",
-    "tagline": "Protegemos sus derechos con asesoría legal especializada, procesos transparentes y tecnología que agiliza cada trámite.",
+    "siteFullName": "AJIN — Asesoría Jurídica Inmobiliaria y Notarial",
+    "tagline": "Asesoría experta en derecho inmobiliario, notarial, familia y corporativo con procesos transparentes y atención personalizada.",
     "whatsapp": "WhatsApp",
+    "whatsappMessage": "Hola, quisiera agendar una consulta con AJIN.",
+    "whatsappAria": "Contactar por WhatsApp",
     "schedule": "Agendar Consulta",
     "requestAdvice": "Solicitar Asesoría",
     "learnMore": "Conoce más",
@@ -30,29 +32,30 @@
       "rights": "Todos los derechos reservados.",
       "privacy": "Política de Privacidad",
       "terms": "Términos y Condiciones",
-      "description": "Asesoría jurídica integral para personas y empresas en Colombia."
+      "description": "Asesoría jurídica inmobiliaria y notarial para personas y empresas en Colombia.",
+      "links": "Enlaces",
+      "dataProtection": "Protección de Datos"
     }
   },
   "home": {
     "hero": {
-      "title": "Asesoría Jurídica Integral para Personas y Empresas",
-      "subtitle": "Protegemos sus derechos con asesoría legal especializada, procesos transparentes y tecnología que agiliza cada trámite.",
+      "title": "Asesoría Jurídica Inmobiliaria y Notarial para Personas y Empresas",
+      "subtitle": "Asesoría experta en derecho inmobiliario, notarial, familia y corporativo con procesos transparentes y atención personalizada.",
+      "badge": "Asesoría Jurídica Inmobiliaria y Notarial",
+      "imageAlt": "Balanza de la justicia - AJIN Asesoría Jurídica Inmobiliaria y Notarial",
       "requestAdvice": "Solicitar Asesoría",
       "schedule": "Agendar Consulta"
     },
     "services": {
       "title": "Nuestros Servicios",
       "subtitle": "Ofrecemos asesoría jurídica especializada en las siguientes áreas",
-      "laboral": "Derecho Laboral",
-      "familia": "Derecho de Familia",
-      "civil": "Derecho Civil",
-      "comercial": "Derecho Comercial",
-      "administrativo": "Derecho Administrativo",
-      "laboralDesc": "Despidos, liquidaciones, acoso laboral, demandas y más.",
-      "familiaDesc": "Divorcios, custodia, alimentos, visitas y más.",
-      "civilDesc": "Contratos, propiedades, obligaciones y más.",
-      "comercialDesc": "Constitución de empresas, contratos comerciales, SAS y más.",
-      "administrativoDesc": "Trámites gubernamentales, licencias, contratación estatal y más."
+      "familia": "Familia y Sucesiones",
+      "inmobiliario": "Derecho Inmobiliario",
+      "comercial": "Comercial y Corporativo",
+      "learnMore": "Conoce más",
+      "familiaDesc": "Divorcios, sucesiones, testamentos, demandas de familia y más.",
+      "inmobiliarioDesc": "Ventas, arriendos, avalúos, englobes, préstamos hipotecarios y más.",
+      "comercialDesc": "Liquidación de sociedades, contratos, poderes, derechos de petición y más."
     },
     "benefits": {
       "title": "¿Por qué elegir AJIN?",
@@ -67,16 +70,17 @@
     },
     "cases": {
       "title": "Casos Frecuentes",
-      "despido": "Despidos Injustificados",
-      "liquidacion": "Liquidaciones Laborales",
       "divorcio": "Divorcios",
-      "custodia": "Custodia de Menores",
+      "sucesion": "Sucesiones",
+      "venta": "Compraventa de Inmuebles",
+      "arriendo": "Arriendos",
       "contratos": "Contratos",
-      "cobro": "Cobro de Cartera"
+      "poderes": "Poderes"
     },
     "cta": {
       "title": "¿Necesita orientación jurídica?",
-      "subtitle": "Agende una consulta hoy mismo y reciba asesoría personalizada."
+      "subtitle": "Agende una consulta hoy mismo y reciba asesoría personalizada.",
+      "ctaButton": "Agendar Consulta"
     }
   },
   "about": {
@@ -84,11 +88,11 @@
     "subtitle": "Conozca más sobre AJIN y nuestro equipo",
     "history": {
       "title": "Nuestra Historia",
-      "content": "AJIN nació de la convicción de que la justicia debe ser accesible para todos. Fundada por un equipo de abogados con experiencia en litigio y derecho corporativo, nuestra firma ha crecido hasta convertirse en un referente de asesoría jurídica integral en Colombia. Combinamos el conocimiento legal tradicional con tecnología de vanguardia para ofrecer un servicio más ágil, transparente y eficiente."
+      "content": "AJIN nació de la convicción de que la justicia debe ser accesible para todos. Fundada por un equipo de abogados con experiencia en derecho inmobiliario, notarial y corporativo, nuestra firma ha crecido hasta convertirse en un referente de asesoría jurídica inmobiliaria y notarial en Colombia. Combinamos el conocimiento legal tradicional con tecnología de vanguardia para ofrecer un servicio más ágil, transparente y eficiente."
     },
     "mission": {
       "title": "Misión",
-      "content": "Brindar asesoría jurídica integral de alta calidad, utilizando tecnología para hacer más accesible y eficiente la defensa de los derechos de nuestras personas y empresas."
+      "content": "Brindar asesoría jurídica inmobiliaria y notarial de alta calidad, utilizando tecnología para hacer más accesible y eficiente la defensa de los derechos de nuestras personas y empresas."
     },
     "vision": {
       "title": "Visión",
@@ -110,25 +114,24 @@
     "title": "Servicios Jurídicos",
     "subtitle": "Ofrecemos asesoría jurídica especializada en las siguientes áreas",
     "consultation": "Solicitar una Consulta",
-    "laboral": {
-      "title": "Derecho Laboral",
-      "items": ["Despidos injustificados", "Liquidaciones laborales", "Acoso laboral", "Demandas laborales", "Contratos de trabajo", "Prestaciones sociales"]
-    },
+    "includes": "Servicios incluyendo:",
+    "needHelp": "¿Necesita asesoría en esta área?",
+    "teamReady": "Nuestro equipo de abogados especializados está listo para atender su caso.",
+    "moreServices": "Y mucho más... Contáctenos para conocer todos nuestros servicios.",
     "familia": {
-      "title": "Derecho de Familia",
-      "items": ["Divorcios", "Custodia de menores", "Alimentos", "Régimen de visitas", "Sucesiones", "Uniones maritales de hecho"]
+      "title": "Familia y Sucesiones",
+      "description": "Asesoría completa en derecho de familia, sucesiones, testamentos y procesos de apoyo.",
+      "items": ["Divorcios", "Sucesiones", "Testamentos", "Demandas de familia", "Liquidación de sociedad conyugal", "Procesos de apoyo (antes Interdicción)", "Cancelaciones de patrimonio"]
     },
-    "civil": {
-      "title": "Derecho Civil",
-      "items": ["Contratos", "Propiedades", "Obligaciones", "Responsabilidad civil", "Arrendamientos", "Propiedad horizontal"]
+    "inmobiliario": {
+      "title": "Derecho Inmobiliario",
+      "description": "Gestión jurídica especializada en bienes raíces, contratos inmobiliarios y avalúos.",
+      "items": ["Ventas", "Arriendos", "Avalúos", "Englobes y desenglobes", "División material", "Promesas de compraventa", "Préstamos sobre hipoteca"]
     },
     "comercial": {
-      "title": "Derecho Comercial",
-      "items": ["Constitución de empresas", "Contratos comerciales", "Sociedades SAS", "Propiedad intelectual", "Fusiones y adquisiciones", "Cobro de cartera"]
-    },
-    "administrativo": {
-      "title": "Derecho Administrativo",
-      "items": ["Contratación estatal", "Licencias y permisos", "Trámites gubernamentales", "Derecho tributario", "Responsabilidad fiscal", "Acciones constitucionales"]
+      "title": "Comercial y Corporativo",
+      "description": "Asesoría legal para empresas en liquidación de sociedades, contratos, poderes y más.",
+      "items": ["Liquidación de sociedades", "Contratos", "Poderes", "Derechos de petición"]
     }
   },
   "contact": {
@@ -144,11 +147,9 @@
       "area": "Área Jurídica",
       "areaPlaceholder": "Seleccione un área",
       "areas": {
-        "laboral": "Derecho Laboral",
-        "familia": "Derecho de Familia",
-        "civil": "Derecho Civil",
-        "comercial": "Derecho Comercial",
-        "administrativo": "Derecho Administrativo",
+        "familia": "Familia y Sucesiones",
+        "inmobiliario": "Derecho Inmobiliario",
+        "comercial": "Comercial y Corporativo",
         "general": "Consulta General"
       },
       "message": "Descripción",
@@ -160,7 +161,15 @@
       "sending": "Enviando...",
       "successTitle": "Mensaje enviado",
       "successMessage": "Nos pondremos en contacto pronto.",
-      "errorMessage": "Error al enviar. Intente de nuevo."
+      "errorMessage": "Error al enviar. Intente de nuevo.",
+      "infoTitle": "Información de Contacto",
+      "addressLabel": "Dirección",
+      "phoneLabel": "Teléfono",
+      "emailLabel": "Email",
+      "scheduleLabel": "Horario",
+      "scheduleValue": "Lun - Vie: 8:30 AM - 5:00 PM / Sáb: 9:00 AM - 12:00 PM",
+      "openInMaps": "Abrir en Maps",
+      "mapTitle": "Ubicación AJIN"
     }
   },
   "powers": {
@@ -196,50 +205,200 @@
       "administrativeDesc": "Para trámites ante entidades públicas."
     }
   },
+  "landing": {
+    "laboral": {
+      "title": "Abogados Laborales en Bogotá",
+      "description": "Somos su firma de abogados laborales en Bogotá con amplia experiencia en despidos, liquidaciones y demandas laborales.",
+      "items": ["Despidos injustificados", "Liquidaciones laborales", "Acoso laboral", "Demandas laborales", "Contratos de trabajo", "Negociaciones colectivas"]
+    },
+    "despido": {
+      "title": "Abogado para Despido Injustificado",
+      "description": "Si fue despedido sin justa causa, nuestros abogados le ayudarán a reclamar su indemnización y derechos laborales.",
+      "items": ["Evaluación gratuita de su caso", "Cálculo de indemnización", "Representación legal", "Negociación con el empleador", "Demanda laboral"]
+    },
+    "divorcio": {
+      "title": "Abogado de Divorcio en Bogotá",
+      "description": "Abogados especialistas en divorcios en Bogotá. Mutuo acuerdo y contencioso. Procesos ágiles y transparentes.",
+      "items": ["Divorcio de mutuo acuerdo", "Divorcio contencioso", "Liquidación de sociedad conyugal", "Custodia y alimentos", "Asesoría completa"]
+    },
+    "empresas": {
+      "title": "Asesoría Jurídica para Empresas",
+      "description": "Asesoría jurídica inmobiliaria y notarial para empresas en Bogotá. Constitución SAS, contratos, cumplimiento normativo.",
+      "items": ["Constitución de empresas SAS", "Contratos comerciales", "Due diligence legal", "Propiedad intelectual", "Cobro de cartera"]
+    },
+    "cobro": {
+      "title": "Abogado de Cobro de Cartera",
+      "description": "Recupere su cartera morosa con nuestros abogados especializados en cobro judicial y prejurídico en Bogotá.",
+      "items": ["Cobro prejurídico", "Demanda ejecutiva", "Embargos y secuestros", "Acuerdos de pago", "Recuperación de cartera"]
+    },
+    "includes": "Nuestros servicios incluyen:",
+    "needHelp": "¿Necesita ayuda con este tema?",
+    "teamReady": "Nuestro equipo está listo para atender su caso. Solicite una consulta hoy.",
+    "requestConsultation": "Solicitar Consulta",
+    "trustTitle": "Confíe en AJIN",
+    "trustDesc": "Con más de 15 años de experiencia, somos su aliado jurídico de confianza en Bogotá. Procesos transparentes, atención personalizada y resultados efectivos.",
+    "contactUs": "Contáctenos"
+  },
+  "blog": {
+    "title": "Blog Jurídico",
+    "description": "Artículos y noticias sobre derecho inmobiliario, notarial, familia y corporativo en Colombia.",
+    "comingSoon": "Próximamente nuevos artículos.",
+    "backToBlog": "Volver al Blog",
+    "notFound": "Artículo no encontrado"
+  },
   "seo": {
     "home": {
-      "title": "AJIN — Asesoría Jurídica Integral en Bogotá",
-      "description": "Asesoría jurídica especializada en derecho laboral, civil, familiar y comercial en Bogotá. Solicite una consulta con AJIN."
+      "title": "AJIN — Asesoría Jurídica Inmobiliaria y Notarial en Bogotá",
+      "description": "Asesoría jurídica especializada en familia y sucesiones, derecho inmobiliario y corporativo en Bogotá. Solicite una consulta con AJIN."
     },
     "about": {
-      "title": "Nosotros | AJIN — Asesoría Jurídica Integral",
-      "description": "Conozca la historia, misión, visión y valores de AJIN, su firma de asesoría jurídica integral en Bogotá."
+      "title": "Nosotros | AJIN — Asesoría Jurídica Inmobiliaria y Notarial",
+      "description": "Conozca la historia, misión, visión y valores de AJIN, su firma de asesoría jurídica inmobiliaria y notarial en Bogotá."
     },
     "services": {
-      "title": "Servicios Jurídicos | AJIN — Asesoría Jurídica Integral",
-      "description": "Ofrecemos servicios de derecho laboral, familiar, civil, comercial y administrativo. Asesoría jurídica integral en Bogotá."
-    },
-    "laboral": {
-      "title": "Abogados Laborales en Bogotá | AJIN",
-      "description": "Especialistas en derecho laboral en Bogotá. Despidos, liquidaciones, acoso laboral y demandas. Consulte con AJIN."
+      "title": "Servicios Jurídicos | AJIN — Asesoría Jurídica Inmobiliaria y Notarial",
+      "description": "Ofrecemos servicios en familia y sucesiones, derecho inmobiliario, comercial y corporativo. Asesoría jurídica inmobiliaria y notarial en Bogotá."
     },
     "familia": {
-      "title": "Abogados de Familia en Bogotá | AJIN",
-      "description": "Especialistas en derecho de familia en Bogotá. Divorcios, custodia, alimentos y visitas. Consulte con AJIN."
+      "title": "Abogados de Familia y Sucesiones | AJIN",
+      "description": "Especialistas en derecho de familia, divorcios, sucesiones, testamentos y procesos de apoyo en Bogotá. Consulte con AJIN."
     },
-    "civil": {
-      "title": "Abogados Civiles en Bogotá | AJIN",
-      "description": "Especialistas en derecho civil en Bogotá. Contratos, propiedades, obligaciones. Consulte con AJIN."
+    "inmobiliario": {
+      "title": "Abogados Inmobiliarios en Bogotá | AJIN",
+      "description": "Especialistas en derecho inmobiliario en Bogotá. Ventas, arriendos, avalúos, englobes y préstamos hipotecarios. Consulte con AJIN."
     },
     "comercial": {
-      "title": "Abogados Comerciales en Bogotá | AJIN",
-      "description": "Especialistas en derecho comercial en Bogotá. Constitución de empresas, contratos, SAS. Consulte con AJIN."
-    },
-    "administrativo": {
-      "title": "Abogados Administrativos en Bogotá | AJIN",
-      "description": "Especialistas en derecho administrativo en Bogotá. Contratación estatal, licencias, trámites. Consulte con AJIN."
+      "title": "Abogados Comerciales y Corporativos en Bogotá | AJIN",
+      "description": "Especialistas en derecho comercial en Bogotá. Liquidación de sociedades, contratos, poderes. Consulte con AJIN."
     },
     "contact": {
-      "title": "Contacto | AJIN — Asesoría Jurídica Integral",
+      "title": "Contacto | AJIN — Asesoría Jurídica Inmobiliaria y Notarial",
       "description": "Contáctenos para recibir asesoría jurídica personalizada. Estamos en Bogotá."
     },
     "powers": {
-      "title": "Poderes Legales | AJIN — Asesoría Jurídica Integral",
+      "title": "Poderes Legales | AJIN — Asesoría Jurídica Inmobiliaria y Notarial",
       "description": "Generamos poderes personalizados para trámites legales y administrativos en Colombia."
     },
     "blog": {
-      "title": "Blog Jurídico | AJIN — Asesoría Jurídica Integral",
-      "description": "Artículos y noticias sobre derecho laboral, familiar, civil, comercial y administrativo en Colombia."
+      "title": "Blog Jurídico | AJIN — Asesoría Jurídica Inmobiliaria y Notarial",
+      "description": "Artículos y noticias sobre derecho de familia, inmobiliario, comercial y corporativo en Colombia."
+    },
+    "privacy": {
+      "title": "Política de Privacidad | AJIN",
+      "description": "Conozca nuestra política de tratamiento de datos personales y protección de la privacidad."
+    },
+    "terms": {
+      "title": "Términos y Condiciones | AJIN",
+      "description": "Términos y condiciones de uso del sitio web de AJIN Asesoría Jurídica Inmobiliaria y Notarial."
+    },
+    "dataProtection": {
+      "title": "Protección de Datos Personales | AJIN",
+      "description": "Política de tratamiento de datos personales y derechos ARCO según la Ley 1581 de 2012."
     }
+  },
+  "privacy": {
+    "title": "Política de Privacidad",
+    "subtitle": "Compromiso con la protección de sus datos personales",
+    "lastUpdated": "Última actualización: Junio de 2025",
+    "sections": [
+      {
+        "title": "1. Introducción",
+        "content": "En AJIN Asesoría Jurídica Inmobiliaria y Notarial (en adelante 'AJIN'), nos comprometemos a proteger su privacidad y garantizar que sus datos personales sean tratados de conformidad con la Ley 1581 de 2012 y sus decretos reglamentarios. Esta Política de Privacidad describe cómo recopilamos, usamos, almacenamos y protegemos su información personal cuando utiliza nuestros servicios o interactúa con nuestro sitio web."
+      },
+      {
+        "title": "2. Datos que recopilamos",
+        "content": "Podemos recopilar la siguiente información personal: nombres y apellidos, documento de identidad, dirección de correo electrónico, número de teléfono, dirección física, información sobre su caso o consulta legal, y cualquier otra información que nos proporcione voluntariamente a través de nuestros formularios de contacto, correo electrónico, WhatsApp o cualquier otro medio de comunicación."
+      },
+      {
+        "title": "3. Finalidad del tratamiento",
+        "content": "Sus datos personales serán tratados con las siguientes finalidades: (a) atender sus solicitudes de asesoría jurídica, consultas o servicios; (b) contactarlo para dar seguimiento a su caso; (c) enviar información sobre nuestros servicios y novedades legales, previa autorización; (d) cumplir con obligaciones legales y regulatorias; (e) mejorar nuestros servicios y la experiencia del usuario en nuestro sitio web."
+      },
+      {
+        "title": "4. Derechos ARCO",
+        "content": "De acuerdo con la Ley 1581 de 2012, usted tiene los siguientes derechos sobre sus datos personales: Acceso (conocer qué datos tenemos y cómo los tratamos), Actualización (solicitar la corrección de datos inexactos), Rectificación (modificar datos incorrectos), Supresión (solicitar la eliminación de sus datos cuando no sean necesarios para las finalidades descritas). Para ejercer estos derechos, envíe su solicitud a clientesajin@gmail.com con el asunto 'Derechos ARCO'."
+      },
+      {
+        "title": "5. Seguridad de los datos",
+        "content": "AJIN implementa medidas de seguridad técnicas, administrativas y físicas razonables para proteger sus datos personales contra acceso no autorizado, pérdida, destrucción o alteración. Sin embargo, ninguna transmisión por Internet es completamente segura, por lo que no podemos garantizar la seguridad absoluta de la información transmitida a través de nuestro sitio web."
+      },
+      {
+        "title": "6. Transferencia de datos",
+        "content": "No compartimos sus datos personales con terceros no relacionados con nuestros servicios, excepto cuando sea necesario para cumplir con obligaciones legales, proteger nuestros derechos, o con su autorización expresa. Podemos compartir información con autoridades judiciales o administrativas cuando la ley lo requiera."
+      },
+      {
+        "title": "7. Uso de cookies",
+        "content": "Nuestro sitio web puede utilizar cookies y tecnologías similares para mejorar la experiencia del usuario, analizar el tráfico del sitio y personalizar el contenido. Al continuar navegando en nuestro sitio, usted acepta el uso de cookies de acuerdo con esta política. Puede configurar su navegador para rechazar cookies, pero esto puede afectar la funcionalidad del sitio."
+      },
+      {
+        "title": "8. Contacto",
+        "content": "Si tiene preguntas sobre esta Política de Privacidad o desea ejercer sus derechos ARCO, puede contactarnos a través de: Correo electrónico: clientesajin@gmail.com, Teléfono: +57 350 4338533, Dirección: Calle 12 # 13-26, Chía, Cundinamarca."
+      }
+    ]
+  },
+  "terms": {
+    "title": "Términos y Condiciones",
+    "subtitle": "Condiciones generales de uso del sitio web de AJIN",
+    "lastUpdated": "Última actualización: Junio de 2025",
+    "sections": [
+      {
+        "title": "1. Aceptación de los términos",
+        "content": "Al acceder y utilizar el sitio web de AJIN Asesoría Jurídica Inmobiliaria y Notarial, usted acepta los presentes Términos y Condiciones. Si no está de acuerdo con alguno de estos términos, le solicitamos que no utilice nuestro sitio web. AJIN se reserva el derecho de modificar estos términos en cualquier momento, siendo efectivas las modificaciones desde su publicación en el sitio."
+      },
+      {
+        "title": "2. Servicios",
+        "content": "AJIN ofrece servicios de asesoría jurídica en derecho inmobiliario, notarial, familia y sucesiones, comercial y corporativo. La información proporcionada en este sitio web tiene fines informativos y no constituye asesoría legal. Para recibir asesoría legal específica, debe contactarnos y formalizar una relación profesional."
+      },
+      {
+        "title": "3. Propiedad intelectual",
+        "content": "Todo el contenido del sitio web, incluyendo textos, imágenes, logotipos, gráficos y diseño, es propiedad de AJIN o de sus licenciantes y está protegido por las leyes de propiedad intelectual. Queda prohibida la reproducción, distribución, modificación o uso no autorizado del contenido sin el consentimiento previo y por escrito de AJIN."
+      },
+      {
+        "title": "4. Limitación de responsabilidad",
+        "content": "AJIN no será responsable por daños directos, indirectos, incidentales o consecuentes derivados del uso o la imposibilidad de uso de este sitio web. La información proporcionada en el sitio se ofrece 'tal cual', sin garantías de exactitud, integridad o actualización. El usuario asume la responsabilidad del uso que dé a la información proporcionada."
+      },
+      {
+        "title": "5. Enlaces a terceros",
+        "content": "Este sitio web puede contener enlaces a sitios web de terceros. AJIN no tiene control sobre el contenido o las prácticas de privacidad de dichos sitios y no asume ninguna responsabilidad por ellos. Le recomendamos leer las políticas de privacidad y términos de uso de cualquier sitio web de terceros que visite."
+      },
+      {
+        "title": "6. Legislación aplicable",
+        "content": "Estos Términos y Condiciones se rigen por las leyes de la República de Colombia. Cualquier controversia relacionada con estos términos será sometida a los tribunales competentes de la ciudad de Bogotá, D.C., Colombia."
+      },
+      {
+        "title": "7. Contacto",
+        "content": "Para cualquier consulta sobre estos Términos y Condiciones, puede contactarnos en: clientesajin@gmail.com o al teléfono +57 350 4338533."
+      }
+    ]
+  },
+  "dataProtection": {
+    "title": "Protección de Datos Personales",
+    "subtitle": "Política de tratamiento de datos personales y derechos ARCO",
+    "lastUpdated": "Última actualización: Junio de 2025",
+    "sections": [
+      {
+        "title": "¿Qué son los datos personales?",
+        "content": "Un dato personal es cualquier información vinculada o que pueda asociarse a una persona natural determinada o determinable. Esto incluye, entre otros, nombres, documentos de identidad, dirección, teléfono, correo electrónico, información financiera y datos relativos a su situación legal o judicial."
+      },
+      {
+        "title": "Responsable del tratamiento",
+        "content": "AJIN Asesoría Jurídica Inmobiliaria y Notarial, identificada con NIT, con domicilio en Calle 12 # 13-26, Chía, Cundinamarca, es la responsable del tratamiento de sus datos personales. Para cualquier inquietud, puede contactarnos a través de clientesajin@gmail.com."
+      },
+      {
+        "title": "Derechos que le asisten (ARCO)",
+        "content": "Como titular de datos personales, usted tiene los siguientes derechos: (i) Acceso: conocer qué datos personales tenemos y cómo los tratamos; (ii) Actualización: solicitar la corrección de datos inexactos o incompletos; (iii) Rectificación: modificar sus datos cuando sean incorrectos; (iv) Supresión: solicitar la eliminación de sus datos cuando no sean necesarios; (v) Revocación: revocar la autorización para el tratamiento de sus datos."
+      },
+      {
+        "title": "¿Cómo ejercer sus derechos?",
+        "content": "Para ejercer sus derechos ARCO, debe enviar una solicitud escrita al correo clientesajin@gmail.com indicando: (a) su nombre completo y documento de identidad; (b) el derecho que desea ejercer; (c) la descripción clara y precisa de la solicitud; (d) los datos de contacto para recibir la respuesta. AJIN responderá su solicitud en un plazo máximo de 15 días hábiles, prorrogables por 15 días adicionales cuando las circunstancias lo ameriten."
+      },
+      {
+        "title": "Procedimiento para consultas y reclamos",
+        "content": "El procedimiento es el siguiente: (1) El titular presenta su consulta o reclamo por el canal habilitado (correo electrónico). (2) AJIN acusa recibo dentro de los 5 días hábiles siguientes. (3) La respuesta se emitirá en un plazo máximo de 15 días hábiles contados desde la fecha de recibo. (4) Si no es posible responder en dicho término, se informará al titular los motivos de la demora y la fecha en que se dará respuesta."
+      },
+      {
+        "title": "Vigencia y modificaciones",
+        "content": "AJIN se reserva el derecho de modificar esta política en cualquier momento. Las modificaciones serán publicadas en este sitio web y entrarán en vigor desde su publicación. Le recomendamos revisar periódicamente esta página para estar informado sobre cómo protegemos sus datos personales."
+      }
+    ]
   }
 }

@@ -3,22 +3,22 @@
 import { useTranslations } from 'next-intl';
 import { Section, SectionHeader } from '@/components/ui/Section';
 import { Card } from '@/components/ui/Card';
-import { AlertTriangle, DollarSign, Heart, Users, FileSignature, HandCoins } from 'lucide-react';
+import { Heart, FileText, Home, Building2, FileSignature, Stamp } from 'lucide-react';
 
 const cases = [
-  { key: 'despido', icon: AlertTriangle },
-  { key: 'liquidacion', icon: DollarSign },
   { key: 'divorcio', icon: Heart },
-  { key: 'custodia', icon: Users },
+  { key: 'sucesion', icon: FileText },
+  { key: 'venta', icon: Home },
+  { key: 'arriendo', icon: Building2 },
   { key: 'contratos', icon: FileSignature },
-  { key: 'cobro', icon: HandCoins },
+  { key: 'poderes', icon: Stamp },
 ] as const;
 
 export default function CommonCases() {
   const t = useTranslations('home.cases');
 
   return (
-    <Section className="bg-ajin-gray-50">
+    <Section>
       <SectionHeader title={t('title')} />
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {cases.map((c) => {

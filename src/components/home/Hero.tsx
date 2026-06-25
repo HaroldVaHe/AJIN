@@ -17,7 +17,7 @@ export default function Hero() {
           <div className="max-w-3xl animate-fade-in-up">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-ajin-green/30 bg-ajin-green/10 px-4 py-1.5 text-sm text-ajin-green">
               <Scale size={14} />
-              <span>Asesoría Jurídica Integral</span>
+              <span>{t('badge')}</span>
             </div>
             <h1 className="text-4xl font-extrabold leading-tight text-white md:text-5xl lg:text-6xl lg:leading-tight">
               {t('title')}
@@ -43,7 +43,7 @@ export default function Hero() {
             <div className="relative w-full max-w-[400px] aspect-square">
               <Image
                 src="/images/Balanza.png"
-                alt="Balanza de la justicia - AJIN Asesoría Jurídica Integral"
+                alt={t('imageAlt')}
                 fill
                 className="object-contain drop-shadow-2xl"
                 priority

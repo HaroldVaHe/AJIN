@@ -1,13 +1,12 @@
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
-import { Section, SectionHeader } from '@/components/ui/Section';
+import { Section } from '@/components/ui/Section';
 import { Card } from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
-import { services } from '@/data/services';
-import { Briefcase, Heart, FileText, Building2, Shield, ArrowRight } from 'lucide-react';
+import { serviceGroups } from '@/data/services';
+import { Heart, Home, Briefcase, FileText, ArrowRight } from 'lucide-react';
 
 const icons: Record<string, React.ElementType> = {
-  Briefcase, Heart, FileText, Building2, Shield,
+  Heart, Home, Briefcase, FileText,
 };
 
 export async function generateMetadata({
@@ -40,20 +39,21 @@ export default async function ServicesPage({
 
       <Section>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((service) => {
-            const Icon = icons[service.icon] || FileText;
+          {serviceGroups.map((group) => {
+            const Icon = icons[group.icon] || FileText;
             return (
-              <Link key={service.id} href={service.href}>
+              <Link key={group.id} href={`/servicios/${group.slug}`}>
                 <Card className="h-full group">
                   <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-ajin-green/10 text-ajin-green group-hover:bg-ajin-green group-hover:text-white transition-colors">
                     <Icon size={24} />
                   </div>
-                  <h3 className="text-xl font-bold">{t(service.titleKey)}</h3>
+                  <h3 className="text-xl font-bold">{t(group.titleKey)}</h3>
+                  <p className="mt-2 text-sm text-ajin-gray-400">{s(`${group.id}.description`)}</p>
                   <ul className="mt-4 space-y-2">
-                    {service.items.map((item, i) => (
+                    {group.items.map((_, i) => (
                       <li key={i} className="flex items-center gap-2 text-sm text-ajin-gray-500">
                         <span className="h-1 w-1 rounded-full bg-ajin-green shrink-0" />
-                        {item}
+                        {s(`${group.id}.items.${i}`)}
                       </li>
                     ))}
                   </ul>
@@ -66,6 +66,7 @@ export default async function ServicesPage({
             );
           })}
         </div>
+        <p className="mt-12 text-center text-lg text-ajin-gray-500">{s('moreServices')}</p>
       </Section>
     </>
   );

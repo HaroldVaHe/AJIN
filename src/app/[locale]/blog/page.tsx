@@ -1,9 +1,9 @@
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
-import { Section, SectionHeader } from '@/components/ui/Section';
+import { Section } from '@/components/ui/Section';
 import { Card } from '@/components/ui/Card';
 import { getAllPosts } from '@/lib/blog';
-import { Calendar, Clock, User, ArrowRight } from 'lucide-react';
+import { Calendar, Clock, ArrowRight } from 'lucide-react';
 
 export async function generateMetadata({
   params,
@@ -22,23 +22,21 @@ export default async function BlogPage({
 }) {
   const { locale } = await params;
   const posts = getAllPosts(locale);
-  const t = await getTranslations({ locale, namespace: 'seo.blog' });
+  const t = await getTranslations({ locale, namespace: 'blog' });
 
   return (
     <>
       <section className="bg-ajin-black py-20 md:py-32">
         <div className="container-ajin px-4 text-center">
-          <h1 className="text-4xl font-bold text-white md:text-5xl lg:text-6xl">Blog Jurídico</h1>
-          <p className="mt-4 text-lg text-ajin-gray-300 max-w-2xl mx-auto">
-            Artículos y noticias sobre derecho laboral, familiar, civil, comercial y administrativo en Colombia.
-          </p>
+          <h1 className="text-4xl font-bold text-white md:text-5xl lg:text-6xl">{t('title')}</h1>
+          <p className="mt-4 text-lg text-ajin-gray-300 max-w-2xl mx-auto">{t('description')}</p>
         </div>
       </section>
 
       <Section>
         {posts.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-ajin-gray-400 text-lg">Próximamente nuevos artículos.</p>
+            <p className="text-ajin-gray-400 text-lg">{t('comingSoon')}</p>
           </div>
         ) : (
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
