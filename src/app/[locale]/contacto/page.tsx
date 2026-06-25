@@ -41,7 +41,7 @@ export default async function ContactPage({
                 <ContactItem icon={MapPin} label="Dirección" value={c('address')} />
                 <ContactItem icon={Phone} label="Teléfono" value={c('phone')} />
                 <ContactItem icon={Mail} label="Email" value={c('email')} />
-                <ContactItem icon={Clock} label="Horario" value={<>Lun - Vie: 8:00 AM - 5:00 PM<br />Sáb: 8:00 AM - 12:00 PM</>}/>
+                <ContactItem icon={Clock} label="Horario" value={<>Lun - Vie: 8:30 AM - 5:00 PM<br />Sáb: 9:00 AM - 12:00 PM</>}/>
               </div>
             </div>
             <div className="relative rounded-2xl overflow-hidden h-[350px] bg-ajin-gray-100 shadow-sm border border-ajin-gray-200">
