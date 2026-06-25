@@ -91,8 +91,8 @@ export default function Header() {
       </div>
 
       {mobileOpen && (
-        <div className="fixed inset-0 top-16 z-40 bg-white md:hidden">
-          <nav className="flex flex-col gap-2 p-6">
+        <div className="fixed inset-0 top-16 z-40 bg-white/95 backdrop-blur-sm md:hidden">
+          <nav className="flex flex-col p-4">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -101,10 +101,10 @@ export default function Header() {
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
                   className={cn(
-                    'rounded-xl px-4 py-3 text-lg font-medium transition-colors',
+                    'px-4 py-4 text-lg font-medium transition-colors border-b border-ajin-gray-100 last:border-b-0',
                     isActive
-                      ? 'bg-ajin-green/10 text-ajin-green'
-                      : 'text-ajin-gray-600 hover:bg-ajin-gray-50'
+                      ? 'text-ajin-green'
+                      : 'text-ajin-gray-600'
                   )}
                 >
                   {t(item.key)}
