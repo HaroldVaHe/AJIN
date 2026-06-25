@@ -157,7 +157,10 @@
       "requiredField": "Este campo es requerido",
       "invalidEmail": "Correo electrónico inválido",
       "invalidPhone": "Teléfono inválido",
-      "sending": "Enviando..."
+      "sending": "Enviando...",
+      "successTitle": "Mensaje enviado",
+      "successMessage": "Nos pondremos en contacto pronto.",
+      "errorMessage": "Error al enviar. Intente de nuevo."
     }
   },
   "powers": {
@@ -176,7 +179,10 @@
       "requiredField": "Este campo es requerido",
       "invalidEmail": "Correo electrónico inválido",
       "invalidPhone": "Teléfono inválido",
-      "sending": "Enviando..."
+      "sending": "Enviando...",
+      "successTitle": "Solicitud enviada",
+      "successMessage": "Revisaremos su solicitud y le contactaremos pronto.",
+      "errorMessage": "Error al enviar. Intente de nuevo."
     },
     "info": {
       "title": "Tipos de Poderes",

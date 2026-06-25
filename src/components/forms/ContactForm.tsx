@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { Input, Textarea, Select } from '@/components/ui/FormFields';
 import Button from '@/components/ui/Button';
-import { sendContact } from '@/lib/n8n';
 import { CheckCircle, Loader2 } from 'lucide-react';
 
 interface ContactFormData {
@@ -28,10 +27,15 @@ export default function ContactForm() {
 
   const onSubmit = async (data: ContactFormData) => {
     try {
-      await sendContact(data);
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error('Failed');
       setSubmitted(true);
     } catch {
-      alert('Error al enviar. Intente de nuevo.');
+      alert(t('errorMessage'));
     }
   };
 
@@ -41,8 +45,8 @@ export default function ContactForm() {
         <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-ajin-green/10">
           <CheckCircle size={32} className="text-ajin-green" />
         </div>
-        <h3 className="text-xl font-bold mb-2">Mensaje enviado</h3>
-        <p className="text-ajin-gray-400">Nos pondremos en contacto pronto.</p>
+        <h3 className="text-xl font-bold mb-2">{t('successTitle')}</h3>
+        <p className="text-ajin-gray-400">{t('successMessage')}</p>
       </div>
     );
   }

@@ -1,21 +1,30 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import {
+  sendToTelegram,
+  sendToN8n,
+  formatContactMessage,
+} from '@/lib/n8n';
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    const data = await request.json();
 
-    // Forward to n8n webhook
-    const n8nUrl = process.env.N8N_CONTACT_WEBHOOK;
-    if (n8nUrl) {
-      await fetch(n8nUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      }).catch(() => {});
+    const results = await Promise.allSettled([
+      sendToTelegram(formatContactMessage(data)),
+      sendToN8n('contact', data),
+    ]);
+
+    const errors = results
+      .filter((r) => r.status === 'rejected')
+      .map((r) => (r as PromiseRejectedResult).reason);
+
+    if (errors.length > 0) {
+      console.error('Contact API errors:', errors);
     }
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (error) {
+    console.error('Contact API error:', error);
     return NextResponse.json(
       { success: false, error: 'Invalid request' },
       { status: 400 }

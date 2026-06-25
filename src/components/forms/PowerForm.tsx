@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { Input, Textarea } from '@/components/ui/FormFields';
 import Button from '@/components/ui/Button';
-import { sendPower } from '@/lib/n8n';
 import { CheckCircle, Loader2 } from 'lucide-react';
 
 interface PowerFormData {
@@ -27,10 +26,15 @@ export default function PowerForm() {
 
   const onSubmit = async (data: PowerFormData) => {
     try {
-      await sendPower(data);
+      const res = await fetch('/api/poderes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error('Failed');
       setSubmitted(true);
     } catch {
-      alert('Error al enviar. Intente de nuevo.');
+      alert(t('errorMessage'));
     }
   };
 
@@ -40,8 +44,8 @@ export default function PowerForm() {
         <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-ajin-green/10">
           <CheckCircle size={32} className="text-ajin-green" />
         </div>
-        <h3 className="text-xl font-bold mb-2">Solicitud enviada</h3>
-        <p className="text-ajin-gray-400">Revisaremos su solicitud y le contactaremos pronto.</p>
+        <h3 className="text-xl font-bold mb-2">{t('successTitle')}</h3>
+        <p className="text-ajin-gray-400">{t('successMessage')}</p>
       </div>
     );
   }

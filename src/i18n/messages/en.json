@@ -157,7 +157,10 @@
       "requiredField": "This field is required",
       "invalidEmail": "Invalid email",
       "invalidPhone": "Invalid phone number",
-      "sending": "Sending..."
+      "sending": "Sending...",
+      "successTitle": "Message sent",
+      "successMessage": "We will contact you soon.",
+      "errorMessage": "Error sending. Please try again."
     }
   },
   "powers": {
@@ -176,7 +179,10 @@
       "requiredField": "This field is required",
       "invalidEmail": "Invalid email",
       "invalidPhone": "Invalid phone number",
-      "sending": "Sending..."
+      "sending": "Sending...",
+      "successTitle": "Request sent",
+      "successMessage": "We will review your request and contact you soon.",
+      "errorMessage": "Error sending. Please try again."
     },
     "info": {
       "title": "Types of Powers of Attorney",
