@@ -7,6 +7,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import WhatsAppButton from '@/components/layout/WhatsAppButton';
 import ThemeProvider from '@/components/ThemeProvider';
+import { Analytics } from '@vercel/analytics/next';
 import '../globals.css';
 
 export function generateStaticParams() {
@@ -85,6 +86,7 @@ export default async function LocaleLayout({
             <WhatsAppButton />
           </ThemeProvider>
         </NextIntlClientProvider>
+        <Analytics />
       </body>
     </html>
   );
