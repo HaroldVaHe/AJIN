@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link, usePathname } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
@@ -26,6 +26,17 @@ export default function Header() {
   const t = useTranslations();
   const pathname = usePathname();
   const locale = useLocale();
+
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileOpen]);
 
   return (
     <header className="sticky top-0 z-50 border-b border-ajin-gray-100 bg-white/95 backdrop-blur-sm">
@@ -91,27 +102,29 @@ export default function Header() {
       </div>
 
       {mobileOpen && (
-        <div className="fixed inset-0 top-16 z-40 bg-white/95 backdrop-blur-sm md:hidden">
-          <nav className="flex flex-col p-4">
-            {navItems.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className={cn(
-                    'px-4 py-4 text-lg font-medium transition-colors border-b border-ajin-gray-100 last:border-b-0',
-                    isActive
-                      ? 'bg-ajin-green/10 text-ajin-green'
-                      : 'bg-ajin-gray-50 text-ajin-gray-600'
-                  )}
-                >
-                  {t(item.key)}
-                </Link>
-              );
-            })}
-            <div className="flex gap-2 mt-4 pt-4 border-t border-ajin-gray-100">
+        <div className="fixed inset-0 z-40 flex flex-col bg-white md:hidden">
+          <div className="flex flex-col h-full pt-16 px-4 pb-6 overflow-y-auto">
+            <nav className="flex flex-col gap-2">
+              {navItems.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={cn(
+                      'rounded-xl px-4 py-4 text-lg font-medium transition-colors',
+                      isActive
+                        ? 'bg-ajin-green text-white'
+                        : 'bg-ajin-gray-50 text-ajin-gray-700'
+                    )}
+                  >
+                    {t(item.key)}
+                  </Link>
+                );
+              })}
+            </nav>
+            <div className="flex gap-2 mt-4">
               {languages.map((lang) => (
                 <Link
                   key={lang.code}
@@ -121,20 +134,20 @@ export default function Header() {
                   className={cn(
                     'flex-1 rounded-xl px-4 py-3 text-center text-sm font-semibold transition-colors',
                     locale === lang.code
-                      ? 'bg-ajin-green text-black'
-                      : 'bg-ajin-gray-50 text-ajin-gray-600'
+                      ? 'bg-ajin-green text-white'
+                      : 'bg-ajin-gray-50 text-ajin-gray-700'
                   )}
                 >
                   {lang.label}
                 </Link>
               ))}
             </div>
-            <Link href="/contacto" onClick={() => setMobileOpen(false)}>
-              <Button variant="primary" className="w-full mt-4">
+            <Link href="/contacto" onClick={() => setMobileOpen(false)} className="mt-auto pt-4">
+              <Button variant="primary" className="w-full">
                 {t('common.schedule')}
               </Button>
             </Link>
-          </nav>
+          </div>
         </div>
       )}
     </header>
