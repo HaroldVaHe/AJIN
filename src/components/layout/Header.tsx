@@ -103,8 +103,8 @@ export default function Header() {
                   className={cn(
                     'px-4 py-4 text-lg font-medium transition-colors border-b border-ajin-gray-100 last:border-b-0',
                     isActive
-                      ? 'text-ajin-green'
-                      : 'text-ajin-gray-600'
+                      ? 'bg-ajin-green/10 text-ajin-green'
+                      : 'bg-ajin-gray-50 text-ajin-gray-600'
                   )}
                 >
                   {t(item.key)}
