@@ -39,72 +39,74 @@ export default function Header() {
   }, [mobileOpen]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-ajin-gray-100 bg-white/95 backdrop-blur-sm">
-      <div className="container-ajin flex h-16 items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl font-bold tracking-tight">
-            <span className="text-ajin-black">AJ</span>
-            <span className="text-ajin-green">IN</span>
-          </span>
-        </Link>
-
-        <nav className="hidden items-center gap-8 md:flex">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  'text-sm font-medium transition-colors',
-                  isActive
-                    ? 'text-ajin-green'
-                    : 'text-ajin-gray-600 hover:text-ajin-black'
-                )}
-              >
-                {t(item.key)}
-              </Link>
-            );
-          })}
-          <div className="flex items-center gap-1 ml-4 border-l border-ajin-gray-200 pl-4">
-            {languages.map((lang) => (
-              <Link
-                key={lang.code}
-                href={pathname}
-                locale={lang.code}
-                className={cn(
-                  'px-2 py-1 text-xs font-semibold rounded-md transition-colors',
-                  locale === lang.code
-                    ? 'bg-ajin-green text-black'
-                    : 'text-ajin-gray-400 hover:text-ajin-black'
-                )}
-              >
-                {lang.label}
-              </Link>
-            ))}
-          </div>
-        </nav>
-
-        <div className="flex items-center gap-3">
-          <Link href="/contacto">
-            <Button variant="primary" size="sm" className="hidden md:inline-flex">
-              {t('common.schedule')}
-            </Button>
+    <>
+      <header className="sticky top-0 z-50 border-b border-ajin-gray-100 bg-white/95 backdrop-blur-sm">
+        <div className="container-ajin flex h-16 items-center justify-between px-4">
+          <Link href="/" className="flex items-center gap-2">
+            <span className="text-xl font-bold tracking-tight">
+              <span className="text-ajin-black">AJ</span>
+              <span className="text-ajin-green">IN</span>
+            </span>
           </Link>
-          <button
-            className="md:hidden p-2"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle menu"
-          >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+
+          <nav className="hidden items-center gap-8 md:flex">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    'text-sm font-medium transition-colors',
+                    isActive
+                      ? 'text-ajin-green'
+                      : 'text-ajin-gray-600 hover:text-ajin-black'
+                  )}
+                >
+                  {t(item.key)}
+                </Link>
+              );
+            })}
+            <div className="flex items-center gap-1 ml-4 border-l border-ajin-gray-200 pl-4">
+              {languages.map((lang) => (
+                <Link
+                  key={lang.code}
+                  href={pathname}
+                  locale={lang.code}
+                  className={cn(
+                    'px-2 py-1 text-xs font-semibold rounded-md transition-colors',
+                    locale === lang.code
+                      ? 'bg-ajin-green text-black'
+                      : 'text-ajin-gray-400 hover:text-ajin-black'
+                  )}
+                >
+                  {lang.label}
+                </Link>
+              ))}
+            </div>
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <Link href="/contacto">
+              <Button variant="primary" size="sm" className="hidden md:inline-flex">
+                {t('common.schedule')}
+              </Button>
+            </Link>
+            <button
+              className="md:hidden p-2"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
-      </div>
+      </header>
 
       {mobileOpen && (
-        <div className="fixed inset-0 z-40 flex flex-col bg-white md:hidden">
-          <div className="flex flex-col h-full pt-16 px-4 pb-6 overflow-y-auto">
-            <nav className="flex flex-col gap-2">
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100dvh', backgroundColor: '#ffffff', zIndex: 40, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingTop: '64px', paddingLeft: '16px', paddingRight: '16px', paddingBottom: '24px', overflowY: 'auto' }}>
+            <nav style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {navItems.map((item) => {
                 const isActive = pathname === item.href;
                 return (
@@ -124,7 +126,7 @@ export default function Header() {
                 );
               })}
             </nav>
-            <div className="flex gap-2 mt-4">
+            <div style={{ display: 'flex', gap: '8px', marginTop: '16px' }}>
               {languages.map((lang) => (
                 <Link
                   key={lang.code}
@@ -142,14 +144,16 @@ export default function Header() {
                 </Link>
               ))}
             </div>
-            <Link href="/contacto" onClick={() => setMobileOpen(false)} className="mt-auto pt-4">
-              <Button variant="primary" className="w-full">
-                {t('common.schedule')}
-              </Button>
-            </Link>
+            <div style={{ marginTop: 'auto', paddingTop: '16px' }}>
+              <Link href="/contacto" onClick={() => setMobileOpen(false)}>
+                <Button variant="primary" className="w-full">
+                  {t('common.schedule')}
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }
