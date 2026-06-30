@@ -25,9 +25,9 @@ export default function Footer() {
     <footer className="bg-ajin-primary text-white">
       <div className="container-ajin px-4 py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-          <div>
-            <Logo dark />
-            <p className="mt-4 text-sm text-ajin-gray-400 leading-relaxed">
+          <div className="flex flex-col items-center md:items-center">
+            <Logo dark className="w-48 h-48" />
+            <p className="mt-4 text-sm text-ajin-gray-400 leading-relaxed text-center md:text-center">
               {t('common.footer.description')}
             </p>
           </div>
