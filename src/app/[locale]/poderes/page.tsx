@@ -31,31 +31,31 @@ export default async function PowersPage({
 
   return (
     <>
-      <section className="bg-ajin-black py-20 md:py-32">
+      <section className="bg-ajin-primary py-20 md:py-32">
         <div className="container-ajin px-4 text-center">
           <PowersTitle />
-          <p className="mt-4 text-lg text-ajin-gray-300 max-w-2xl mx-auto"><PowersSubtitle /></p>
+          <p className="mt-4 text-lg text-ajin-gray-400 max-w-2xl mx-auto"><PowersSubtitle /></p>
         </div>
       </section>
 
       <Section>
         <div className="grid gap-12 lg:grid-cols-2">
           <div>
-            <h2 className="text-2xl font-bold mb-6"><PowersFormTitle /></h2>
+            <h2 className="text-2xl font-bold text-ajin-primary mb-6"><PowersFormTitle /></h2>
             <PowerForm />
           </div>
           <div>
-            <h2 className="text-2xl font-bold mb-6">{i('title')}</h2>
+            <h2 className="text-2xl font-bold text-ajin-primary mb-6">{i('title')}</h2>
             <div className="grid gap-4">
               {powerTypes.map((pt) => {
                 const Icon = pt.icon;
                 return (
                   <Card key={pt.key} className="flex items-start gap-4">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-ajin-green/10 text-ajin-green">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-ajin-accent/10 text-ajin-accent">
                       <Icon size={24} />
                     </div>
                     <div>
-                      <h3 className="font-bold">{i(pt.key)}</h3>
+                      <h3 className="font-bold text-ajin-primary">{i(pt.key)}</h3>
                       <p className="text-sm text-ajin-gray-400">{i(`${pt.key}Desc`)}</p>
                     </div>
                   </Card>

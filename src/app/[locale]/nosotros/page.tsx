@@ -30,12 +30,12 @@ export default async function AboutPage({
 
   return (
     <>
-      <section className="bg-ajin-black py-20 md:py-32">
+      <section className="bg-ajin-primary py-20 md:py-32">
         <div className="container-ajin px-4 text-center">
           <h1 className="text-4xl font-bold text-white md:text-5xl lg:text-6xl">
             {t('title')}
           </h1>
-          <p className="mt-4 text-lg text-ajin-gray-300 max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-ajin-gray-400 max-w-2xl mx-auto">
             {t('subtitle')}
           </p>
         </div>
@@ -44,21 +44,21 @@ export default async function AboutPage({
       <Section>
         <div className="grid gap-12 lg:grid-cols-2">
           <div>
-            <h2 className="text-2xl font-bold mb-4">{t('history.title')}</h2>
+            <h2 className="text-2xl font-bold text-ajin-primary mb-4">{t('history.title')}</h2>
             <p className="text-ajin-gray-300 leading-relaxed">{t('history.content')}</p>
           </div>
           <div className="grid gap-6">
-            <Card hover={false} className="border-l-4 border-l-ajin-green">
+            <Card hover={false} className="border-l-4 border-l-ajin-accent">
               <div className="flex items-center gap-3 mb-2">
-                <Target className="text-ajin-green" size={24} />
-                <h3 className="text-xl font-bold">{t('mission.title')}</h3>
+                <Target className="text-ajin-accent" size={24} />
+                <h3 className="text-xl font-bold text-ajin-primary">{t('mission.title')}</h3>
               </div>
               <p className="text-ajin-gray-300">{t('mission.content')}</p>
             </Card>
-            <Card hover={false} className="border-l-4 border-l-ajin-green">
+            <Card hover={false} className="border-l-4 border-l-ajin-accent">
               <div className="flex items-center gap-3 mb-2">
-                <Eye className="text-ajin-green" size={24} />
-                <h3 className="text-xl font-bold">{t('vision.title')}</h3>
+                <Eye className="text-ajin-accent" size={24} />
+                <h3 className="text-xl font-bold text-ajin-primary">{t('vision.title')}</h3>
               </div>
               <p className="text-ajin-gray-300">{t('vision.content')}</p>
             </Card>
@@ -73,10 +73,10 @@ export default async function AboutPage({
             const Icon = v.icon;
             return (
               <Card key={v.key} className="text-center">
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-ajin-green/10 text-ajin-green">
+                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-ajin-accent/10 text-ajin-accent">
                   <Icon size={28} />
                 </div>
-                <h3 className="text-lg font-bold">{t(`values.${v.key}`)}</h3>
+                <h3 className="text-lg font-bold text-ajin-primary">{t(`values.${v.key}`)}</h3>
                 <p className="mt-2 text-sm text-ajin-gray-300">{t(`values.${v.key}Desc`)}</p>
               </Card>
             );

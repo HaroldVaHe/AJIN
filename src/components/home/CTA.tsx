@@ -10,15 +10,15 @@ export default function CTA() {
   const t = useTranslations('home.cta');
 
   return (
-    <Section className="bg-ajin-green text-center">
+    <Section className="bg-ajin-accent text-center">
       <div className="flex flex-col items-center animate-fade-in">
-        <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-black/10">
-          <Scale size={32} className="text-black" />
+        <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-ajin-primary/10">
+          <Scale size={32} className="text-ajin-primary" />
         </div>
-        <h2 className="text-3xl font-bold text-black md:text-4xl lg:text-5xl">
+        <h2 className="text-3xl font-bold text-ajin-primary md:text-4xl lg:text-5xl">
           {t('title')}
         </h2>
-        <p className="mt-4 text-lg text-black/70 max-w-xl">
+        <p className="mt-4 text-lg text-ajin-primary/70 max-w-xl">
           {t('subtitle')}
         </p>
         <Link href="/contacto" className="mt-8">

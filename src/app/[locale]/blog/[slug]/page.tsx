@@ -54,17 +54,17 @@ export default async function BlogPostPage({
 
   return (
     <>
-      <section className="bg-ajin-black py-20 md:py-32">
+      <section className="bg-ajin-primary py-20 md:py-32">
         <div className="container-ajin px-4">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-sm text-ajin-green hover:text-ajin-green-dark mb-6 transition-colors"
+            className="inline-flex items-center gap-2 text-sm text-ajin-accent hover:text-ajin-accent-dark mb-6 transition-colors"
           >
             <ArrowLeft size={16} />
             {t('backToBlog')}
           </Link>
           <div className="flex items-center gap-3 text-sm text-ajin-gray-400 mb-4">
-            <span className="rounded-full bg-ajin-green/10 text-ajin-green px-3 py-1 font-medium">
+            <span className="rounded-full bg-ajin-accent/10 text-ajin-accent px-3 py-1 font-medium">
               {post.category}
             </span>
             <span className="flex items-center gap-1">
@@ -79,7 +79,7 @@ export default async function BlogPostPage({
           <h1 className="text-3xl font-bold text-white md:text-4xl lg:text-5xl max-w-3xl">
             {post.title}
           </h1>
-          <p className="mt-4 text-lg text-ajin-gray-300 max-w-2xl">
+          <p className="mt-4 text-lg text-ajin-gray-400 max-w-2xl">
             {post.description}
           </p>
         </div>

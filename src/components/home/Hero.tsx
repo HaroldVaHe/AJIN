@@ -10,19 +10,19 @@ export default function Hero() {
   const t = useTranslations('home.hero');
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-ajin-black via-ajin-black to-ajin-gray-900">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(142,200,63,0.08),_transparent_50%)]" />
+    <section className="relative overflow-hidden bg-ajin-primary">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(201,168,76,0.08),_transparent_50%)]" />
       <div className="container-ajin relative px-4 py-20 md:py-32 lg:py-40">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div className="max-w-3xl animate-fade-in-up">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-ajin-green/30 bg-ajin-green/10 px-4 py-1.5 text-sm text-ajin-green">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-ajin-accent/30 bg-ajin-accent/10 px-4 py-1.5 text-sm text-ajin-accent">
               <Scale size={14} />
               <span>{t('badge')}</span>
             </div>
             <h1 className="text-4xl font-extrabold leading-tight text-white md:text-5xl lg:text-6xl lg:leading-tight">
               {t('title')}
             </h1>
-            <p className="mt-6 text-lg leading-relaxed text-ajin-gray-300 md:text-xl max-w-2xl">
+            <p className="mt-6 text-lg leading-relaxed text-ajin-gray-400 md:text-xl max-w-2xl">
               {t('subtitle')}
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
@@ -33,7 +33,7 @@ export default function Hero() {
                 </Button>
               </Link>
               <Link href="/contacto">
-                <Button variant="outline" size="lg">
+                <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-ajin-primary">
                   {t('schedule')}
                 </Button>
               </Link>
@@ -45,7 +45,7 @@ export default function Hero() {
                 src="/images/Balanza.png"
                 alt={t('imageAlt')}
                 fill
-                className="object-contain drop-shadow-2xl"
+                className="object-contain drop-shadow-2xl opacity-90"
                 priority
               />
             </div>

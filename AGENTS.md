@@ -12,7 +12,6 @@ Next.js 15.5.18 + Tailwind CSS 4 + next-intl bilingual (ES/EN) site for AJIN Ase
 
 - All routes under `/[locale]` with `localePrefix: 'always'` (next-intl). Default: `es`. Languages: `es`, `en`.
 - Tailwind v4 — no `tailwind.config.*`. Theme in `src/app/globals.css` via `@import "tailwindcss"` + `@theme` block.
-- Custom CSS variables for dark/light theming. `[data-theme="light"]` toggles via `ThemeProvider.tsx` (persisted in `localStorage@ajin-theme`). Default: dark.
 - Blog: markdown files in `src/content/{es,en}/` with gray-matter frontmatter (title, description, date, category, author). Read at build time via `src/lib/blog.ts`.
 - Forms POST to `/api/{contact,poderes,asesoria}` → Telegram (primary) + n8n (future, silently skipped if `NEXT_PUBLIC_N8N_WEBHOOK_BASE` unset).
 - Sitemap: manually maintained in `src/app/sitemap.ts`.
@@ -34,6 +33,8 @@ Set in Vercel dashboard for production.
 - All user-facing text in `src/i18n/messages/{es,en}.json`. Service items via `services.{id}.items.{i}`, landing pages via `landing.{key}.*`.
 - Components use `cn()` from `@/lib/utils` (simple filter+join, not clsx).
 - Layout helpers: `container-ajin` (max-w-7xl centered), `section-padding` (responsive padding).
-- `bg-ajin-black` / `text-white` are static (remain dark in light theme). `bg-ajin-bg`, `bg-ajin-surface`, `text-ajin-gray-{100,200,300,700}`, `text-ajin-text`, `border-ajin-border` use CSS variables and adapt to theme.
+- **Brand (Classic Premium 60-30-10):** `bg-ajin-primary` (#1B2A4A navy) = 30% structure; `bg-ajin-accent` (#C9A84C gold) = 10% CTAs/accents; `bg-ajin-bg` (#FAF7F2 marfil) = 60% backgrounds. Static colors, no dark/light toggle.
+- Typography: headings = `Playfair Display` (serif, 600+), body = `Inter` (sans-serif, 400+).
+- `Logo` component in `@/components/ui/Logo` — use `<Logo />` for light bg, `<Logo dark />` for navy/primary backgrounds.
 - No test framework. No CI configured.
 - Use `Link` from `@/i18n/navigation` (wraps next-intl) — not `next/link`. Use `usePathname` from same module.

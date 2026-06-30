@@ -24,10 +24,10 @@ export default async function ContactPage({
 
   return (
     <>
-      <section className="bg-ajin-black py-20 md:py-32">
+      <section className="bg-ajin-primary py-20 md:py-32">
         <div className="container-ajin px-4 text-center">
           <h1 className="text-4xl font-bold text-white md:text-5xl lg:text-6xl">{t('title')}</h1>
-          <p className="mt-4 text-lg text-ajin-gray-300 max-w-2xl mx-auto">{t('subtitle')}</p>
+          <p className="mt-4 text-lg text-ajin-gray-400 max-w-2xl mx-auto">{t('subtitle')}</p>
         </div>
       </section>
 
@@ -36,7 +36,7 @@ export default async function ContactPage({
           <ContactForm />
           <div className="space-y-8">
             <div>
-              <h3 className="text-lg font-bold mb-4">{t('form.infoTitle')}</h3>
+              <h3 className="text-lg font-bold text-ajin-primary mb-4">{t('form.infoTitle')}</h3>
               <div className="space-y-4">
                 <ContactItem icon={MapPin} label={t('form.addressLabel')} value={c('address')} />
                 <ContactItem icon={Phone} label={t('form.phoneLabel')} value={c('phone')} />
@@ -49,7 +49,7 @@ export default async function ContactPage({
                 href="https://maps.app.goo.gl/jWZxs9ED1DQqqXwL7"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute top-4 right-4 z-20 bg-ajin-bg/95 backdrop-blur-sm rounded-lg px-3 py-2 shadow-md hover:shadow-lg transition-all flex items-center gap-2 text-sm font-medium hover:bg-ajin-surface"
+                className="absolute top-4 right-4 z-20 bg-white/95 backdrop-blur-sm rounded-lg px-3 py-2 shadow-md hover:shadow-lg transition-all flex items-center gap-2 text-sm font-medium hover:bg-ajin-surface"
               >
                 <ExternalLink size={16} />
                 {t('form.openInMaps')}
@@ -79,7 +79,7 @@ export default async function ContactPage({
 function ContactItem({ icon: Icon, label, value }: { icon: React.ElementType; label: string; value: string | React.ReactNode }) {
   return (
     <div className="flex items-start gap-3">
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-ajin-green/10 text-ajin-green">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-ajin-accent/10 text-ajin-accent">
         <Icon size={20} />
       </div>
       <div>

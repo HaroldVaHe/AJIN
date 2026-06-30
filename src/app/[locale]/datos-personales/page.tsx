@@ -22,10 +22,10 @@ export default async function DataProtectionPage({
 
   return (
     <>
-      <section className="bg-ajin-black py-20 md:py-32">
+      <section className="bg-ajin-primary py-20 md:py-32">
         <div className="container-ajin px-4 text-center">
           <h1 className="text-4xl font-bold text-white md:text-5xl lg:text-6xl">{t('title')}</h1>
-          <p className="mt-4 text-lg text-ajin-gray-300 max-w-2xl mx-auto">{t('subtitle')}</p>
+          <p className="mt-4 text-lg text-ajin-gray-400 max-w-2xl mx-auto">{t('subtitle')}</p>
           <p className="mt-2 text-sm text-ajin-gray-400">{t('lastUpdated')}</p>
         </div>
       </section>

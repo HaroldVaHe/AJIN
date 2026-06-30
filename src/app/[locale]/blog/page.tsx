@@ -26,10 +26,10 @@ export default async function BlogPage({
 
   return (
     <>
-      <section className="bg-ajin-black py-20 md:py-32">
+      <section className="bg-ajin-primary py-20 md:py-32">
         <div className="container-ajin px-4 text-center">
           <h1 className="text-4xl font-bold text-white md:text-5xl lg:text-6xl">{t('title')}</h1>
-          <p className="mt-4 text-lg text-ajin-gray-300 max-w-2xl mx-auto">{t('description')}</p>
+          <p className="mt-4 text-lg text-ajin-gray-400 max-w-2xl mx-auto">{t('description')}</p>
         </div>
       </section>
 
@@ -44,11 +44,11 @@ export default async function BlogPage({
               <Link key={post.slug} href={`/blog/${post.slug}`}>
                 <Card className="h-full flex flex-col">
                   <div className="flex items-center gap-2 text-xs text-ajin-gray-400 mb-3">
-                    <span className="rounded-full bg-ajin-green/10 text-ajin-green px-3 py-1 font-medium">
+                    <span className="rounded-full bg-ajin-accent/10 text-ajin-accent px-3 py-1 font-medium">
                       {post.category}
                     </span>
                   </div>
-                  <h2 className="text-lg font-bold mb-2 line-clamp-2">{post.title}</h2>
+                  <h2 className="text-lg font-bold text-ajin-primary mb-2 line-clamp-2">{post.title}</h2>
                   <p className="text-sm text-ajin-gray-400 line-clamp-3 mb-4 flex-1">
                     {post.description}
                   </p>
@@ -63,7 +63,7 @@ export default async function BlogPage({
                         {post.readingTime}
                       </span>
                     </div>
-                    <ArrowRight size={14} className="text-ajin-green" />
+                    <ArrowRight size={14} className="text-ajin-accent" />
                   </div>
                 </Card>
               </Link>

@@ -37,28 +37,28 @@ export default async function ServiceDetailPage({
 
   return (
     <>
-      <section className="bg-ajin-black py-20 md:py-32">
+      <section className="bg-ajin-primary py-20 md:py-32">
         <div className="container-ajin px-4">
           <h1 className="text-4xl font-bold text-white md:text-5xl">{t('title')}</h1>
-          <p className="mt-4 text-lg text-ajin-gray-300 max-w-2xl">{t('description')}</p>
+          <p className="mt-4 text-lg text-ajin-gray-400 max-w-2xl">{t('description')}</p>
         </div>
       </section>
 
       <Section>
         <div className="grid gap-12 lg:grid-cols-2">
           <div>
-            <h2 className="text-2xl font-bold mb-6">{d('includes')}</h2>
+            <h2 className="text-2xl font-bold text-ajin-primary mb-6">{d('includes')}</h2>
             <div className="space-y-4">
               {group.items.map((_, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <CheckCircle className="text-ajin-green shrink-0 mt-0.5" size={20} />
-                  <span className="text-ajin-gray-200">{t(`items.${i}`)}</span>
+                  <CheckCircle className="text-ajin-accent shrink-0 mt-0.5" size={20} />
+                  <span className="text-ajin-gray-300">{t(`items.${i}`)}</span>
                 </div>
               ))}
             </div>
           </div>
           <div className="bg-ajin-surface rounded-2xl p-8">
-            <h3 className="text-xl font-bold mb-4">{d('needHelp')}</h3>
+            <h3 className="text-xl font-bold text-ajin-primary mb-4">{d('needHelp')}</h3>
             <p className="text-ajin-gray-300 mb-6">
               {d('teamReady')}
             </p>

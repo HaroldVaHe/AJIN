@@ -22,10 +22,10 @@ export default function Benefits() {
           const Icon = benefit.icon;
           return (
             <div key={benefit.key} className="text-center group">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-ajin-black text-ajin-green transition-all group-hover:bg-ajin-green group-hover:text-black">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-ajin-primary text-ajin-accent transition-all group-hover:bg-ajin-accent group-hover:text-white">
                 <Icon size={32} />
               </div>
-              <h3 className="text-lg font-bold">{t(benefit.key)}</h3>
+              <h3 className="text-lg font-bold text-ajin-primary">{t(benefit.key)}</h3>
               <p className="mt-2 text-sm text-ajin-gray-300">{t(`${benefit.key}Desc`)}</p>
             </div>
           );

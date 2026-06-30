@@ -4,9 +4,9 @@ import { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link, usePathname } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import Button from '@/components/ui/Button';
-import { useTheme } from '@/components/ThemeProvider';
+import Logo from '@/components/ui/Logo';
 
 const navItems = [
   { href: '/', key: 'common.nav.home' },
@@ -27,7 +27,6 @@ export default function Header() {
   const t = useTranslations();
   const pathname = usePathname();
   const locale = useLocale();
-  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     if (mobileOpen) {
@@ -42,13 +41,10 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-ajin-border backdrop-blur-sm" style={{ backgroundColor: 'var(--ajin-header-bg)' }}>
+      <header className="sticky top-0 z-50 border-b border-ajin-gray-700 bg-ajin-primary">
         <div className="container-ajin flex h-16 items-center justify-between px-4">
-          <Link href="/" className="flex items-center gap-2">
-              <span className="text-xl font-bold tracking-tight">
-                <span style={{ color: 'var(--ajin-logo-color)' }}>AJ</span>
-              <span className="text-ajin-green">IN</span>
-            </span>
+          <Link href="/">
+            <Logo />
           </Link>
 
           <nav className="hidden items-center gap-8 md:flex">
@@ -61,15 +57,15 @@ export default function Header() {
                   className={cn(
                     'text-sm font-medium transition-colors',
                     isActive
-                      ? 'text-ajin-green'
-                      : 'text-ajin-gray-300 hover:text-ajin-text'
+                      ? 'text-ajin-accent'
+                      : 'text-ajin-gray-400 hover:text-white'
                   )}
                 >
                   {t(item.key)}
                 </Link>
               );
             })}
-            <div className="flex items-center gap-1 ml-4 border-l border-ajin-border pl-4">
+            <div className="flex items-center gap-1 ml-4 border-l border-ajin-gray-600 pl-4">
               {languages.map((lang) => (
                 <Link
                   key={lang.code}
@@ -78,31 +74,24 @@ export default function Header() {
                   className={cn(
                     'px-2 py-1 text-xs font-semibold rounded-md transition-colors',
                     locale === lang.code
-                      ? 'bg-ajin-green text-black'
-                      : 'text-ajin-gray-400 hover:text-ajin-text'
+                      ? 'bg-ajin-accent text-ajin-primary'
+                      : 'text-ajin-gray-400 hover:text-white'
                   )}
                 >
                   {lang.label}
                 </Link>
               ))}
-              <button
-                onClick={toggleTheme}
-                className="ml-2 p-1.5 rounded-md text-ajin-gray-400 hover:text-ajin-text transition-colors"
-                aria-label="Toggle theme"
-              >
-                {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-              </button>
             </div>
           </nav>
 
           <div className="flex items-center gap-3">
             <Link href="/contacto">
-              <Button variant="secondary" size="sm" className="hidden md:inline-flex">
+              <Button variant="primary" size="sm" className="hidden md:inline-flex">
                 {t('common.schedule')}
               </Button>
             </Link>
             <button
-              className="md:hidden p-2 text-ajin-gray-100"
+              className="md:hidden p-2 text-white"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
             >
@@ -113,9 +102,9 @@ export default function Header() {
       </header>
 
       {mobileOpen && (
-        <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100dvh', backgroundColor: 'var(--ajin-bg)', zIndex: 40, display: 'flex', flexDirection: 'column' }}>
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingTop: '64px', paddingLeft: '16px', paddingRight: '16px', paddingBottom: '24px', overflowY: 'auto' }}>
-            <nav style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div className="fixed inset-0 z-40 flex flex-col bg-ajin-primary" style={{ height: '100dvh' }}>
+          <div className="flex flex-col flex-1 px-4 pb-6 overflow-y-auto" style={{ paddingTop: '64px' }}>
+            <nav className="flex flex-col gap-2">
               {navItems.map((item) => {
                 const isActive = pathname === item.href;
                 return (
@@ -126,8 +115,8 @@ export default function Header() {
                     className={cn(
                       'rounded-xl px-4 py-4 text-lg font-medium transition-colors',
                       isActive
-                        ? 'bg-ajin-green text-black'
-                        : 'bg-ajin-surface text-ajin-gray-100'
+                        ? 'bg-ajin-accent text-ajin-primary'
+                        : 'bg-ajin-primary-light text-white'
                     )}
                   >
                     {t(item.key)}
@@ -135,7 +124,7 @@ export default function Header() {
                 );
               })}
             </nav>
-            <div style={{ display: 'flex', gap: '8px', marginTop: '16px' }}>
+            <div className="flex gap-2 mt-4">
               {languages.map((lang) => (
                 <Link
                   key={lang.code}
@@ -145,26 +134,17 @@ export default function Header() {
                   className={cn(
                     'flex-1 rounded-xl px-4 py-3 text-center text-sm font-semibold transition-colors',
                     locale === lang.code
-                      ? 'bg-ajin-green text-black'
-                      : 'bg-ajin-surface text-ajin-gray-200'
+                      ? 'bg-ajin-accent text-ajin-primary'
+                      : 'bg-ajin-primary-light text-ajin-gray-400'
                   )}
                 >
                   {lang.label}
                 </Link>
               ))}
-              <button
-                onClick={toggleTheme}
-                className="flex-1 rounded-xl px-4 py-3 text-center transition-colors bg-ajin-surface text-ajin-gray-200 hover:text-ajin-text flex items-center justify-center gap-2"
-              >
-                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-                <span className="text-sm font-semibold">
-                  {theme === 'dark' ? 'Light' : 'Dark'}
-                </span>
-              </button>
             </div>
-            <div style={{ marginTop: 'auto', paddingTop: '16px' }}>
+            <div className="mt-auto pt-4">
               <Link href="/contacto" onClick={() => setMobileOpen(false)}>
-                <Button variant="secondary" className="w-full">
+                <Button variant="primary" className="w-full">
                   {t('common.schedule')}
                 </Button>
               </Link>

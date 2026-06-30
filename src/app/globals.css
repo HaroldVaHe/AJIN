@@ -1,59 +1,28 @@
 @import "tailwindcss";
 
-:root {
-  --ajin-bg: #1C1C1C;
-  --ajin-surface: #252525;
-  --ajin-text: #E8E8E8;
-  --ajin-text-secondary: #A0A0A0;
-  --ajin-text-muted: #808080;
-  --ajin-border: #333333;
-  --ajin-header-bg: rgba(28, 28, 28, 0.95);
-  --ajin-header-border: #333333;
-  --ajin-logo-color: #FFFFFF;
-  --ajin-gray-100: #E8E8E8;
-  --ajin-gray-200: #D0D0D0;
-  --ajin-gray-300: #A0A0A0;
-  --ajin-gray-700: #333333;
-}
-
-[data-theme="light"] {
-  --ajin-bg: #FFFFFF;
-  --ajin-surface: #F5F5F5;
-  --ajin-text: #202020;
-  --ajin-text-secondary: #606060;
-  --ajin-text-muted: #808080;
-  --ajin-border: #E0E0E0;
-  --ajin-header-bg: rgba(255, 255, 255, 0.95);
-  --ajin-header-border: #E0E0E0;
-  --ajin-logo-color: #000000;
-  --ajin-gray-100: #202020;
-  --ajin-gray-200: #303030;
-  --ajin-gray-300: #606060;
-  --ajin-gray-700: #E0E0E0;
-}
-
 @theme {
-  --color-ajin-black: #000000;
-  --color-ajin-green: #8EC83F;
-  --color-ajin-green-dark: #6DA82A;
-  --color-ajin-green-light: #A8D86A;
-  --color-ajin-white: #FFFFFF;
-  --color-ajin-bg: var(--ajin-bg);
-  --color-ajin-gray: var(--ajin-bg);
-  --color-ajin-surface: var(--ajin-surface);
-  --color-ajin-text: var(--ajin-text);
-  --color-ajin-text-secondary: var(--ajin-text-secondary);
-  --color-ajin-text-muted: var(--ajin-text-muted);
-  --color-ajin-border: var(--ajin-border);
-  --color-ajin-gray-50: #F5F5F5;
-  --color-ajin-gray-100: var(--ajin-gray-100);
-  --color-ajin-gray-200: var(--ajin-gray-200);
-  --color-ajin-gray-300: var(--ajin-gray-300);
-  --color-ajin-gray-400: #808080;
-  --color-ajin-gray-500: #606060;
-  --color-ajin-gray-600: #404040;
-  --color-ajin-gray-700: var(--ajin-gray-700);
-  --color-ajin-gray-800: #202020;
+  --color-ajin-primary: #1B2A4A;
+  --color-ajin-primary-light: #2C4268;
+  --color-ajin-primary-dark: #0F1B33;
+  --color-ajin-accent: #C9A84C;
+  --color-ajin-accent-dark: #B8973A;
+  --color-ajin-accent-light: #DFC66A;
+  --color-ajin-bg: #FAF7F2;
+  --color-ajin-surface: #F5F0E8;
+  --color-ajin-surface-dark: #E8E0D4;
+  --color-ajin-text: #2C2C2C;
+  --color-ajin-text-secondary: #666666;
+  --color-ajin-text-muted: #999999;
+  --color-ajin-border: #E0D8CD;
+  --color-ajin-gray-50: #FAF7F2;
+  --color-ajin-gray-100: #2C2C2C;
+  --color-ajin-gray-200: #3D3D3D;
+  --color-ajin-gray-300: #666666;
+  --color-ajin-gray-400: #999999;
+  --color-ajin-gray-500: #B0A89E;
+  --color-ajin-gray-600: #C8C0B6;
+  --color-ajin-gray-700: #E0D8CD;
+  --color-ajin-gray-800: #D0C8BD;
   --color-ajin-gray-900: #101010;
 }
 
@@ -79,19 +48,19 @@
 }
 
 .prose {
-  --tw-prose-body: var(--ajin-text-secondary);
-  --tw-prose-headings: var(--ajin-text);
-  --tw-prose-links: theme('colors.ajin.green');
-  --tw-prose-bold: var(--ajin-text);
-  --tw-prose-counters: var(--ajin-text-muted);
-  --tw-prose-bullets: theme('colors.ajin.green');
-  --tw-prose-hr: var(--ajin-border);
-  --tw-prose-quotes: var(--ajin-text-secondary);
-  --tw-prose-quote-borders: theme('colors.ajin.green');
-  --tw-prose-captions: var(--ajin-text-muted);
-  --tw-prose-code: var(--ajin-text);
-  --tw-prose-pre-code: theme('colors.ajin.gray.100');
-  --tw-prose-pre-bg: theme('colors.ajin.black');
+  --tw-prose-body: var(--color-ajin-text-secondary);
+  --tw-prose-headings: var(--color-ajin-primary);
+  --tw-prose-links: var(--color-ajin-accent);
+  --tw-prose-bold: var(--color-ajin-text);
+  --tw-prose-counters: var(--color-ajin-text-muted);
+  --tw-prose-bullets: var(--color-ajin-accent);
+  --tw-prose-hr: var(--color-ajin-border);
+  --tw-prose-quotes: var(--color-ajin-text-secondary);
+  --tw-prose-quote-borders: var(--color-ajin-accent);
+  --tw-prose-captions: var(--color-ajin-text-muted);
+  --tw-prose-code: var(--color-ajin-text);
+  --tw-prose-pre-code: var(--color-ajin-gray-50);
+  --tw-prose-pre-bg: var(--color-ajin-primary);
 }
 
 .prose h2 { @apply text-2xl font-bold mt-10 mb-4; }
@@ -100,12 +69,12 @@
 .prose ul { @apply mb-4 list-disc pl-6; }
 .prose ol { @apply mb-4 list-decimal pl-6; }
 .prose li { @apply mb-1; }
-.prose a { @apply text-ajin-green font-medium hover:text-ajin-green-dark transition-colors; }
+.prose a { @apply text-ajin-accent font-medium hover:text-ajin-accent-dark transition-colors; }
 .prose strong { @apply font-bold; }
-.prose blockquote { @apply border-l-4 border-ajin-green pl-4 italic my-6; }
-.prose hr { @apply my-8; border-color: var(--ajin-border); }
+.prose blockquote { @apply border-l-4 border-ajin-accent pl-4 italic my-6; }
+.prose hr { @apply my-8; }
 .prose code { @apply bg-ajin-surface rounded px-1.5 py-0.5 text-sm font-mono; }
-.prose pre { @apply bg-ajin-black text-ajin-gray-100 rounded-xl p-4 overflow-x-auto mb-6; }
+.prose pre { @apply bg-ajin-primary text-ajin-gray-50 rounded-xl p-4 overflow-x-auto mb-6; }
 
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(20px); }

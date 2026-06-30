@@ -24,20 +24,20 @@ export default function ServicesGrid() {
           return (
             <Link key={group.id} href={`/servicios/${group.slug}`}>
               <Card className="h-full group">
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-ajin-green/10 text-ajin-green group-hover:bg-ajin-green group-hover:text-white transition-colors">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-ajin-accent/10 text-ajin-accent group-hover:bg-ajin-accent group-hover:text-white transition-colors">
                   <Icon size={24} />
                 </div>
-                <h3 className="text-xl font-bold">{t(group.id)}</h3>
+                <h3 className="text-xl font-bold text-ajin-primary">{t(group.id)}</h3>
                 <p className="mt-2 text-sm text-ajin-gray-300">{t(`${group.id}Desc`)}</p>
                 <ul className="mt-4 space-y-1.5">
                   {group.items.slice(0, 4).map((_, i) => (
                     <li key={i} className="flex items-center gap-2 text-sm text-ajin-gray-400">
-                      <span className="h-1 w-1 rounded-full bg-ajin-green shrink-0" />
+                      <span className="h-1 w-1 rounded-full bg-ajin-accent shrink-0" />
                       {ts(`${group.id}.items.${i}`)}
                     </li>
                   ))}
                 </ul>
-                <div className="mt-4 flex items-center gap-1 text-sm font-semibold text-ajin-green">
+                <div className="mt-4 flex items-center gap-1 text-sm font-semibold text-ajin-accent">
                   {t('learnMore')}
                   <ArrowRight size={14} />
                 </div>

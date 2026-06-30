@@ -25,10 +25,10 @@ export default function CommonCases() {
           const Icon = c.icon;
           return (
             <Card key={c.key} className="flex items-center gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-ajin-green/10 text-ajin-green">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-ajin-accent/10 text-ajin-accent">
                 <Icon size={24} />
               </div>
-              <span className="font-semibold">{t(c.key)}</span>
+              <span className="font-semibold text-ajin-primary">{t(c.key)}</span>
             </Card>
           );
         })}

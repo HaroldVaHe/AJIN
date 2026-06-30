@@ -41,10 +41,10 @@ export default function PowerForm() {
   if (submitted) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center">
-        <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-ajin-green/10">
-          <CheckCircle size={32} className="text-ajin-green" />
+        <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-ajin-accent/10">
+          <CheckCircle size={32} className="text-ajin-accent" />
         </div>
-        <h3 className="text-xl font-bold mb-2">{t('successTitle')}</h3>
+        <h3 className="text-xl font-bold text-ajin-primary mb-2">{t('successTitle')}</h3>
         <p className="text-ajin-gray-400">{t('successMessage')}</p>
       </div>
     );

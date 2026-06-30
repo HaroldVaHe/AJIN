@@ -14,7 +14,7 @@ export function Input({ label, error, id, className, ...props }: InputProps) {
       <input
         id={id}
         className={cn(
-          'w-full rounded-xl border border-ajin-gray-700 bg-ajin-surface px-4 py-2.5 text-sm text-ajin-gray-100 placeholder:text-ajin-gray-500 focus:border-ajin-green focus:ring-2 focus:ring-ajin-green/20 focus:outline-none',
+          'w-full rounded-xl border border-ajin-gray-700 bg-white px-4 py-2.5 text-sm text-ajin-gray-100 placeholder:text-ajin-gray-500 focus:border-ajin-accent focus:ring-2 focus:ring-ajin-accent/20 focus:outline-none',
           error && 'border-red-500 focus:border-red-500 focus:ring-red-500/20',
           className
         )}
@@ -39,7 +39,7 @@ export function Textarea({ label, error, id, className, ...props }: TextareaProp
       <textarea
         id={id}
         className={cn(
-          'w-full rounded-xl border border-ajin-gray-700 bg-ajin-surface px-4 py-2.5 text-sm text-ajin-gray-100 placeholder:text-ajin-gray-500 focus:border-ajin-green focus:ring-2 focus:ring-ajin-green/20 focus:outline-none min-h-[120px]',
+          'w-full rounded-xl border border-ajin-gray-700 bg-white px-4 py-2.5 text-sm text-ajin-gray-100 placeholder:text-ajin-gray-500 focus:border-ajin-accent focus:ring-2 focus:ring-ajin-accent/20 focus:outline-none min-h-[120px]',
           error && 'border-red-500 focus:border-red-500 focus:ring-red-500/20',
           className
         )}
@@ -66,7 +66,7 @@ export function Select({ label, error, id, children, options, className, ...prop
       <select
         id={id}
         className={cn(
-          'w-full rounded-xl border border-ajin-gray-700 bg-ajin-surface px-4 py-2.5 text-sm text-ajin-gray-100 focus:border-ajin-green focus:ring-2 focus:ring-ajin-green/20 focus:outline-none',
+          'w-full rounded-xl border border-ajin-gray-700 bg-white px-4 py-2.5 text-sm text-ajin-gray-100 focus:border-ajin-accent focus:ring-2 focus:ring-ajin-accent/20 focus:outline-none',
           error && 'border-red-500 focus:border-red-500 focus:ring-red-500/20',
           className
         )}
