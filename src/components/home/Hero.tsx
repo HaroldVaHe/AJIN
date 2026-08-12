@@ -40,12 +40,13 @@ export default function Hero() {
             </div>
           </div>
           <div className="hidden lg:flex justify-center animate-fade-in">
-            <div className="relative w-full max-w-[400px] aspect-square">
+            <div className="relative w-full max-w-[400px] aspect-[2/3]">
               <Image
-                src="/images/abogada.png"
+                src="/images/abogada.webp"
                 alt={t('imageAlt')}
                 fill
-                className="object-contain drop-shadow-2xl opacity-90"
+                sizes="400px"
+                className="object-cover rounded-lg drop-shadow-2xl opacity-95"
                 priority
               />
             </div>
