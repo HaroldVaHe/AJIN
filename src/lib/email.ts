@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import type { ContactData, PowerData } from '@/lib/n8n';
+import { areaLabel } from '@/lib/n8n';
 
 const SMTP_HOST = process.env.SMTP_HOST || '';
 const SMTP_PORT = Number(process.env.SMTP_PORT) || 587;
@@ -44,7 +45,7 @@ export function formatContactEmail(data: ContactData): EmailPayload {
       { label: 'Nombre', value: escapeHtml(data.name) },
       { label: 'Email', value: escapeHtml(data.email) },
       { label: 'Teléfono', value: escapeHtml(data.phone) },
-      { label: 'Área', value: escapeHtml(data.area || 'General') },
+      { label: 'Área', value: escapeHtml(areaLabel(data.area)) },
       { label: 'Mensaje', value: escapeHtml(data.message) },
     ]),
   };

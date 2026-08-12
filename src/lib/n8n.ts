@@ -17,6 +17,17 @@ export interface PowerData {
   description: string;
 }
 
+const AREA_LABELS: Record<string, string> = {
+  familia: 'Familia y Sucesiones',
+  inmobiliario: 'Derecho Inmobiliario',
+  comercial: 'Comercial y Corporativo',
+  general: 'Consulta General',
+};
+
+export function areaLabel(area?: string): string {
+  return (area && AREA_LABELS[area]) || 'Consulta General';
+}
+
 export async function sendToTelegram(message: string) {
   if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return null;
   const response = await fetch(
@@ -55,7 +66,7 @@ export function formatContactMessage(data: ContactData): string {
     `<b>Nombre:</b> ${data.name}\n` +
     `<b>Email:</b> ${data.email}\n` +
     `<b>Teléfono:</b> ${data.phone}\n` +
-    `<b>Área:</b> ${data.area || 'General'}\n` +
+    `<b>Área:</b> ${areaLabel(data.area)}\n` +
     `<b>Mensaje:</b>\n${data.message}`
   );
 }
