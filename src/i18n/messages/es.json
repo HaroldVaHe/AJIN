@@ -19,7 +19,7 @@
     "invalidPhone": "Teléfono inválido",
     "address": "Calle 12 # 13-26, Chia, Cundinamarca.",
     "phone": "+57 350 4338533",
-    "email": "clientesajin@gmail.com",
+    "email": "asesoríainmobiliariaynotarial@gmail.com",
     "nav": {
       "home": "Inicio",
       "about": "Nosotros",
@@ -62,7 +62,7 @@
       "quick": "Atención Rápida",
       "quickDesc": "Respuesta en menos de 24 horas hábiles.",
       "experience": "Experiencia Jurídica",
-      "experienceDesc": "Más de 15 años de experiencia en derecho corporativo y litigio.",
+      "experienceDesc": "Más de 20 años de experiencia en derecho corporativo y litigio.",
       "transparent": "Procesos Transparentes",
       "transparentDesc": "Honorarios claros desde el inicio, sin sorpresas.",
       "personalized": "Asistencia Personalizada",
@@ -236,7 +236,7 @@
     "teamReady": "Nuestro equipo está listo para atender su caso. Solicite una consulta hoy.",
     "requestConsultation": "Solicitar Consulta",
     "trustTitle": "Confíe en AJIN",
-    "trustDesc": "Con más de 15 años de experiencia, somos su aliado jurídico de confianza en Bogotá. Procesos transparentes, atención personalizada y resultados efectivos.",
+    "trustDesc": "Con más de 20 años de experiencia, somos su aliado jurídico de confianza en Bogotá. Procesos transparentes, atención personalizada y resultados efectivos.",
     "contactUs": "Contáctenos"
   },
   "blog": {
