@@ -42,7 +42,7 @@ export default function Hero() {
           <div className="hidden lg:flex justify-center animate-fade-in">
             <div className="relative w-full max-w-[400px] aspect-square">
               <Image
-                src="/images/Balanza.png"
+                src="/images/abogada.png"
                 alt={t('imageAlt')}
                 fill
                 className="object-contain drop-shadow-2xl opacity-90"
