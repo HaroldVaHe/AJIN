@@ -48,17 +48,17 @@ export default function Header() {
     - Lado derecho (Botones): Toma 1 fracción del espacio sobrante
     Al medir '1fr' ambos extremos, el centro se mantiene matemáticamente en el eje central.
   */}
-        <div className="container-ajin flex md:grid md:grid-cols-[1fr_auto_1fr] h-16 items-center justify-between md:justify-normal gap-x-[clamp(1.5rem,3.5vw,6rem)] px-[clamp(1.5rem,9vw,10rem)]">
+        <div className="container-ajin flex lg:grid lg:grid-cols-[1fr_auto_1fr] h-16 items-center justify-between lg:justify-normal gap-x-[clamp(1rem,2vw,4rem)] px-[clamp(1rem,4vw,6rem)]">
 
           {/* Columna 1: Logo (Alineado a la izquierda) */}
-          <div className="flex items-center justify-start">
+          <div className="flex shrink-0 min-w-12 items-center justify-start">
             <Link href="/" className="flex items-center">
               <Logo className="w-12 h-12" />
             </Link>
           </div>
 
           {/* Columna 2: Navegación (Centrada y con su tamaño natural) */}
-          <nav className="hidden md:flex items-center justify-center gap-[clamp(1.5rem,3.5vw,5rem)] px-4">
+          <nav className="hidden lg:flex items-center justify-center gap-[clamp(1rem,1.75vw,3rem)] px-4">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -81,7 +81,7 @@ export default function Header() {
           {/* Columna 3: Idiomas y Botón (Alineado a la derecha) */}
           <div className="flex items-center justify-end gap-[clamp(1rem,2.5vw,4rem)]">
             {/* Idiomas */}
-            <div className="hidden md:flex items-center gap-1 border-l border-ajin-gray-600 pl-4">
+            <div className="hidden lg:flex items-center gap-1 border-l border-ajin-gray-600 pl-4">
               {languages.map((lang) => (
                 <Link
                   key={lang.code}
@@ -101,14 +101,14 @@ export default function Header() {
 
             {/* Botón */}
             <Link href="/contacto">
-              <Button variant="primary" size="sm" className="hidden md:inline-flex whitespace-nowrap">
+              <Button variant="primary" size="sm" className="hidden lg:inline-flex whitespace-nowrap">
                 {t('common.schedule')}
               </Button>
             </Link>
 
             {/* Menú móvil */}
             <button
-              className="md:hidden p-2 text-white"
+              className="lg:hidden p-2 text-white"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
             >
