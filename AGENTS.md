@@ -13,7 +13,7 @@ Next.js 15.5.18 + Tailwind CSS 4 + next-intl bilingual (ES/EN) site for AJIN Ase
 - All routes under `/[locale]` with `localePrefix: 'always'` (next-intl). Default: `es`. Languages: `es`, `en`.
 - Tailwind v4 — no `tailwind.config.*`. Theme in `src/app/globals.css` via `@import "tailwindcss"` + `@theme` block.
 - Blog: markdown files in `src/content/{es,en}/` with gray-matter frontmatter (title, description, date, category, author). Read at build time via `src/lib/blog.ts`.
-- Forms POST to `/api/{contact,poderes,asesoria}` → Telegram (primary) + n8n (future, silently skipped if `NEXT_PUBLIC_N8N_WEBHOOK_BASE` unset).
+- Forms POST to `/api/{contact,poderes,asesoria}` → Telegram + email (SMTP) in parallel + n8n (future, silently skipped if `NEXT_PUBLIC_N8N_WEBHOOK_BASE` unset). WhatsApp personal: on submit the form also opens `wa.me` with the message prefilled (client-side, via `src/lib/whatsapp.ts`).
 - Sitemap: manually maintained in `src/app/sitemap.ts`.
 - Body scroll locked on mobile menu open (`useEffect` toggles `document.body.style.overflow`).
 - `<Analytics />` from `@vercel/analytics/next` must be added to layout. Package already in deps.
@@ -23,6 +23,11 @@ Next.js 15.5.18 + Tailwind CSS 4 + next-intl bilingual (ES/EN) site for AJIN Ase
 ```
 TELEGRAM_BOT_TOKEN=<token>
 TELEGRAM_CHAT_ID=<chat_id>
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=<gmail de asesoría>
+SMTP_PASS=<app password 16 chars, requiere 2FA en Google>
+SMTP_TO=<destinatario, normalmente el mismo SMTP_USER>
 NEXT_PUBLIC_N8N_WEBHOOK_BASE=   # optional, future
 ```
 

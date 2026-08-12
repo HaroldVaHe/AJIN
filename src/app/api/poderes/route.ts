@@ -4,6 +4,7 @@ import {
   sendToN8n,
   formatPowerMessage,
 } from '@/lib/n8n';
+import { sendToEmail, formatPowerEmail } from '@/lib/email';
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,6 +12,7 @@ export async function POST(request: NextRequest) {
 
     const results = await Promise.allSettled([
       sendToTelegram(formatPowerMessage(data)),
+      sendToEmail(formatPowerEmail(data)),
       sendToN8n('poderes', data),
     ]);
 

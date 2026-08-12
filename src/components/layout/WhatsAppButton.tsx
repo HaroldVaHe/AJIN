@@ -2,13 +2,11 @@
 
 import { useTranslations } from 'next-intl';
 import { MessageCircle } from 'lucide-react';
-
-const WHATSAPP_NUMBER = '573504338533';
+import { buildWhatsAppUrl } from '@/lib/whatsapp';
 
 export default function WhatsAppButton() {
   const t = useTranslations('common');
-  const message = t('whatsappMessage');
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  const whatsappUrl = buildWhatsAppUrl(t('whatsappMessage'));
 
   return (
     <a

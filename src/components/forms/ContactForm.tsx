@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { Input, Textarea, Select } from '@/components/ui/FormFields';
 import Button from '@/components/ui/Button';
+import { buildWhatsAppUrl } from '@/lib/whatsapp';
 import { CheckCircle, Loader2 } from 'lucide-react';
 
 interface ContactFormData {
@@ -25,7 +26,23 @@ export default function ContactForm() {
     formState: { errors, isSubmitting },
   } = useForm<ContactFormData>();
 
+  const whatsappMessage = (data: ContactFormData) =>
+    [
+      '📩 Nuevo contacto - AJIN',
+      '',
+      `${t('name')}: ${data.name}`,
+      `${t('email')}: ${data.email}`,
+      `${t('phone')}: ${data.phone}`,
+      data.area ? `${t('area')}: ${t(`areas.${data.area}`)}` : '',
+      '',
+      `${t('message')}:`,
+      data.message,
+    ]
+      .filter((line) => line !== '')
+      .join('\n');
+
   const onSubmit = async (data: ContactFormData) => {
+    const waWindow = window.open(buildWhatsAppUrl(whatsappMessage(data)), '_blank');
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
@@ -35,6 +52,7 @@ export default function ContactForm() {
       if (!res.ok) throw new Error('Failed');
       setSubmitted(true);
     } catch {
+      waWindow?.close();
       alert(t('errorMessage'));
     }
   };

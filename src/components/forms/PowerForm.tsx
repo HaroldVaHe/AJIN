@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { Input, Textarea } from '@/components/ui/FormFields';
 import Button from '@/components/ui/Button';
+import { buildWhatsAppUrl } from '@/lib/whatsapp';
 import { CheckCircle, Loader2 } from 'lucide-react';
 
 interface PowerFormData {
@@ -24,7 +25,22 @@ export default function PowerForm() {
     formState: { errors, isSubmitting },
   } = useForm<PowerFormData>();
 
+  const whatsappMessage = (data: PowerFormData) =>
+    [
+      '📄 Solicitud de Poder - AJIN',
+      '',
+      `${t('name')}: ${data.name}`,
+      `${t('email')}: ${data.email}`,
+      `${t('phone')}: ${data.phone}`,
+      '',
+      `${t('description')}:`,
+      data.description,
+    ]
+      .filter((line) => line !== '')
+      .join('\n');
+
   const onSubmit = async (data: PowerFormData) => {
+    const waWindow = window.open(buildWhatsAppUrl(whatsappMessage(data)), '_blank');
     try {
       const res = await fetch('/api/poderes', {
         method: 'POST',
@@ -34,6 +50,7 @@ export default function PowerForm() {
       if (!res.ok) throw new Error('Failed');
       setSubmitted(true);
     } catch {
+      waWindow?.close();
       alert(t('errorMessage'));
     }
   };

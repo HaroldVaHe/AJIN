@@ -4,6 +4,7 @@ import {
   sendToN8n,
   formatContactMessage,
 } from '@/lib/n8n';
+import { sendToEmail, formatContactEmail } from '@/lib/email';
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,6 +12,7 @@ export async function POST(request: NextRequest) {
 
     const results = await Promise.allSettled([
       sendToTelegram(formatContactMessage(data)),
+      sendToEmail(formatContactEmail(data)),
       sendToN8n('contact', data),
     ]);
 
