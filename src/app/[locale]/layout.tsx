@@ -28,7 +28,11 @@ export async function generateMetadata({
     },
     description: 'Asesoría jurídica especializada en inmobiliario, notarial, familia y corporativo en Bogotá.',
     icons: {
-      icon: '/icons/favicon.ico',
+      icon: [
+        { url: '/icons/favicon.ico', sizes: 'any' },
+        { url: '/icons/favicon.png', type: 'image/png' },
+      ],
+      apple: '/icons/apple-touch-icon.png',
     },
     openGraph: {
       type: 'website',
