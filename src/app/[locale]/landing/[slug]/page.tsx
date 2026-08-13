@@ -32,7 +32,7 @@ export async function generateMetadata({
   if (!key) return { title: 'Not found' };
   const t = await getTranslations({ locale, namespace: `landing.${key}` });
   return {
-    title: t('title'),
+    title: `${t('title')} | AJIN`,
     description: t('description'),
     alternates: buildAlternates(locale, `/landing/${slug}`),
     openGraph: {

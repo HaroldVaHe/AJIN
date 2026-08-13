@@ -25,7 +25,7 @@ export async function generateMetadata({
   try {
     const post = getPost(slug, locale);
     return {
-      title: post.title,
+      title: `${post.title} | AJIN`,
       description: post.description,
       alternates: buildAlternates(locale, `/blog/${slug}`),
       openGraph: {

@@ -25,10 +25,7 @@ export async function generateMetadata({
   // Base metadata — will be overridden per page
   return {
     metadataBase: new URL(SITE_URL),
-    title: {
-      default: 'AJIN — Asesoría Jurídica Inmobiliaria y Notarial',
-      template: '%s | AJIN',
-    },
+    title: 'AJIN — Asesoría Jurídica Inmobiliaria y Notarial',
     description: 'Asesoría jurídica especializada en inmobiliario, notarial, familia y corporativo en Bogotá.',
     alternates: {
       canonical: `/${locale}`,
