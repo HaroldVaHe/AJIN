@@ -2,6 +2,7 @@ import { getTranslations } from 'next-intl/server';
 import { Section } from '@/components/ui/Section';
 import { Card } from '@/components/ui/Card';
 import PowerForm from '@/components/forms/PowerForm';
+import { OG_IMAGE_URL, buildAlternates } from '@/lib/site';
 import { FileText, FileSignature, Gavel, ClipboardList } from 'lucide-react';
 
 export async function generateMetadata({
@@ -11,7 +12,16 @@ export async function generateMetadata({
 }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'seo.powers' });
-  return { title: t('title'), description: t('description') };
+  return {
+    title: t('title'),
+    description: t('description'),
+    alternates: buildAlternates(locale, '/poderes'),
+    openGraph: {
+      title: t('title'),
+      description: t('description'),
+      images: [{ url: OG_IMAGE_URL, width: 1200, height: 630, alt: 'Poderes AJIN' }],
+    },
+  };
 }
 
 const powerTypes = [

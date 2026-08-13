@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { Section } from '@/components/ui/Section';
+import { buildAlternates } from '@/lib/site';
 
 export async function generateMetadata({
   params,
@@ -8,7 +9,11 @@ export async function generateMetadata({
 }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'seo.privacy' });
-  return { title: t('title'), description: t('description') };
+  return {
+    title: t('title'),
+    description: t('description'),
+    alternates: buildAlternates(locale, '/privacidad'),
+  };
 }
 
 export default async function PrivacyPage({

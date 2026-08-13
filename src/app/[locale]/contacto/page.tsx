@@ -1,6 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 import { Section } from '@/components/ui/Section';
 import ContactForm from '@/components/forms/ContactForm';
+import { OG_IMAGE_URL, buildAlternates } from '@/lib/site';
 import { Phone, Mail, MapPin, Clock, ExternalLink } from 'lucide-react';
 
 export async function generateMetadata({
@@ -10,7 +11,16 @@ export async function generateMetadata({
 }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'seo.contact' });
-  return { title: t('title'), description: t('description') };
+  return {
+    title: t('title'),
+    description: t('description'),
+    alternates: buildAlternates(locale, '/contacto'),
+    openGraph: {
+      title: t('title'),
+      description: t('description'),
+      images: [{ url: OG_IMAGE_URL, width: 1200, height: 630, alt: 'Contacto AJIN' }],
+    },
+  };
 }
 
 export default async function ContactPage({

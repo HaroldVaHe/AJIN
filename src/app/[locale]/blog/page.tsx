@@ -3,6 +3,8 @@ import { Link } from '@/i18n/navigation';
 import { Section } from '@/components/ui/Section';
 import { Card } from '@/components/ui/Card';
 import { getAllPosts } from '@/lib/blog';
+import { SITE_URL, OG_IMAGE_URL, buildAlternates } from '@/lib/site';
+import JsonLd from '@/components/ui/JsonLd';
 import { Calendar, Clock, ArrowRight } from 'lucide-react';
 
 export async function generateMetadata({
@@ -12,7 +14,16 @@ export async function generateMetadata({
 }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'seo.blog' });
-  return { title: t('title'), description: t('description') };
+  return {
+    title: t('title'),
+    description: t('description'),
+    alternates: buildAlternates(locale, '/blog'),
+    openGraph: {
+      title: t('title'),
+      description: t('description'),
+      images: [{ url: OG_IMAGE_URL, width: 1200, height: 630, alt: 'Blog AJIN' }],
+    },
+  };
 }
 
 export default async function BlogPage({
@@ -26,6 +37,21 @@ export default async function BlogPage({
 
   return (
     <>
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'Blog',
+          name: `Blog AJIN`,
+          url: `${SITE_URL}/${locale}/blog`,
+          blogPost: posts.map((p) => ({
+            '@type': 'BlogPosting',
+            headline: p.title,
+            description: p.description,
+            datePublished: p.date,
+            author: { '@type': 'Person', name: p.author },
+          })),
+        }}
+      />
       <section className="bg-ajin-primary py-20 md:py-32">
         <div className="container-ajin px-4 text-center">
           <h1 className="text-4xl font-bold text-white md:text-5xl lg:text-6xl">{t('title')}</h1>

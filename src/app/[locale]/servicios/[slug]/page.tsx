@@ -3,6 +3,8 @@ import { Link } from '@/i18n/navigation';
 import { Section } from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
 import { serviceGroups } from '@/data/services';
+import { SITE_URL, OG_IMAGE_URL, buildAlternates } from '@/lib/site';
+import JsonLd from '@/components/ui/JsonLd';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 
 const slugToId: Record<string, string> = {};
@@ -19,7 +21,16 @@ export async function generateMetadata({
   const id = slugToId[slug];
   if (!id) return { title: 'Not found' };
   const t = await getTranslations({ locale, namespace: `seo.${id}` });
-  return { title: t('title'), description: t('description') };
+  return {
+    title: t('title'),
+    description: t('description'),
+    alternates: buildAlternates(locale, `/servicios/${slug}`),
+    openGraph: {
+      title: t('title'),
+      description: t('description'),
+      images: [{ url: OG_IMAGE_URL, width: 1200, height: 630, alt: t('title') }],
+    },
+  };
 }
 
 export default async function ServiceDetailPage({
@@ -37,6 +48,21 @@ export default async function ServiceDetailPage({
 
   return (
     <>
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'Service',
+          name: t('title'),
+          description: t('description'),
+          provider: {
+            '@type': 'LegalService',
+            name: 'AJIN',
+            url: SITE_URL,
+          },
+          url: `${SITE_URL}/${locale}/servicios/${slug}`,
+          areaServed: ['Bogotá', 'Chía', 'Cundinamarca'],
+        }}
+      />
       <section className="bg-ajin-primary py-20 md:py-32">
         <div className="container-ajin px-4">
           <h1 className="text-4xl font-bold text-white md:text-5xl">{t('title')}</h1>

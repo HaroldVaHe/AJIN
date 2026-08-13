@@ -2,6 +2,7 @@ import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { Section } from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
+import { OG_IMAGE_URL, buildAlternates } from '@/lib/site';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 
 const slugToLandingKey: Record<string, string> = {
@@ -29,7 +30,16 @@ export async function generateMetadata({
   const key = slugToLandingKey[slug];
   if (!key) return { title: 'Not found' };
   const t = await getTranslations({ locale, namespace: `landing.${key}` });
-  return { title: t('title'), description: t('description') };
+  return {
+    title: t('title'),
+    description: t('description'),
+    alternates: buildAlternates(locale, `/landing/${slug}`),
+    openGraph: {
+      title: t('title'),
+      description: t('description'),
+      images: [{ url: OG_IMAGE_URL, width: 1200, height: 630, alt: t('title') }],
+    },
+  };
 }
 
 export default async function LandingPage({

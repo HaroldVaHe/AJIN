@@ -3,6 +3,8 @@ import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { Section } from '@/components/ui/Section';
 import { getPost, getAllSlugs } from '@/lib/blog';
+import { SITE_URL, OG_IMAGE_URL, SITE_NAME, buildAlternates } from '@/lib/site';
+import JsonLd from '@/components/ui/JsonLd';
 import { Calendar, Clock, ArrowLeft } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -25,11 +27,14 @@ export async function generateMetadata({
     return {
       title: post.title,
       description: post.description,
+      alternates: buildAlternates(locale, `/blog/${slug}`),
       openGraph: {
         title: post.title,
         description: post.description,
         type: 'article',
         publishedTime: post.date,
+        authors: [post.author],
+        images: [{ url: OG_IMAGE_URL, width: 1200, height: 630, alt: post.title }],
       },
     };
   } catch {
@@ -54,6 +59,27 @@ export default async function BlogPostPage({
 
   return (
     <>
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'BlogPosting',
+          headline: post.title,
+          description: post.description,
+          datePublished: post.date,
+          author: { '@type': 'Person', name: post.author },
+          publisher: {
+            '@type': 'Organization',
+            name: SITE_NAME,
+            url: SITE_URL,
+            logo: `${SITE_URL}/icons/favicon.png`,
+          },
+          image: OG_IMAGE_URL,
+          mainEntityOfPage: {
+            '@type': 'WebPage',
+            '@id': `${SITE_URL}/${locale}/blog/${post.slug}`,
+          },
+        }}
+      />
       <section className="bg-ajin-primary py-20 md:py-32">
         <div className="container-ajin px-4">
           <Link

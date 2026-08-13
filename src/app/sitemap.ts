@@ -1,4 +1,6 @@
 import { MetadataRoute } from 'next';
+import { SITE_URL } from '@/lib/site';
+import { getAllSlugs } from '@/lib/blog';
 
 const locales = ['es', 'en'] as const;
 
@@ -28,10 +30,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
   for (const locale of locales) {
     for (const page of staticPages) {
       entries.push({
-        url: `https://ajin.com/${locale}${page.path}`,
+        url: `${SITE_URL}/${locale}${page.path}`,
         lastModified: new Date(),
         changeFrequency: 'monthly',
         priority: parseFloat(page.priority) as 0.0 | 0.1 | 0.2 | 0.3 | 0.4 | 0.5 | 0.6 | 0.7 | 0.8 | 0.9 | 1.0,
+      });
+    }
+
+    for (const slug of getAllSlugs(locale)) {
+      entries.push({
+        url: `${SITE_URL}/${locale}/blog/${slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.8,
       });
     }
   }

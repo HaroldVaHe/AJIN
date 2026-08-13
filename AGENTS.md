@@ -14,7 +14,8 @@ Next.js 15.5.18 + Tailwind CSS 4 + next-intl bilingual (ES/EN) site for AJIN Ase
 - Tailwind v4 — no `tailwind.config.*`. Theme in `src/app/globals.css` via `@import "tailwindcss"` + `@theme` block.
 - Blog: markdown files in `src/content/{es,en}/` with gray-matter frontmatter (title, description, date, category, author). Read at build time via `src/lib/blog.ts`.
 - Forms POST to `/api/{contact,poderes,asesoria}` → Telegram + email (SMTP) in parallel + n8n (future, silently skipped if `NEXT_PUBLIC_N8N_WEBHOOK_BASE` unset). WhatsApp personal: on submit the form also opens `wa.me` with the message prefilled (client-side, via `src/lib/whatsapp.ts`).
-- Sitemap: manually maintained in `src/app/sitemap.ts`.
+- Sitemap: `src/app/sitemap.ts` — includes static pages, landings and blog posts (via `src/lib/blog.ts`), using `NEXT_PUBLIC_SITE_URL` (fallback in `src/lib/site.ts`).
+- SEO: metadata (canonical + hreflang `alternates`, OG image, Twitter card) via `buildAlternates()` and `OG_IMAGE_URL` from `src/lib/site.ts`. JSON-LD structured data rendered with `<JsonLd>` component (LegalService global, BlogPosting, Service).
 - Body scroll locked on mobile menu open (`useEffect` toggles `document.body.style.overflow`).
 - `<Analytics />` from `@vercel/analytics/next` must be added to layout. Package already in deps.
 
@@ -28,6 +29,8 @@ SMTP_PORT=587
 SMTP_USER=<gmail de asesoría>
 SMTP_PASS=<app password 16 chars, requiere 2FA en Google>
 SMTP_TO=<destinatario, normalmente el mismo SMTP_USER>
+NEXT_PUBLIC_SITE_URL=https://ajinabogados.online   # dominio real; fallback en src/lib/site.ts
+NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=              # opcional, meta tag de Search Console
 NEXT_PUBLIC_N8N_WEBHOOK_BASE=   # optional, future
 ```
 

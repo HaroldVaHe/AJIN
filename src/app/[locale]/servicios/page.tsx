@@ -3,6 +3,7 @@ import { Link } from '@/i18n/navigation';
 import { Section } from '@/components/ui/Section';
 import { Card } from '@/components/ui/Card';
 import { serviceGroups } from '@/data/services';
+import { OG_IMAGE_URL, buildAlternates } from '@/lib/site';
 import { Heart, Home, Briefcase, FileText, ArrowRight } from 'lucide-react';
 
 const icons: Record<string, React.ElementType> = {
@@ -16,7 +17,16 @@ export async function generateMetadata({
 }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'seo.services' });
-  return { title: t('title'), description: t('description') };
+  return {
+    title: t('title'),
+    description: t('description'),
+    alternates: buildAlternates(locale, '/servicios'),
+    openGraph: {
+      title: t('title'),
+      description: t('description'),
+      images: [{ url: OG_IMAGE_URL, width: 1200, height: 630, alt: 'Servicios AJIN' }],
+    },
+  };
 }
 
 export default async function ServicesPage({
