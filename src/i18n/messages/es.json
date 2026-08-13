@@ -237,7 +237,23 @@
     "requestConsultation": "Solicitar Consulta",
     "trustTitle": "Confíe en AJIN",
     "trustDesc": "Con más de 20 años de experiencia, somos su aliado jurídico de confianza en Bogotá. Procesos transparentes, atención personalizada y resultados efectivos.",
-    "contactUs": "Contáctenos"
+    "contactUs": "Contáctenos",
+    "form": {
+      "name": "Nombre completo",
+      "namePlaceholder": "Escriba su nombre",
+      "phone": "Teléfono / WhatsApp",
+      "phonePlaceholder": "Ej: 300 123 4567",
+      "message": "Cuéntenos su caso",
+      "messagePlaceholder": "Describa brevemente su situación",
+      "submit": "Solicitar Asesoría",
+      "sending": "Enviando...",
+      "successTitle": "¡Solicitud enviada!",
+      "successMessage": "Hemos recibido su solicitud. También abrimos WhatsApp con su mensaje para agilizar la atención.",
+      "errorMessage": "Hubo un problema al enviar su solicitud. Inténtelo de nuevo o escríbanos por WhatsApp.",
+      "requiredField": "Este campo es obligatorio",
+      "invalidPhone": "Ingrese un número de teléfono válido",
+      "privacyNote": "Sus datos se usan solo para contactarlo y nunca se comparten con terceros."
+    }
   },
   "blog": {
     "title": "Blog Jurídico",

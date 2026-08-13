@@ -237,7 +237,23 @@
     "requestConsultation": "Request Consultation",
     "trustTitle": "Trust AJIN",
     "trustDesc": "With over 20 years of experience, we are your trusted legal ally in Bogotá. Transparent processes, personalized attention, and effective results.",
-    "contactUs": "Contact Us"
+    "contactUs": "Contact Us",
+    "form": {
+      "name": "Full name",
+      "namePlaceholder": "Enter your name",
+      "phone": "Phone / WhatsApp",
+      "phonePlaceholder": "e.g. 300 123 4567",
+      "message": "Tell us about your case",
+      "messagePlaceholder": "Briefly describe your situation",
+      "submit": "Request Consultation",
+      "sending": "Sending...",
+      "successTitle": "Request sent!",
+      "successMessage": "We received your request. We also opened WhatsApp with your message to speed things up.",
+      "errorMessage": "There was a problem sending your request. Try again or reach us on WhatsApp.",
+      "requiredField": "This field is required",
+      "invalidPhone": "Enter a valid phone number",
+      "privacyNote": "Your data is used only to contact you and is never shared with third parties."
+    }
   },
   "blog": {
     "title": "Legal Blog",

@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import type { ContactData, PowerData } from '@/lib/n8n';
+import type { ContactData, LeadData, PowerData } from '@/lib/n8n';
 import { areaLabel } from '@/lib/n8n';
 
 const SMTP_HOST = process.env.SMTP_HOST || '';
@@ -59,6 +59,18 @@ export function formatPowerEmail(data: PowerData): EmailPayload {
       { label: 'Email', value: escapeHtml(data.email) },
       { label: 'Teléfono', value: escapeHtml(data.phone) },
       { label: 'Descripción', value: escapeHtml(data.description) },
+    ]),
+  };
+}
+
+export function formatLeadEmail(data: LeadData): EmailPayload {
+  return {
+    subject: `💼 Solicitud de asesoría - ${data.name}`,
+    html: emailLayout([
+      { label: 'Nombre', value: escapeHtml(data.name) },
+      { label: 'Teléfono', value: escapeHtml(data.phone) },
+      { label: 'Asunto', value: escapeHtml(data.topic ?? 'Consulta general') },
+      { label: 'Mensaje', value: escapeHtml(data.message) },
     ]),
   };
 }

@@ -17,6 +17,13 @@ export interface PowerData {
   description: string;
 }
 
+export interface LeadData {
+  name: string;
+  phone: string;
+  message: string;
+  topic?: string;
+}
+
 const AREA_LABELS: Record<string, string> = {
   familia: 'Familia y Sucesiones',
   inmobiliario: 'Derecho Inmobiliario',
@@ -78,5 +85,15 @@ export function formatPowerMessage(data: PowerData): string {
     `<b>Email:</b> ${data.email}\n` +
     `<b>Teléfono:</b> ${data.phone}\n` +
     `<b>Descripción:</b>\n${data.description}`
+  );
+}
+
+export function formatLeadMessage(data: LeadData): string {
+  return (
+    `<b>💼 Solicitud de asesoría - ${data.topic ?? 'AJIN'}</b>\n\n` +
+    `<b>Nombre:</b> ${data.name}\n` +
+    `<b>Teléfono:</b> ${data.phone}\n` +
+    `<b>Asunto:</b> ${data.topic ?? 'Consulta general'}\n` +
+    `<b>Mensaje:</b>\n${data.message}`
   );
 }

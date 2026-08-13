@@ -2,17 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import {
   sendToTelegram,
   sendToN8n,
-  formatContactMessage,
+  formatLeadMessage,
 } from '@/lib/n8n';
-import { sendToEmail, formatContactEmail } from '@/lib/email';
+import { sendToEmail, formatLeadEmail } from '@/lib/email';
 
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
 
     const results = await Promise.allSettled([
-      sendToTelegram(formatContactMessage(data)),
-      sendToEmail(formatContactEmail(data)),
+      sendToTelegram(formatLeadMessage(data)),
+      sendToEmail(formatLeadEmail(data)),
       sendToN8n('asesoria', data),
     ]);
 

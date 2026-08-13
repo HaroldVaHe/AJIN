@@ -2,6 +2,7 @@ import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { Section } from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
+import LeadForm from '@/components/forms/LeadForm';
 import { OG_IMAGE_URL, buildAlternates } from '@/lib/site';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 
@@ -86,12 +87,7 @@ export default async function LandingPage({
             <p className="text-ajin-gray-300 mb-6">
               {d('teamReady')}
             </p>
-            <Link href="/contacto">
-              <Button variant="primary" size="lg" className="w-full">
-                {d('requestConsultation')}
-                <ArrowRight size={20} className="ml-2" />
-              </Button>
-            </Link>
+            <LeadForm topic={t('title')} />
           </div>
         </div>
       </Section>
