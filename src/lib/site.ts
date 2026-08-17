@@ -5,10 +5,10 @@ export const OG_IMAGE_URL = `${SITE_URL}/images/og-image.png`;
 
 export function buildAlternates(locale: string, path: string) {
   return {
-    canonical: `/${locale}${path}`,
+    canonical: `${SITE_URL}/${locale}${path}`,
     languages: {
-      es: `/es${path}`,
-      en: `/en${path}`,
+      es: `${SITE_URL}/es${path}`,
+      en: `${SITE_URL}/en${path}`,
     },
   };
 }

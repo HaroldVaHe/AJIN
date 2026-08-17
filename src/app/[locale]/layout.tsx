@@ -28,10 +28,10 @@ export async function generateMetadata({
     title: 'AJIN — Asesoría Jurídica Inmobiliaria y Notarial',
     description: 'Asesoría jurídica especializada en inmobiliario, notarial, familia y corporativo en Bogotá.',
     alternates: {
-      canonical: `/${locale}`,
+      canonical: `${SITE_URL}/${locale}`,
       languages: {
-        es: '/es',
-        en: '/en',
+        es: `${SITE_URL}/es`,
+        en: `${SITE_URL}/en`,
       },
     },
     icons: {
