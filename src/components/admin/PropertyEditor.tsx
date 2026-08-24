@@ -34,6 +34,7 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
   const [featured, setFeatured] = useState(property?.featured ?? false);
   const [images, setImages] = useState<PropertyWithImages['images']>(property?.images ?? []);
   const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState('');
   const [saveState, setSaveState] = useState<SaveState>('idle');
   const [department, setDepartment] = useState(property?.department ?? '');
   const cities = getCitiesForDepartment(department);
@@ -138,9 +139,14 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
   const uploadPhoto = async (list: FileList | null) => {
     if (!list || list.length === 0 || id === null) return;
     setUploading(true);
+    setUploadError('');
     try {
-      const files = await filesToWebp(list);
-      for (const file of files.filter((f) => f.type.startsWith('image/')).slice(0, MAX_PHOTOS - images.length)) {
+      const incoming = Array.from(list);
+      const empty = incoming.filter((f) => f.size === 0);
+      const files = await filesToWebp(incoming.filter((f) => f.size > 0));
+      const valid = files.filter((f) => f.type.startsWith('image/')).slice(0, MAX_PHOTOS - images.length);
+      let failed = 0;
+      for (const file of valid) {
         const fd = new FormData();
         fd.append('file', file);
         const res = await fetch(`/api/admin/inmuebles/${id}/foto`, {
@@ -150,11 +156,20 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
         const data = await res.json();
         if (res.ok && data.success && data.image) {
           setImages((prev) => [...prev, data.image]);
+        } else {
+          failed += 1;
         }
       }
+      const messages: string[] = [];
+      if (empty.length > 0) messages.push(`${empty.length} archivo(s) vacío(s) omitido(s)`);
+      if (files.length - valid.length > 0 && valid.length < MAX_PHOTOS - images.length)
+        messages.push(`${files.filter((f) => !f.type.startsWith('image/')).length} archivo(s) no reconocidos como imagen`);
+      if (failed > 0) messages.push(`${failed} foto(s) no pudieron subirse al servidor`);
+      setUploadError(messages.join(' · '));
       router.refresh();
     } catch (err) {
       console.error('Photo upload failed:', err);
+      setUploadError('No se pudieron procesar las fotos. Intenta de nuevo.');
     } finally {
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
@@ -372,6 +387,7 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
           <div className="rounded-2xl bg-white p-6 shadow-sm md:p-8">
             <h2 className="mb-1 text-lg font-semibold text-ajin-primary">{t('photosSection')}</h2>
             <p className="mb-4 text-xs text-ajin-gray-400">{t('photoLimit')}</p>
+            {uploadError && <p className="mb-3 text-xs font-medium text-red-600">{uploadError}</p>}
 
             <input
               ref={fileInputRef}

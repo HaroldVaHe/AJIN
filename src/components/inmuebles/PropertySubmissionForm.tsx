@@ -57,6 +57,7 @@ export default function PropertySubmissionForm() {
   const [ownerPhone, setOwnerPhone] = useState('');
   const [status, setStatus] = useState<Status>('idle');
   const [photos, setPhotos] = useState<Array<{ file: File; preview: string }>>([]);
+  const [photoError, setPhotoError] = useState('');
   const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState('');
 
@@ -82,10 +83,14 @@ export default function PropertySubmissionForm() {
 
   const handleFilesSelected = async (list: FileList | null) => {
     if (!list || list.length === 0) return;
+    const incoming = Array.from(list);
     try {
-      const converted = await filesToWebp(Array.from(list));
+      const empty = incoming.filter((f) => f.size === 0);
+      const usable = incoming.filter((f) => f.size > 0);
+      const converted = usable.length > 0 ? await filesToWebp(usable) : [];
       const valid = converted.filter((f) => f.type.startsWith('image/'));
       if (valid.length > 0) {
+        setPhotoError('');
         setPhotos((prev) =>
           [...prev, ...valid.map((file) => ({ file, preview: URL.createObjectURL(file) }))].slice(
             0,
@@ -93,13 +98,17 @@ export default function PropertySubmissionForm() {
           )
         );
       }
-      const skipped = converted.length - valid.length;
-      if (skipped > 0) {
-        setError(`${skipped} archivo(s) no válidos omitidos`);
+      const skippedInvalid = converted.length - valid.length;
+      const messages: string[] = [];
+      if (empty.length > 0) messages.push(`${empty.length} archivo(s) vacío(s) omitido(s)`);
+      if (skippedInvalid > 0) messages.push(`${skippedInvalid} archivo(s) no reconocidos como imagen`);
+      if (valid.length === 0 && incoming.length > 0) {
+        messages.unshift('No se pudo adjuntar ninguna foto. Verifica que sean imágenes (JPG, PNG, WebP o HEIC).');
       }
+      setPhotoError(messages.join(' · '));
     } catch (err) {
       console.error('Photo processing failed:', err);
-      setError('No se pudieron procesar las fotos. Intenta con otras imágenes.');
+      setPhotoError('No se pudieron procesar las fotos. Intenta de nuevo o prueba con otras imágenes.');
     } finally {
       if (fileInputRef.current) fileInputRef.current.value = '';
     }
@@ -386,6 +395,7 @@ export default function PropertySubmissionForm() {
             </button>
           )}
         </div>
+        {photoError && <p className="mt-3 text-xs font-medium text-red-600">{photoError}</p>}
       </div>
 
       <div className="mt-6 rounded-2xl bg-white p-6 shadow-sm md:p-8">
