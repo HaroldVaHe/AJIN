@@ -61,7 +61,7 @@ Sección visual de propiedades en venta y arriendo sobre Supabase (Postgres + St
 
 1. Ejecutar `supabase-setup.sql` en el **SQL Editor** de Supabase: crea tablas `properties` / `property_images`, RLS (lectura pública solo de `approved`) y el bucket público `inmuebles` (límite 5 MB por archivo).
 2. Crear los usuarios admin en **Authentication → Users** (email/password, Auto Confirm). Un usuario es admin si su email está en `ADMIN_EMAILS`.
-3. Variables en Vercel: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_EMAILS`, `CRON_SECRET`.
+3. Variables en Vercel (todas pueden marcarse **Sensitive** — sin prefijo `NEXT_PUBLIC_`): `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_EMAILS`, `CRON_SECRET`. El cliente de navegador recibe URL/anon key como props desde Server Components.
 
 ### Flujo de publicación (ES)
 

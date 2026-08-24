@@ -3,6 +3,9 @@ import { SITE_URL } from '@/lib/site';
 import { getAllSlugs } from '@/lib/blog';
 import { fetchApprovedIds } from '@/lib/supabase/public';
 
+// Runtime (no build-time) para que las env de Supabase sensibles estén disponibles.
+export const revalidate = 3600;
+
 const locales = ['es', 'en'] as const;
 
 const staticPages = [
