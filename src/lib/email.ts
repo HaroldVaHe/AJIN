@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import type { ContactData, LeadData, PowerData } from '@/lib/n8n';
+import type { ContactData, LeadData, PowerData, PropertyRequestData } from '@/lib/n8n';
 import { areaLabel } from '@/lib/n8n';
 
 const SMTP_HOST = process.env.SMTP_HOST || '';
@@ -72,6 +72,28 @@ export function formatLeadEmail(data: LeadData): EmailPayload {
       { label: 'Asunto', value: escapeHtml(data.topic ?? 'Consulta general') },
       { label: 'Mensaje', value: escapeHtml(data.message) },
     ]),
+  };
+}
+
+export function formatPropertyRequestEmail(data: PropertyRequestData): EmailPayload {
+  const rows: Array<{ label: string; value: string }> = [
+    { label: 'Título', value: escapeHtml(data.title) },
+    { label: 'Operación', value: escapeHtml(data.operation) },
+    { label: 'Tipo', value: escapeHtml(data.type) },
+    { label: 'Precio', value: `$${data.price_cop.toLocaleString('es-CO')} COP` },
+  ];
+  if (data.id) rows.push({ label: 'ID', value: `#${data.id}` });
+  if (data.neighborhood)
+    rows.push({ label: 'Sector', value: `${escapeHtml(data.neighborhood)}, ${escapeHtml(data.city ?? '')}` });
+  if (data.photos !== undefined) rows.push({ label: 'Fotos', value: String(data.photos) });
+  rows.push(
+    { label: 'Dueño', value: escapeHtml(data.owner_name) },
+    { label: 'Teléfono', value: escapeHtml(data.owner_phone) }
+  );
+  if (data.owner_email) rows.push({ label: 'Email', value: escapeHtml(data.owner_email) });
+  return {
+    subject: `🏠 Nueva propiedad para publicar - ${data.title}`,
+    html: emailLayout(rows),
   };
 }
 

@@ -121,17 +121,38 @@
     "familia": {
       "title": "Familia y Sucesiones",
       "description": "Asesoría completa en derecho de familia, sucesiones, testamentos y procesos de apoyo.",
-      "items": ["Divorcios", "Sucesiones", "Testamentos", "Demandas de familia", "Liquidación de sociedad conyugal", "Procesos de apoyo (antes Interdicción)", "Cancelaciones de patrimonio"]
+      "items": [
+        "Divorcios",
+        "Sucesiones",
+        "Testamentos",
+        "Demandas de familia",
+        "Liquidación de sociedad conyugal",
+        "Procesos de apoyo (antes Interdicción)",
+        "Cancelaciones de patrimonio"
+      ]
     },
     "inmobiliario": {
       "title": "Derecho Inmobiliario",
       "description": "Gestión jurídica especializada en bienes raíces, contratos inmobiliarios y avalúos.",
-      "items": ["Ventas", "Arriendos", "Avalúos", "Englobes y desenglobes", "División material", "Promesas de compraventa", "Préstamos sobre hipoteca"]
+      "items": [
+        "Ventas",
+        "Arriendos",
+        "Avalúos",
+        "Englobes y desenglobes",
+        "División material",
+        "Promesas de compraventa",
+        "Préstamos sobre hipoteca"
+      ]
     },
     "comercial": {
       "title": "Comercial y Corporativo",
       "description": "Asesoría legal para empresas en liquidación de sociedades, contratos, poderes y más.",
-      "items": ["Liquidación de sociedades", "Contratos", "Poderes", "Derechos de petición"]
+      "items": [
+        "Liquidación de sociedades",
+        "Contratos",
+        "Poderes",
+        "Derechos de petición"
+      ]
     }
   },
   "contact": {
@@ -209,27 +230,58 @@
     "laboral": {
       "title": "Abogados Laborales en Bogotá",
       "description": "Somos su firma de abogados laborales en Bogotá con amplia experiencia en despidos, liquidaciones y demandas laborales.",
-      "items": ["Despidos injustificados", "Liquidaciones laborales", "Acoso laboral", "Demandas laborales", "Contratos de trabajo", "Negociaciones colectivas"]
+      "items": [
+        "Despidos injustificados",
+        "Liquidaciones laborales",
+        "Acoso laboral",
+        "Demandas laborales",
+        "Contratos de trabajo",
+        "Negociaciones colectivas"
+      ]
     },
     "despido": {
       "title": "Abogado para Despido Injustificado",
       "description": "Si fue despedido sin justa causa, nuestros abogados le ayudarán a reclamar su indemnización y derechos laborales.",
-      "items": ["Evaluación gratuita de su caso", "Cálculo de indemnización", "Representación legal", "Negociación con el empleador", "Demanda laboral"]
+      "items": [
+        "Evaluación gratuita de su caso",
+        "Cálculo de indemnización",
+        "Representación legal",
+        "Negociación con el empleador",
+        "Demanda laboral"
+      ]
     },
     "divorcio": {
       "title": "Abogado de Divorcio en Bogotá",
       "description": "Abogados especialistas en divorcios en Bogotá. Mutuo acuerdo y contencioso. Procesos ágiles y transparentes.",
-      "items": ["Divorcio de mutuo acuerdo", "Divorcio contencioso", "Liquidación de sociedad conyugal", "Custodia y alimentos", "Asesoría completa"]
+      "items": [
+        "Divorcio de mutuo acuerdo",
+        "Divorcio contencioso",
+        "Liquidación de sociedad conyugal",
+        "Custodia y alimentos",
+        "Asesoría completa"
+      ]
     },
     "empresas": {
       "title": "Asesoría Jurídica para Empresas",
       "description": "Asesoría jurídica inmobiliaria y notarial para empresas en Bogotá. Constitución SAS, contratos, cumplimiento normativo.",
-      "items": ["Constitución de empresas SAS", "Contratos comerciales", "Due diligence legal", "Propiedad intelectual", "Cobro de cartera"]
+      "items": [
+        "Constitución de empresas SAS",
+        "Contratos comerciales",
+        "Due diligence legal",
+        "Propiedad intelectual",
+        "Cobro de cartera"
+      ]
     },
     "cobro": {
       "title": "Abogado de Cobro de Cartera",
       "description": "Recupere su cartera morosa con nuestros abogados especializados en cobro judicial y prejurídico en Bogotá.",
-      "items": ["Cobro prejurídico", "Demanda ejecutiva", "Embargos y secuestros", "Acuerdos de pago", "Recuperación de cartera"]
+      "items": [
+        "Cobro prejurídico",
+        "Demanda ejecutiva",
+        "Embargos y secuestros",
+        "Acuerdos de pago",
+        "Recuperación de cartera"
+      ]
     },
     "includes": "Nuestros servicios incluyen:",
     "needHelp": "¿Necesita ayuda con este tema?",
@@ -331,7 +383,7 @@
       },
       {
         "title": "4. Derechos ARCO",
-        "content": "De acuerdo con la Ley 1581 de 2012, usted tiene los siguientes derechos sobre sus datos personales: Acceso (conocer qué datos tenemos y cómo los tratamos), Actualización (solicitar la corrección de datos inexactos), Rectificación (modificar datos incorrectos), Supresión (solicitar la eliminación de sus datos cuando no sean necesarios para las finalidades descritas). Para ejercer estos derechos, envíe su solicitud a clientesajin@gmail.com con el asunto 'Derechos ARCO'."
+        "content": "De acuerdo con la Ley 1581 de 2012, usted tiene los siguientes derechos sobre sus datos personales: Acceso (conocer qué datos tenemos y cómo los tratamos), Actualización (solicitar la corrección de datos inexactos), Rectificación (modificar datos incorrectos), Supresión (solicitar la eliminación de sus datos cuando no sean necesarios para las finalidades descritas). Para ejercer estos derechos, envíe su solicitud a asesoriajuridicainmobiliariaynotarial@gmail.com con el asunto 'Derechos ARCO'."
       },
       {
         "title": "5. Seguridad de los datos",
@@ -347,7 +399,7 @@
       },
       {
         "title": "8. Contacto",
-        "content": "Si tiene preguntas sobre esta Política de Privacidad o desea ejercer sus derechos ARCO, puede contactarnos a través de: Correo electrónico: clientesajin@gmail.com, Teléfono: +57 350 4338533, Dirección: Calle 12 # 13-26, Chía, Cundinamarca."
+        "content": "Si tiene preguntas sobre esta Política de Privacidad o desea ejercer sus derechos ARCO, puede contactarnos a través de: Correo electrónico: asesoriajuridicainmobiliariaynotarial@gmail.com, Teléfono: +57 350 4338533, Dirección: Calle 12 # 13-26, Chía, Cundinamarca."
       }
     ]
   },
@@ -382,7 +434,7 @@
       },
       {
         "title": "7. Contacto",
-        "content": "Para cualquier consulta sobre estos Términos y Condiciones, puede contactarnos en: clientesajin@gmail.com o al teléfono +57 350 4338533."
+        "content": "Para cualquier consulta sobre estos Términos y Condiciones, puede contactarnos en: asesoriajuridicainmobiliariaynotarial@gmail.com o al teléfono +57 350 4338533."
       }
     ]
   },
@@ -397,7 +449,7 @@
       },
       {
         "title": "Responsable del tratamiento",
-        "content": "AJIN Asesoría Jurídica Inmobiliaria y Notarial, identificada con NIT, con domicilio en Calle 12 # 13-26, Chía, Cundinamarca, es la responsable del tratamiento de sus datos personales. Para cualquier inquietud, puede contactarnos a través de clientesajin@gmail.com."
+        "content": "AJIN Asesoría Jurídica Inmobiliaria y Notarial, identificada con NIT, con domicilio en Calle 12 # 13-26, Chía, Cundinamarca, es la responsable del tratamiento de sus datos personales. Para cualquier inquietud, puede contactarnos a través de asesoriajuridicainmobiliariaynotarial@gmail.com."
       },
       {
         "title": "Derechos que le asisten (ARCO)",
@@ -405,7 +457,7 @@
       },
       {
         "title": "¿Cómo ejercer sus derechos?",
-        "content": "Para ejercer sus derechos ARCO, debe enviar una solicitud escrita al correo clientesajin@gmail.com indicando: (a) su nombre completo y documento de identidad; (b) el derecho que desea ejercer; (c) la descripción clara y precisa de la solicitud; (d) los datos de contacto para recibir la respuesta. AJIN responderá su solicitud en un plazo máximo de 15 días hábiles, prorrogables por 15 días adicionales cuando las circunstancias lo ameriten."
+        "content": "Para ejercer sus derechos ARCO, debe enviar una solicitud escrita al correo asesoriajuridicainmobiliariaynotarial@gmail.com indicando: (a) su nombre completo y documento de identidad; (b) el derecho que desea ejercer; (c) la descripción clara y precisa de la solicitud; (d) los datos de contacto para recibir la respuesta. AJIN responderá su solicitud en un plazo máximo de 15 días hábiles, prorrogables por 15 días adicionales cuando las circunstancias lo ameriten."
       },
       {
         "title": "Procedimiento para consultas y reclamos",
@@ -416,5 +468,138 @@
         "content": "AJIN se reserva el derecho de modificar esta política en cualquier momento. Las modificaciones serán publicadas en este sitio web y entrarán en vigor desde su publicación. Le recomendamos revisar periódicamente esta página para estar informado sobre cómo protegemos sus datos personales."
       }
     ]
+  },
+  "inmuebles": {
+    "navLabel": "Inmuebles",
+    "listingTitle": "Inmuebles en Venta y Arriendo",
+    "listingSubtitle": "Propiedades seleccionadas por AJIN Asesoría Jurídica Inmobiliaria y Notarial.",
+    "filters": {
+      "operation": "Operación",
+      "type": "Tipo",
+      "all": "Todas",
+      "allTypes": "Todos los tipos"
+    },
+    "operations": {
+      "venta": "Venta",
+      "arriendo": "Arriendo"
+    },
+    "types": {
+      "apartamento": "Apartamento",
+      "casa": "Casa",
+      "oficina": "Oficina",
+      "lote": "Lote",
+      "bodega": "Bodega"
+    },
+    "specs": {
+      "areaM2": "m²",
+      "bedrooms": "habitaciones",
+      "bathrooms": "baños",
+      "parking": "parqueaderos",
+      "stratum": "Estrato"
+    },
+    "perMonth": "/mes",
+    "featured": "Destacado",
+    "viewDetail": "Ver detalle",
+    "noResults": "No hay inmuebles publicados que coincidan con el filtro.",
+    "publishCta": "¿Tienes un inmueble? Publícalo con nosotros",
+    "seoTitle": "Inmuebles en Venta y Arriendo | AJIN",
+    "seoDescription": "Inmuebles en venta y arriendo en Bogotá y Chía verificados por AJIN Asesoría Jurídica Inmobiliaria y Notarial.",
+    "detail": {
+      "features": "Características",
+      "description": "Descripción",
+      "interested": "¿Interesado en este inmueble?",
+      "contactDesc": "Déjanos tus datos y te contactaremos para coordinar una visita.",
+      "backToList": "Volver a Inmuebles",
+      "code": "Código",
+      "notFound": "Inmueble no encontrado o ya no disponible.",
+      "ownerInfo": "Publicado por su propietario y validado por AJIN."
+    },
+    "publish": {
+      "title": "Publica tu Inmueble",
+      "subtitle": "Completa el formulario y nuestro equipo validará la información antes de publicarlo.",
+      "operation": "Operación *",
+      "type": "Tipo de inmueble *",
+      "propertyTitle": "Título del anuncio *",
+      "propertyTitlePlaceholder": "Ej: Apartamento en Chía Norte, 3 habitaciones",
+      "price": "Precio (COP) *",
+      "pricePlaceholder": "Ej: 450000000",
+      "area": "Área (m²)",
+      "bedrooms": "Habitaciones",
+      "bathrooms": "Baños",
+      "parking": "Parqueaderos",
+      "stratum": "Estrato (1-6)",
+      "neighborhood": "Barrio / Sector",
+      "city": "Ciudad",
+      "descriptionField": "Descripción",
+      "descriptionPlaceholder": "Describe tu inmueble: distribución, acabados, zonas comunes...",
+      "photos": "Fotos (máximo 15)",
+      "photosHint": "Las fotos se optimizan automáticamente antes de enviarse.",
+      "addPhotos": "Agregar fotos",
+      "uploadingPhotos": "Subiendo fotos...",
+      "ownerSection": "Tus datos de contacto",
+      "name": "Nombre completo *",
+      "phone": "Teléfono / WhatsApp *",
+      "emailField": "Email",
+      "submit": "Enviar solicitud",
+      "sending": "Enviando...",
+      "successTitle": "¡Solicitud enviada!",
+      "successMessage": "Recibimos tu inmueble. Nuestro equipo lo revisará y te contactará. Las solicitudes sin aprobar se eliminan después de 30 días.",
+      "errorMessage": "Hubo un problema al enviar la solicitud. Inténtalo de nuevo.",
+      "requiredField": "Este campo es obligatorio",
+      "invalidPhone": "Ingrese un teléfono válido",
+      "invalidPrice": "Ingrese un precio válido",
+      "shortTitle": "El título debe tener al menos 5 caracteres"
+    },
+    "publishButton": "Publicar mi inmueble"
+  },
+  "admin": {
+    "loginTitle": "Panel de Administración",
+    "password": "Contraseña",
+    "signIn": "Iniciar sesión",
+    "signOut": "Cerrar sesión",
+    "notAdmin": "Esta cuenta no tiene acceso de administrador.",
+    "listTitle": "Gestión de Inmuebles",
+    "newProperty": "Nuevo inmueble",
+    "tabs": {
+      "pending": "Pendientes",
+      "approved": "Publicados",
+      "rejected": "Rechazados"
+    },
+    "table": {
+      "title": "Título",
+      "operation": "Operación",
+      "price": "Precio",
+      "date": "Fecha",
+      "actions": "Acciones",
+      "photos": "Fotos"
+    },
+    "emptyState": "No hay inmuebles en este estado.",
+    "approve": "Aprobar",
+    "reject": "Rechazar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "deleteConfirm": "¿Eliminar este inmueble y todas sus fotos? Esta acción no se puede deshacer.",
+    "editor": {
+      "backToList": "Volver a la lista",
+      "saveChanges": "Guardar cambios",
+      "saving": "Guardando...",
+      "saved": "Cambios guardados",
+      "saveError": "Error al guardar. Inténtalo de nuevo.",
+      "statusLabel": "Estado",
+      "featuredLabel": "Destacado",
+      "detailsSection": "Datos del inmueble",
+      "photosSection": "Fotos",
+      "addPhoto": "Agregar foto",
+      "uploading": "Subiendo...",
+      "photoLimit": "Máximo 15 fotos.",
+      "deletePhotoConfirm": "¿Eliminar esta foto?",
+      "makeCover": "Portada",
+      "cover": "Portada",
+      "moveLeft": "←",
+      "moveRight": "→",
+      "createdByAdmin": "Creado desde el panel",
+      "clientRequest": "Solicitud de cliente",
+      "contactInfo": "Datos de contacto del propietario"
+    }
   }
 }

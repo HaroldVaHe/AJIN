@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { SITE_URL } from '@/lib/site';
 import { getAllSlugs } from '@/lib/blog';
+import { fetchApprovedIds } from '@/lib/supabase/public';
 
 const locales = ['es', 'en'] as const;
 
@@ -24,7 +25,7 @@ const staticPages = [
   { path: '/landing/abogado-cobro-cartera', priority: '0.9' },
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [];
 
   for (const locale of locales) {
@@ -45,6 +46,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.8,
       });
     }
+  }
+
+  try {
+    const propertyIds = await fetchApprovedIds();
+    for (const id of propertyIds) {
+      entries.push({
+        url: `${SITE_URL}/es/inmuebles/${id}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.8,
+      });
+    }
+    entries.push({
+      url: `${SITE_URL}/es/inmuebles`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.9,
+    });
+    entries.push({
+      url: `${SITE_URL}/en/inmuebles`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.9,
+    });
+  } catch {
+    // Supabase not reachable at build time — skip properties
   }
 
   return entries;

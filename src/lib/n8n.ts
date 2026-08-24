@@ -24,6 +24,20 @@ export interface LeadData {
   topic?: string;
 }
 
+export interface PropertyRequestData {
+  id?: number;
+  operation: string;
+  type: string;
+  title: string;
+  price_cop: number;
+  owner_name: string;
+  owner_phone: string;
+  owner_email?: string;
+  neighborhood?: string;
+  city?: string;
+  photos?: number;
+}
+
 const AREA_LABELS: Record<string, string> = {
   familia: 'Familia y Sucesiones',
   inmobiliario: 'Derecho Inmobiliario',
@@ -95,5 +109,21 @@ export function formatLeadMessage(data: LeadData): string {
     `<b>Teléfono:</b> ${data.phone}\n` +
     `<b>Asunto:</b> ${data.topic ?? 'Consulta general'}\n` +
     `<b>Mensaje:</b>\n${data.message}`
+  );
+}
+
+export function formatPropertyRequestMessage(data: PropertyRequestData): string {
+  const idLine = data.id ? ` #${data.id}` : '';
+  return (
+    `<b>🏠 Nueva propiedad para publicar${idLine} - AJIN</b>\n\n` +
+    `<b>Título:</b> ${data.title}\n` +
+    `<b>Operación:</b> ${data.operation}\n` +
+    `<b>Tipo:</b> ${data.type}\n` +
+    `<b>Precio:</b> $${data.price_cop.toLocaleString('es-CO')} COP\n` +
+    (data.neighborhood ? `<b>Sector:</b> ${data.neighborhood}, ${data.city ?? ''}\n` : '') +
+    (data.photos !== undefined ? `<b>Fotos:</b> ${data.photos}\n` : '') +
+    `<b>Dueño:</b> ${data.owner_name}\n` +
+    `<b>Teléfono:</b> ${data.owner_phone}` +
+    (data.owner_email ? `\n<b>Email:</b> ${data.owner_email}` : '')
   );
 }

@@ -12,6 +12,7 @@ const navItems = [
   { href: '/', key: 'common.nav.home' },
   { href: '/nosotros', key: 'common.nav.about' },
   { href: '/servicios', key: 'common.nav.services' },
+  { href: '/inmuebles', key: 'inmuebles.navLabel' },
   { href: '/blog', key: 'common.nav.blog' },
   { href: '/poderes', key: 'common.nav.powers' },
   { href: '/contacto', key: 'common.nav.contact' },

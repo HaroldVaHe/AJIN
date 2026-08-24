@@ -121,17 +121,38 @@
     "familia": {
       "title": "Family & Successions",
       "description": "Comprehensive advisory in family law, successions, wills, and support processes.",
-      "items": ["Divorces", "Successions", "Wills", "Family lawsuits", "Marital property liquidation", "Support processes (formerly Guardianship)", "Asset cancellations"]
+      "items": [
+        "Divorces",
+        "Successions",
+        "Wills",
+        "Family lawsuits",
+        "Marital property liquidation",
+        "Support processes (formerly Guardianship)",
+        "Asset cancellations"
+      ]
     },
     "inmobiliario": {
       "title": "Real Estate Law",
       "description": "Specialized legal management in real estate, property contracts, and appraisals.",
-      "items": ["Sales", "Leases", "Appraisals", "Property mergers and divisions", "Material division", "Promissory purchase agreements", "Mortgage loans"]
+      "items": [
+        "Sales",
+        "Leases",
+        "Appraisals",
+        "Property mergers and divisions",
+        "Material division",
+        "Promissory purchase agreements",
+        "Mortgage loans"
+      ]
     },
     "comercial": {
       "title": "Commercial & Corporate",
       "description": "Legal advisory for companies in liquidation, contracts, powers of attorney and more.",
-      "items": ["Company liquidation", "Contracts", "Powers of attorney", "Petition rights"]
+      "items": [
+        "Company liquidation",
+        "Contracts",
+        "Powers of attorney",
+        "Petition rights"
+      ]
     }
   },
   "contact": {
@@ -209,27 +230,58 @@
     "laboral": {
       "title": "Labor Lawyers in Bogotá",
       "description": "We are your labor law firm in Bogotá with extensive experience in terminations, settlements, and labor lawsuits.",
-      "items": ["Wrongful termination", "Labor settlements", "Workplace harassment", "Labor lawsuits", "Employment contracts", "Collective bargaining"]
+      "items": [
+        "Wrongful termination",
+        "Labor settlements",
+        "Workplace harassment",
+        "Labor lawsuits",
+        "Employment contracts",
+        "Collective bargaining"
+      ]
     },
     "despido": {
       "title": "Lawyer for Wrongful Termination",
       "description": "If you were unfairly dismissed, our attorneys will help you claim your compensation and labor rights.",
-      "items": ["Free case evaluation", "Compensation calculation", "Legal representation", "Employer negotiation", "Labor lawsuit"]
+      "items": [
+        "Free case evaluation",
+        "Compensation calculation",
+        "Legal representation",
+        "Employer negotiation",
+        "Labor lawsuit"
+      ]
     },
     "divorcio": {
       "title": "Divorce Lawyer in Bogotá",
       "description": "Divorce specialists in Bogotá. Mutual agreement and contentious. Agile and transparent processes.",
-      "items": ["Mutual agreement divorce", "Contentious divorce", "Marital property liquidation", "Custody and alimony", "Complete advisory"]
+      "items": [
+        "Mutual agreement divorce",
+        "Contentious divorce",
+        "Marital property liquidation",
+        "Custody and alimony",
+        "Complete advisory"
+      ]
     },
     "empresas": {
       "title": "Legal Advisory for Companies",
       "description": "Real estate and notarial legal advisory for companies in Bogotá. SAS incorporation, contracts, regulatory compliance.",
-      "items": ["SAS company incorporation", "Commercial contracts", "Legal due diligence", "Intellectual property", "Debt collection"]
+      "items": [
+        "SAS company incorporation",
+        "Commercial contracts",
+        "Legal due diligence",
+        "Intellectual property",
+        "Debt collection"
+      ]
     },
     "cobro": {
       "title": "Debt Collection Lawyer",
       "description": "Recover your delinquent portfolio with our attorneys specialized in judicial and pre-judicial collection in Bogotá.",
-      "items": ["Pre-judicial collection", "Executive lawsuit", "Garnishment and seizures", "Payment agreements", "Portfolio recovery"]
+      "items": [
+        "Pre-judicial collection",
+        "Executive lawsuit",
+        "Garnishment and seizures",
+        "Payment agreements",
+        "Portfolio recovery"
+      ]
     },
     "includes": "Our services include:",
     "needHelp": "Need help with this matter?",
@@ -331,7 +383,7 @@
       },
       {
         "title": "4. ARCO Rights",
-        "content": "Under Law 1581 of 2012, you have the following rights over your personal data: Access (to know what data we hold and how we process it), Update (to request correction of inaccurate data), Rectification (to modify incorrect data), Suppression (to request deletion of your data when no longer needed for the described purposes). To exercise these rights, send your request to clientesajin@gmail.com with the subject 'ARCO Rights'."
+        "content": "Under Law 1581 of 2012, you have the following rights over your personal data: Access (to know what data we hold and how we process it), Update (to request correction of inaccurate data), Rectification (to modify incorrect data), Suppression (to request deletion of your data when no longer needed for the described purposes). To exercise these rights, send your request to asesoriajuridicainmobiliariaynotarial@gmail.com with the subject 'ARCO Rights'."
       },
       {
         "title": "5. Data security",
@@ -347,7 +399,7 @@
       },
       {
         "title": "8. Contact",
-        "content": "If you have questions about this Privacy Policy or wish to exercise your ARCO rights, you can contact us at: Email: clientesajin@gmail.com, Phone: +57 350 4338533, Address: Calle 12 # 13-26, Chía, Cundinamarca."
+        "content": "If you have questions about this Privacy Policy or wish to exercise your ARCO rights, you can contact us at: Email: asesoriajuridicainmobiliariaynotarial@gmail.com, Phone: +57 350 4338533, Address: Calle 12 # 13-26, Chía, Cundinamarca."
       }
     ]
   },
@@ -382,7 +434,7 @@
       },
       {
         "title": "7. Contact",
-        "content": "For any questions about these Terms & Conditions, you can contact us at: clientesajin@gmail.com or phone +57 350 4338533."
+        "content": "For any questions about these Terms & Conditions, you can contact us at: asesoriajuridicainmobiliariaynotarial@gmail.com or phone +57 350 4338533."
       }
     ]
   },
@@ -397,7 +449,7 @@
       },
       {
         "title": "Data controller",
-        "content": "AJIN Real Estate and Notarial Legal Advisory, with address at Calle 12 # 13-26, Chía, Cundinamarca, is the data controller responsible for processing your personal data. For any inquiries, you can contact us at clientesajin@gmail.com."
+        "content": "AJIN Real Estate and Notarial Legal Advisory, with address at Calle 12 # 13-26, Chía, Cundinamarca, is the data controller responsible for processing your personal data. For any inquiries, you can contact us at asesoriajuridicainmobiliariaynotarial@gmail.com."
       },
       {
         "title": "Your ARCO rights",
@@ -405,7 +457,7 @@
       },
       {
         "title": "How to exercise your rights",
-        "content": "To exercise your ARCO rights, you must send a written request to clientesajin@gmail.com stating: (a) your full name and identification document; (b) the right you wish to exercise; (c) a clear and precise description of your request; (d) contact information to receive the response. AJIN will respond to your request within a maximum of 15 business days, extendable by an additional 15 days when circumstances warrant."
+        "content": "To exercise your ARCO rights, you must send a written request to asesoriajuridicainmobiliariaynotarial@gmail.com stating: (a) your full name and identification document; (b) the right you wish to exercise; (c) a clear and precise description of your request; (d) contact information to receive the response. AJIN will respond to your request within a maximum of 15 business days, extendable by an additional 15 days when circumstances warrant."
       },
       {
         "title": "Procedure for inquiries and complaints",
@@ -416,5 +468,138 @@
         "content": "AJIN reserves the right to modify this policy at any time. Modifications will be published on this website and will take effect upon publication. We recommend periodically reviewing this page to stay informed about how we protect your personal data."
       }
     ]
+  },
+  "inmuebles": {
+    "navLabel": "Properties",
+    "listingTitle": "Properties for Sale and Rent",
+    "listingSubtitle": "Handpicked properties by AJIN Real Estate and Notarial Legal Advisory.",
+    "filters": {
+      "operation": "Operation",
+      "type": "Type",
+      "all": "All",
+      "allTypes": "All types"
+    },
+    "operations": {
+      "venta": "For Sale",
+      "arriendo": "For Rent"
+    },
+    "types": {
+      "apartamento": "Apartment",
+      "casa": "House",
+      "oficina": "Office",
+      "lote": "Lot",
+      "bodega": "Warehouse"
+    },
+    "specs": {
+      "areaM2": "m²",
+      "bedrooms": "bedrooms",
+      "bathrooms": "bathrooms",
+      "parking": "parking spots",
+      "stratum": "Stratum"
+    },
+    "perMonth": "/month",
+    "featured": "Featured",
+    "viewDetail": "View details",
+    "noResults": "No published properties match this filter.",
+    "publishCta": "Do you own a property? List it with us",
+    "seoTitle": "Properties for Sale and Rent | AJIN",
+    "seoDescription": "Verified properties for sale and rent in Bogotá and Chía by AJIN Real Estate and Notarial Legal Advisory.",
+    "detail": {
+      "features": "Features",
+      "description": "Description",
+      "interested": "Interested in this property?",
+      "contactDesc": "Leave your details and we will contact you to schedule a visit.",
+      "backToList": "Back to Properties",
+      "code": "Listing ID",
+      "notFound": "Property not found or no longer available.",
+      "ownerInfo": "Posted by its owner and validated by AJIN."
+    },
+    "publish": {
+      "title": "List Your Property",
+      "subtitle": "Complete the form and our team will verify the information before publishing it.",
+      "operation": "Operation *",
+      "type": "Property type *",
+      "propertyTitle": "Listing title *",
+      "propertyTitlePlaceholder": "e.g. Apartment in North Chía, 3 bedrooms",
+      "price": "Price (COP) *",
+      "pricePlaceholder": "e.g. 450000000",
+      "area": "Area (m²)",
+      "bedrooms": "Bedrooms",
+      "bathrooms": "Bathrooms",
+      "parking": "Parking spots",
+      "stratum": "Stratum (1-6)",
+      "neighborhood": "Neighborhood / Area",
+      "city": "City",
+      "descriptionField": "Description",
+      "descriptionPlaceholder": "Describe your property: layout, finishes, common areas...",
+      "photos": "Photos (max 15)",
+      "photosHint": "Photos are automatically optimized before uploading.",
+      "addPhotos": "Add photos",
+      "uploadingPhotos": "Uploading photos...",
+      "ownerSection": "Your contact details",
+      "name": "Full name *",
+      "phone": "Phone / WhatsApp *",
+      "emailField": "Email",
+      "submit": "Submit request",
+      "sending": "Sending...",
+      "successTitle": "Request sent!",
+      "successMessage": "We received your property. Our team will review it and contact you. Unapproved requests are deleted after 30 days.",
+      "errorMessage": "There was a problem submitting your request. Please try again.",
+      "requiredField": "This field is required",
+      "invalidPhone": "Enter a valid phone number",
+      "invalidPrice": "Enter a valid price",
+      "shortTitle": "The title must be at least 5 characters"
+    },
+    "publishButton": "List my property"
+  },
+  "admin": {
+    "loginTitle": "Admin Panel",
+    "password": "Password",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "notAdmin": "This account does not have administrator access.",
+    "listTitle": "Property Management",
+    "newProperty": "New property",
+    "tabs": {
+      "pending": "Pending",
+      "approved": "Published",
+      "rejected": "Rejected"
+    },
+    "table": {
+      "title": "Title",
+      "operation": "Operation",
+      "price": "Price",
+      "date": "Date",
+      "actions": "Actions",
+      "photos": "Photos"
+    },
+    "emptyState": "No properties with this status.",
+    "approve": "Approve",
+    "reject": "Reject",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this property and all its photos? This cannot be undone.",
+    "editor": {
+      "backToList": "Back to list",
+      "saveChanges": "Save changes",
+      "saving": "Saving...",
+      "saved": "Changes saved",
+      "saveError": "Error saving. Please try again.",
+      "statusLabel": "Status",
+      "featuredLabel": "Featured",
+      "detailsSection": "Property details",
+      "photosSection": "Photos",
+      "addPhoto": "Add photo",
+      "uploading": "Uploading...",
+      "photoLimit": "Maximum 15 photos.",
+      "deletePhotoConfirm": "Delete this photo?",
+      "makeCover": "Make cover",
+      "cover": "Cover",
+      "moveLeft": "←",
+      "moveRight": "→",
+      "createdByAdmin": "Created from admin panel",
+      "clientRequest": "Client request",
+      "contactInfo": "Owner contact details"
+    }
   }
 }
