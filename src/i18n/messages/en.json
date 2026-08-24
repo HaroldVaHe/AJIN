@@ -548,7 +548,12 @@
       "requiredField": "This field is required",
       "invalidPhone": "Enter a valid phone number",
       "invalidPrice": "Enter a valid price",
-      "shortTitle": "The title must be at least 5 characters"
+      "shortTitle": "The title must be at least 5 characters",
+      "department": "Department *",
+      "selectDepartment": "Select a department",
+      "selectCity": "Select a city",
+      "cityDisabledHint": "Select a department first",
+      "descriptionPresetHint": "We prepared a description from the form data; you can edit it."
     },
     "publishButton": "List my property",
     "department": "Department *",
@@ -604,7 +609,8 @@
       "moveRight": "→",
       "createdByAdmin": "Created from admin panel",
       "clientRequest": "Client request",
-      "contactInfo": "Owner contact details"
+      "contactInfo": "Owner contact details",
+      "generateDesc": "Generate description"
     },
     "generateDesc": "Generate description"
   }
