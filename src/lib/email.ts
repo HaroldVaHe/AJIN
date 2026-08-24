@@ -64,14 +64,18 @@ export function formatPowerEmail(data: PowerData): EmailPayload {
 }
 
 export function formatLeadEmail(data: LeadData): EmailPayload {
+  const isProperty = data.source === 'property';
+  const rows: Array<{ label: string; value: string }> = [
+    { label: 'Nombre', value: escapeHtml(data.name) },
+    { label: 'Teléfono', value: escapeHtml(data.phone) },
+    isProperty
+      ? { label: 'Inmueble', value: escapeHtml(data.topic ?? '') }
+      : { label: 'Asunto', value: escapeHtml(data.topic ?? 'Consulta general') },
+    { label: 'Mensaje', value: escapeHtml(data.message) },
+  ];
   return {
-    subject: `💼 Solicitud de asesoría - ${data.name}`,
-    html: emailLayout([
-      { label: 'Nombre', value: escapeHtml(data.name) },
-      { label: 'Teléfono', value: escapeHtml(data.phone) },
-      { label: 'Asunto', value: escapeHtml(data.topic ?? 'Consulta general') },
-      { label: 'Mensaje', value: escapeHtml(data.message) },
-    ]),
+    subject: `${leadHeadline(data)} - ${data.name}`,
+    html: emailLayout(rows),
   };
 }
 
