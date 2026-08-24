@@ -19,6 +19,16 @@ Next.js 15.5.18 + Tailwind CSS 4 + next-intl bilingual (ES/EN) site for AJIN Ase
 - Body scroll locked on mobile menu open (`useEffect` toggles `document.body.style.overflow`).
 - `<Analytics />` from `@vercel/analytics/next` must be added to layout. Package already in deps.
 
+## Marketplace de Inmuebles (Supabase)
+
+- **Stack:** Supabase (Postgres + Storage + Auth). Setup DDL en `supabase-setup.sql` (tablas `properties` / `property_images`, RLS solo lectura pública de `approved`, bucket público `inmuebles` límite 5 MB). Ejecutar una vez en SQL Editor; los 3 usuarios admin se crean manualmente en Authentication (email/password).
+- **Seguridad:** TODAS las escrituras pasan por rutas API con la service-role key (`src/lib/supabase/admin.ts`); el anon key nunca escribe. Sin tabla `admins`: un usuario es admin si su email de sesión está en `ADMIN_EMAILS` (env, coma-separada). Guard doble: middleware (`/es|en/admin/*` → login si no sesión+admin) y `requireAdminApi()` en cada ruta `/api/admin/*`.
+- **Flujo cliente:** `/inmuebles/publicar` (`PropertySubmissionForm`) → POST `/api/inmuebles/solicitud` (JSON metadata, rate-limit 5/h) crea fila `pending source=client` → sube fotos una a una a POST `/api/inmuebles/solicitud/[id]/foto` (máx 15, 40/h). Fotos se convierten a WebP client-side (`src/lib/image-webp.ts`, OffscreenCanvas máx 1600 px q0.8) para esquivar el límite de body de 4.5 MB de Vercel. Notificación Telegram+email vía `src/lib/property-notify.ts`.
+- **Purga:** Vercel Cron diario (`vercel.json`) llama GET `/api/cron/cleanup-pending` con header `Authorization: Bearer CRON_SECRET`; elimina solicitudes `pending|rejected` >30 días (fotos del bucket primero, luego fila cascade) y avisa por Telegram.
+- **Admin:** `/[locale]/admin/login` (client, `signInWithPassword`) y panel bajo route group `admin/(guarded)/` — lista con tabs por estado (`?estado=pending|approved|rejected`), aprobar/rechazar/eliminar inline (`AdminRowActions`), editor completo con gestión de fotos (subir/borrar/reordenar/portada, `PropertyEditor`) en `/admin/inmuebles/[id]` y creación en `/admin/inmuebles/nuevo`. Layout protegido cierra sesión y redirige.
+- **Público:** listado `/inmuebles` con filtros por operación/tipo (query params, ISR 60s), detalle `/inmuebles/[id]` (galería lightbox + `LeadForm` → `/api/asesoria` con topic = título #id), JSON-LD `ItemList`/`Product`. Sitemap async incluye IDs aprobados (fail-safe sin Supabase).
+- **next.config.mjs** tiene `images.remotePatterns` para `*.supabase.co` (storage público).
+
 ## SEO (rationale)
 
 - **Single source of truth** — `src/lib/site.ts` exports `SITE_URL` (env `NEXT_PUBLIC_SITE_URL`, fallback `https://ajinabogados.online`), `SITE_NAME`, `SITE_TAGLINE`, `OG_IMAGE_URL` (`/images/og-image.png`, 1200×630) and `buildAlternates(locale, path)`. Change the domain in one place only.
@@ -41,9 +51,14 @@ SMTP_TO=<destinatario, normalmente el mismo SMTP_USER>
 NEXT_PUBLIC_SITE_URL=https://ajinabogados.online   # dominio real; fallback en src/lib/site.ts
 NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=              # NO NECESARIA — propiedad verificada por método Dominio (DNS TXT en Alibaba Cloud). Solo si se revierte a método meta tag.
 NEXT_PUBLIC_N8N_WEBHOOK_BASE=   # optional, future
+NEXT_PUBLIC_SUPABASE_URL=https://<project-ref>.supabase.co   # valor real en .env.local / Vercel
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon key>
+SUPABASE_SERVICE_ROLE_KEY=<service role key — NUNCA exponer al cliente>
+ADMIN_EMAILS=<emails admin coma-separados>
+CRON_SECRET=<secreto del cron de limpieza>
 ```
 
-Set in Vercel dashboard for production.
+Set in Vercel dashboard for production (todas las de Supabase + ADMIN_EMAILS + CRON_SECRET también).
 
 ## Key Conventions
 

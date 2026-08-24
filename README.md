@@ -8,6 +8,7 @@ Sitio web corporativo bilingüe (ES/EN) para una firma de abogados colombiana es
 - Tailwind CSS 4 + @tailwindcss/typography
 - next-intl (i18n)
 - react-hook-form
+- @supabase/supabase-js + @supabase/ssr (marketplace de inmuebles)
 - @vercel/analytics
 - Hosting: Vercel
 
@@ -49,6 +50,38 @@ src/
 ## Formularios
 
 Los envíos de formularios (`/contacto`, `/poderes`, y los `LeadForm` en las landing pages → `/api/asesoria`) se envían en paralelo a Telegram y email (SMTP Gmail), más n8n (futuro, opcional vía `NEXT_PUBLIC_N8N_WEBHOOK_BASE`). Al enviar, también se abre `wa.me` con el mensaje prellenado. Ver `.env.example`.
+
+---
+
+## Marketplace de Inmuebles
+
+Sección visual de propiedades en venta y arriendo sobre Supabase (Postgres + Storage + Auth).
+
+### Configuración (una vez)
+
+1. Ejecutar `supabase-setup.sql` en el **SQL Editor** de Supabase: crea tablas `properties` / `property_images`, RLS (lectura pública solo de `approved`) y el bucket público `inmuebles` (límite 5 MB por archivo).
+2. Crear los usuarios admin en **Authentication → Users** (email/password, Auto Confirm). Un usuario es admin si su email está en `ADMIN_EMAILS`.
+3. Variables en Vercel: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_EMAILS`, `CRON_SECRET`.
+
+### Flujo de publicación (ES)
+
+| Paso | Descripción |
+|---|---|
+| Cliente | Completa `/es/inmuebles/publicar`: metadata JSON (`POST /api/inmuebles/solicitud`, rate-limit 5/h) y fotos una a una (`POST /api/inmuebles/solicitud/{id}/foto`, máx 15). Fotos se comprimen a WebP en el navegador. Queda `pending` y notifica a Telegram/email. |
+| Purga | Vercel Cron diario elimina solicitudes sin aprobar con más de 30 días (`GET /api/cron/cleanup-pending`, protegido con `CRON_SECRET`). |
+| Admin | Entra por `/es/admin/login`. Lista con tabs Pendientes/Publicados/Rechazados; aprobar o rechazar inline; editor completo con fotos (subir, borrar, reordenar, portada) en `/es/admin/inmuebles/{id}`. |
+| Público | `/es/inmuebles` lista aprobados con filtros (ISR 60 s); detalle `/es/inmuebles/{id}` con galería lightbox y formulario de contacto. |
+
+### Property flow (EN)
+
+| Step | Description |
+|---|---|
+| Client | Submits `/en/inmuebles/publicar`: metadata JSON first, then photos one by one (max 15), converted to WebP in-browser. Stored as `pending`; Telegram/email notification sent. |
+| Cleanup | Daily Vercel cron deletes unapproved requests older than 30 days (Bearer-protected with `CRON_SECRET`). |
+| Admin | Signs in at `/en/admin/login`; status tabs, inline approve/reject, full photo manager in the editor. |
+| Public | `/en/inmuebles` lists approved properties with filters (ISR 60 s); detail page with lightbox gallery and lead form. |
+
+Security: every write goes through API routes using the service-role key; the anon key is read-only via RLS. Admin access = authenticated session whose email is listed in `ADMIN_EMAILS`, enforced by middleware and again inside each `/api/admin/*` route.
 
 ---
 
