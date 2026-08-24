@@ -22,6 +22,8 @@ export interface LeadData {
   phone: string;
   message: string;
   topic?: string;
+  /** 'property' = interés en un inmueble del marketplace. */
+  source?: 'landing' | 'property';
 }
 
 export interface PropertyRequestData {
@@ -102,12 +104,20 @@ export function formatPowerMessage(data: PowerData): string {
   );
 }
 
+export function leadHeadline(data: LeadData): string {
+  return data.source === 'property'
+    ? `🏠 Interés en inmueble - ${data.topic ?? 'AJIN'}`
+    : `💼 Solicitud de asesoría - ${data.topic ?? 'AJIN'}`;
+}
+
 export function formatLeadMessage(data: LeadData): string {
   return (
-    `<b>💼 Solicitud de asesoría - ${data.topic ?? 'AJIN'}</b>\n\n` +
+    `<b>${leadHeadline(data)}</b>\n\n` +
     `<b>Nombre:</b> ${data.name}\n` +
     `<b>Teléfono:</b> ${data.phone}\n` +
-    `<b>Asunto:</b> ${data.topic ?? 'Consulta general'}\n` +
+    (data.source === 'property'
+      ? `<b>Inmueble:</b> ${data.topic ?? ''}\n`
+      : `<b>Asunto:</b> ${data.topic ?? 'Consulta general'}\n`) +
     `<b>Mensaje:</b>\n${data.message}`
   );
 }

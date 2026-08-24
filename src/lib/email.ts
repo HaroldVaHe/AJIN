@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import type { ContactData, LeadData, PowerData, PropertyRequestData } from '@/lib/n8n';
-import { areaLabel } from '@/lib/n8n';
+import { areaLabel, leadHeadline } from '@/lib/n8n';
 
 const SMTP_HOST = process.env.SMTP_HOST || '';
 const SMTP_PORT = Number(process.env.SMTP_PORT) || 587;

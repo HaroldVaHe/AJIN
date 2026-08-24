@@ -49,7 +49,7 @@ export default function LeadForm({ topic, variant = 'landing' }: LeadFormProps) 
       const res = await fetch('/api/asesoria', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, topic }),
+        body: JSON.stringify({ ...data, topic, source: isProperty ? 'property' : 'landing' }),
       });
       if (!res.ok) throw new Error('Failed');
       setSubmitted(true);
