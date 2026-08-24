@@ -33,6 +33,7 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
   const [status, setStatus] = useState(property?.status ?? 'approved');
   const [featured, setFeatured] = useState(property?.featured ?? false);
   const [images, setImages] = useState<PropertyWithImages['images']>(property?.images ?? []);
+  const [pendingPhotos, setPendingPhotos] = useState<Array<{ file: File; preview: string }>>([]);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
   const [saveState, setSaveState] = useState<SaveState>('idle');
@@ -96,6 +97,7 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
       };
 
       let targetId = id;
+      let photoFailures = 0;
       if (isNew || targetId === null) {
         const res = await fetch('/api/admin/inmuebles', {
           method: 'POST',
@@ -106,6 +108,10 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
         if (!res.ok || !data.success) throw new Error(data.error);
         targetId = data.id;
         setId(targetId);
+        // Subir fotos en buffer antes de navegar: replace() desmonta este componente.
+        if (pendingPhotos.length > 0 && targetId !== null) {
+          photoFailures = await uploadPendingPhotos(targetId);
+        }
         router.replace(`/admin/inmuebles/${targetId}`);
       } else {
         const res = await fetch(`/api/admin/inmuebles/${targetId}`, {
@@ -117,6 +123,7 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
         if (!res.ok || !data.success) throw new Error(data.error);
       }
 
+      setUploadError(photoFailures > 0 ? `${photoFailures} foto(s) no pudieron subirse al servidor` : '');
       setSaveState('saved');
       router.refresh();
     } catch (err) {
@@ -137,16 +144,36 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
   };
 
   const uploadPhoto = async (list: FileList | null) => {
-    if (!list || list.length === 0 || id === null) return;
+    if (!list || list.length === 0) return;
+    const incoming = Array.from(list);
+    if (fileInputRef.current) fileInputRef.current.value = '';
     setUploading(true);
     setUploadError('');
     try {
-      const incoming = Array.from(list);
       const empty = incoming.filter((f) => f.size === 0);
       const files = await filesToWebp(incoming.filter((f) => f.size > 0));
-      const valid = files.filter((f) => f.type.startsWith('image/')).slice(0, MAX_PHOTOS - images.length);
+      const valid = files.filter((f) => f.type.startsWith('image/'));
+
+      // Modo creación: sin id todavía → se guardan en buffer y se suben al guardar.
+      if (id === null) {
+        setPendingPhotos((prev) =>
+          [...prev, ...valid.map((file) => ({ file, preview: URL.createObjectURL(file) }))].slice(
+            0,
+            MAX_PHOTOS
+          )
+        );
+        const skippedInvalid = files.filter((f) => !f.type.startsWith('image/')).length;
+        const messages: string[] = [];
+        if (empty.length > 0) messages.push(`${empty.length} archivo(s) vacío(s) omitido(s)`);
+        if (skippedInvalid > 0) messages.push(`${skippedInvalid} archivo(s) no reconocidos como imagen`);
+        if (valid.length === 0 && incoming.length > 0)
+          messages.unshift('No se pudo adjuntar ninguna foto. Verifica que sean imágenes.');
+        setUploadError(messages.join(' · '));
+        return;
+      }
+
       let failed = 0;
-      for (const file of valid) {
+      for (const file of valid.slice(0, MAX_PHOTOS - images.length)) {
         const fd = new FormData();
         fd.append('file', file);
         const res = await fetch(`/api/admin/inmuebles/${id}/foto`, {
@@ -172,8 +199,33 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
       setUploadError('No se pudieron procesar las fotos. Intenta de nuevo.');
     } finally {
       setUploading(false);
-      if (fileInputRef.current) fileInputRef.current.value = '';
     }
+  };
+
+  /** Sube las fotos en buffer tras crear el inmueble. Devuelve nº de fallos. */
+  const uploadPendingPhotos = async (targetId: number): Promise<number> => {
+    let failed = 0;
+    for (const { file } of pendingPhotos) {
+      try {
+        const fd = new FormData();
+        fd.append('file', file);
+        const res = await fetch(`/api/admin/inmuebles/${targetId}/foto`, {
+          method: 'POST',
+          body: fd,
+        });
+        const data = await res.json();
+        if (res.ok && data.success && data.image) {
+          setImages((prev) => [...prev, data.image]);
+        } else {
+          failed += 1;
+        }
+      } catch {
+        failed += 1;
+      }
+    }
+    pendingPhotos.forEach((p) => URL.revokeObjectURL(p.preview));
+    setPendingPhotos([]);
+    return failed;
   };
 
   const deletePhoto = async (imageId: number) => {
@@ -452,7 +504,30 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
                   </div>
                 ))}
 
-              {images.length < MAX_PHOTOS && (
+              {pendingPhotos.map((photo, idx) => (
+                <div key={photo.preview} className="group relative overflow-hidden rounded-xl bg-ajin-surface">
+                  <div className="relative aspect-square">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={photo.preview} alt={`Foto nueva ${images.length + idx + 1}`} className="h-full w-full object-cover" />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      URL.revokeObjectURL(photo.preview);
+                      setPendingPhotos((prev) => prev.filter((p) => p.preview !== photo.preview));
+                    }}
+                    className="absolute right-1 top-1 rounded-full bg-black/60 p-1 text-white"
+                    title="Quitar foto"
+                  >
+                    <Trash2 size={12} />
+                  </button>
+                  <span className="absolute inset-x-0 bottom-0 bg-black/50 py-0.5 text-center text-[10px] font-semibold text-white">
+                    {isNew ? 'Se sube al guardar' : ''}
+                  </span>
+                </div>
+              ))}
+
+              {images.length + pendingPhotos.length < MAX_PHOTOS && (
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
