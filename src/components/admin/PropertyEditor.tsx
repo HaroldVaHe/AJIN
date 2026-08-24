@@ -4,10 +4,11 @@ import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { CheckCircle2, AlertCircle, Loader2, ImagePlus, Trash2, ArrowLeft, ArrowRight, Star } from 'lucide-react';
+import { CheckCircle2, AlertCircle, Loader2, ImagePlus, Trash2, ArrowLeft, ArrowRight, Star, Wand2 } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import type { PropertyWithImages } from '@/types/property';
 import { filesToWebp } from '@/lib/image-webp';
+import { DEPARTMENTS, getCitiesForDepartment, composeDescription } from '@/lib/colombia-geo';
 
 const OPERATIONS = ['venta', 'arriendo'] as const;
 const TYPES = ['apartamento', 'casa', 'oficina', 'lote', 'bodega'] as const;
@@ -25,6 +26,7 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
   const t = useTranslations('admin.editor');
   const tAdmin = useTranslations('admin');
   const tInm = useTranslations('inmuebles');
+  const formRef = useRef<HTMLFormElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [id, setId] = useState<number | null>(property?.id ?? null);
@@ -33,6 +35,8 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
   const [images, setImages] = useState<PropertyWithImages['images']>(property?.images ?? []);
   const [uploading, setUploading] = useState(false);
   const [saveState, setSaveState] = useState<SaveState>('idle');
+  const [department, setDepartment] = useState(property?.department ?? '');
+  const cities = getCitiesForDepartment(department);
 
   const collectPayload = (form: HTMLFormElement) => {
     const fd = new FormData(form);
@@ -50,10 +54,34 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
       stratum: Number(get('stratum')) || null,
       neighborhood: get('neighborhood'),
       city: get('city') || 'Bogotá',
+      department,
       owner_name: get('owner_name'),
       owner_phone: get('owner_phone'),
       owner_email: get('owner_email'),
     };
+  };
+
+  const generateDescription = () => {
+    const textarea = formRef.current?.elements.namedItem('description') as HTMLTextAreaElement | null;
+    if (!textarea) return;
+    const fd = new FormData(formRef.current!);
+    const num = (k: string) => Number(fd.get(k)) || null;
+    const generated = composeDescription({
+      operation: String(fd.get('operation') ?? ''),
+      type: String(fd.get('type') ?? ''),
+      neighborhood: String(fd.get('neighborhood') ?? ''),
+      city: String(fd.get('city') ?? ''),
+      department,
+      area_m2: num('area_m2'),
+      bedrooms: num('bedrooms'),
+      bathrooms: num('bathrooms'),
+      parking: num('parking'),
+      stratum: num('stratum'),
+    });
+    if (generated) {
+      textarea.value = generated;
+      setSaveState('idle');
+    }
   };
 
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -112,7 +140,7 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
     setUploading(true);
     try {
       const files = await filesToWebp(list);
-      for (const file of files.slice(0, MAX_PHOTOS - images.length)) {
+      for (const file of files.filter((f) => f.type.startsWith('image/')).slice(0, MAX_PHOTOS - images.length)) {
         const fd = new FormData();
         fd.append('file', file);
         const res = await fetch(`/api/admin/inmuebles/${id}/foto`, {
@@ -125,6 +153,8 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
         }
       }
       router.refresh();
+    } catch (err) {
+      console.error('Photo upload failed:', err);
     } finally {
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
@@ -165,7 +195,7 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
     'w-full rounded-xl border border-ajin-border px-4 py-2.5 text-sm focus:border-ajin-accent focus:outline-none';
 
   return (
-    <form onSubmit={handleSave}>
+    <form ref={formRef} onSubmit={handleSave}>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <h1 className="text-2xl font-bold text-ajin-primary">
@@ -286,11 +316,48 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
                 <input name="neighborhood" defaultValue={property?.neighborhood} className={inputCls} />
               </div>
               <div>
+                <label className="mb-1 block text-sm font-semibold text-ajin-text">Departamento</label>
+                <select
+                  name="department_select"
+                  required
+                  value={department}
+                  onChange={(e) => setDepartment(e.target.value)}
+                  className={inputCls}
+                >
+                  <option value="" disabled>—</option>
+                  {DEPARTMENTS.map((d) => (
+                    <option key={d.name} value={d.name}>{d.name}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
                 <label className="mb-1 block text-sm font-semibold text-ajin-text">Ciudad</label>
-                <input name="city" defaultValue={property?.city ?? 'Bogotá'} className={inputCls} />
+                <select
+                  name="city"
+                  required={!isNew || department !== ''}
+                  disabled={!department}
+                  key={department}
+                  defaultValue={property && property.department === department ? property.city : ''}
+                  className={`${inputCls} disabled:cursor-not-allowed disabled:bg-ajin-surface`}
+                >
+                  <option value="" disabled>—</option>
+                  {cities.map((c) => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
               </div>
               <div className="sm:col-span-2">
-                <label className="mb-1 block text-sm font-semibold text-ajin-text">Descripción</label>
+                <div className="mb-1 flex items-center justify-between">
+                  <label className="block text-sm font-semibold text-ajin-text">Descripción</label>
+                  <button
+                    type="button"
+                    onClick={generateDescription}
+                    className="flex items-center gap-1 text-xs font-semibold text-ajin-accent transition-colors hover:text-ajin-accent-dark"
+                    title={t('generateDesc')}
+                  >
+                    <Wand2 size={14} /> {t('generateDesc')}
+                  </button>
+                </div>
                 <textarea
                   name="description"
                   rows={5}

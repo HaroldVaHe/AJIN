@@ -16,6 +16,7 @@ export interface Property {
   stratum: number | null;
   neighborhood: string;
   city: string;
+  department: string;
   status: PropertyStatus;
   featured: boolean;
   owner_name: string;
@@ -38,3 +39,11 @@ export interface PropertyImage {
 export interface PropertyWithImages extends Property {
   images: PropertyImage[];
 }
+
+/** Versión pública: nunca expone datos de contacto del propietario. */
+export type PublicProperty = Omit<
+  Property,
+  'owner_name' | 'owner_phone' | 'owner_email'
+> & {
+  images: PropertyImage[];
+};

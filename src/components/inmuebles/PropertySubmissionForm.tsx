@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { CheckCircle2, AlertCircle, Loader2, ImagePlus, X } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { filesToWebp } from '@/lib/image-webp';
+import { DEPARTMENTS, getCitiesForDepartment, composeDescription } from '@/lib/colombia-geo';
 
 const OPERATIONS = ['venta', 'arriendo'] as const;
 const TYPES = ['apartamento', 'casa', 'oficina', 'lote', 'bodega'] as const;
@@ -13,51 +14,125 @@ const MAX_PHOTOS = 15;
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
 
+interface FormValues {
+  operation: string;
+  type: string;
+  title: string;
+  price_cop: string;
+  area_m2: string;
+  bedrooms: string;
+  bathrooms: string;
+  parking: string;
+  stratum: string;
+  neighborhood: string;
+  department: string;
+  city: string;
+}
+
+const INITIAL_VALUES: FormValues = {
+  operation: '',
+  type: '',
+  title: '',
+  price_cop: '',
+  area_m2: '',
+  bedrooms: '',
+  bathrooms: '',
+  parking: '',
+  stratum: '',
+  neighborhood: '',
+  department: '',
+  city: '',
+};
+
 export default function PropertySubmissionForm() {
   const t = useTranslations('inmuebles.publish');
   const tInm = useTranslations('inmuebles');
+  const formRef = useRef<HTMLFormElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [values, setValues] = useState<FormValues>(INITIAL_VALUES);
+  const [descriptionTouched, setDescriptionTouched] = useState(false);
+  const [descriptionValue, setDescriptionValue] = useState('');
+  const [ownerName, setOwnerName] = useState('');
+  const [ownerPhone, setOwnerPhone] = useState('');
   const [status, setStatus] = useState<Status>('idle');
-  const [photos, setPhotos] = useState<File[]>([]);
+  const [photos, setPhotos] = useState<Array<{ file: File; preview: string }>>([]);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState('');
 
+  const cities = getCitiesForDepartment(values.department);
+
+  const setValue = (key: keyof FormValues) => (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => setValues((prev) => ({ ...prev, [key]: e.target.value }));
+
+  const preset = composeDescription({
+    operation: values.operation,
+    type: values.type,
+    neighborhood: values.neighborhood,
+    city: values.city,
+    department: values.department,
+    area_m2: Number(values.area_m2) || null,
+    bedrooms: Number(values.bedrooms) || null,
+    bathrooms: Number(values.bathrooms) || null,
+    parking: Number(values.parking) || null,
+    stratum: Number(values.stratum) || null,
+  });
+  const description = descriptionTouched ? descriptionValue : preset;
+
   const handleFilesSelected = async (list: FileList | null) => {
     if (!list || list.length === 0) return;
-    const remaining = MAX_PHOTOS - photos.length;
-    const incoming = await filesToWebp(Array.from(list).slice(0, remaining));
-    setPhotos((prev) => [...prev, ...incoming]);
-    if (fileInputRef.current) fileInputRef.current.value = '';
+    try {
+      const converted = await filesToWebp(Array.from(list));
+      const valid = converted.filter((f) => f.type.startsWith('image/'));
+      if (valid.length > 0) {
+        setPhotos((prev) =>
+          [...prev, ...valid.map((file) => ({ file, preview: URL.createObjectURL(file) }))].slice(
+            0,
+            MAX_PHOTOS
+          )
+        );
+      }
+      const skipped = converted.length - valid.length;
+      if (skipped > 0) {
+        setError(`${skipped} archivo(s) no válidos omitidos`);
+      }
+    } catch (err) {
+      console.error('Photo processing failed:', err);
+      setError('No se pudieron procesar las fotos. Intenta con otras imágenes.');
+    } finally {
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
   };
 
   const removePhoto = (index: number) =>
-    setPhotos((prev) => prev.filter((_, i) => i !== index));
+    setPhotos((prev) => {
+      URL.revokeObjectURL(prev[index].preview);
+      return prev.filter((_, i) => i !== index);
+    });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setStatus('sending');
 
-    const form = new FormData(e.currentTarget);
-    const get = (key: string) => String(form.get(key) ?? '').trim();
-
     const payload = {
-      operation: get('operation'),
-      type: get('type'),
-      title: get('title'),
-      description: get('description'),
-      price_cop: Number(get('price_cop')),
-      area_m2: Number(get('area_m2')) || null,
-      bedrooms: Number(get('bedrooms')) || null,
-      bathrooms: Number(get('bathrooms')) || null,
-      parking: Number(get('parking')) || null,
-      stratum: Number(get('stratum')) || null,
-      neighborhood: get('neighborhood'),
-      city: get('city') || 'Bogotá',
-      owner_name: get('owner_name'),
-      owner_phone: get('owner_phone'),
-      owner_email: get('owner_email'),
+      operation: values.operation,
+      type: values.type,
+      title: values.title.trim(),
+      description: description.slice(0, 5000),
+      price_cop: Number(values.price_cop),
+      area_m2: Number(values.area_m2) || null,
+      bedrooms: Number(values.bedrooms) || null,
+      bathrooms: Number(values.bathrooms) || null,
+      parking: Number(values.parking) || null,
+      stratum: Number(values.stratum) || null,
+      neighborhood: values.neighborhood.trim(),
+      city: values.city.trim(),
+      department: values.department,
+      owner_name: ownerName.trim(),
+      owner_phone: ownerPhone.trim(),
+      owner_email: String(new FormData(e.currentTarget).get('owner_email') ?? '').trim(),
       photo_count: photos.length,
     };
 
@@ -75,7 +150,7 @@ export default function PropertySubmissionForm() {
       for (let i = 0; i < photos.length; i += 1) {
         setUploadProgress(i + 1);
         const fd = new FormData();
-        fd.append('file', photos[i]);
+        fd.append('file', photos[i].file);
         const photoRes = await fetch(`/api/inmuebles/solicitud/${data.id}/foto`, {
           method: 'POST',
           body: fd,
@@ -116,28 +191,21 @@ export default function PropertySubmissionForm() {
     );
   }
 
+  const inputCls =
+    'w-full rounded-xl border border-ajin-border bg-white px-4 py-2.5 text-sm focus:border-ajin-accent focus:outline-none';
+
   return (
-    <form onSubmit={handleSubmit} className="mx-auto max-w-3xl">
+    <form ref={formRef} onSubmit={handleSubmit} className="mx-auto max-w-3xl">
       <div className="rounded-2xl bg-white p-6 shadow-sm md:p-8">
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
             <label htmlFor="operation" className="mb-1 block text-sm font-semibold text-ajin-text">
               {t('operation')}
             </label>
-            <select
-              id="operation"
-              name="operation"
-              required
-              defaultValue=""
-              className="w-full rounded-xl border border-ajin-border bg-white px-4 py-2.5 text-sm focus:border-ajin-accent focus:outline-none"
-            >
-              <option value="" disabled>
-                —
-              </option>
+            <select id="operation" required value={values.operation} onChange={setValue('operation')} className={inputCls}>
+              <option value="" disabled>—</option>
               {OPERATIONS.map((op) => (
-                <option key={op} value={op}>
-                  {tInm(`operations.${op}`)}
-                </option>
+                <option key={op} value={op}>{tInm(`operations.${op}`)}</option>
               ))}
             </select>
           </div>
@@ -146,20 +214,10 @@ export default function PropertySubmissionForm() {
             <label htmlFor="type" className="mb-1 block text-sm font-semibold text-ajin-text">
               {t('type')}
             </label>
-            <select
-              id="type"
-              name="type"
-              required
-              defaultValue=""
-              className="w-full rounded-xl border border-ajin-border bg-white px-4 py-2.5 text-sm focus:border-ajin-accent focus:outline-none"
-            >
-              <option value="" disabled>
-                —
-              </option>
+            <select id="type" required value={values.type} onChange={setValue('type')} className={inputCls}>
+              <option value="" disabled>—</option>
               {TYPES.map((ty) => (
-                <option key={ty} value={ty}>
-                  {tInm(`types.${ty}`)}
-                </option>
+                <option key={ty} value={ty}>{tInm(`types.${ty}`)}</option>
               ))}
             </select>
           </div>
@@ -170,130 +228,120 @@ export default function PropertySubmissionForm() {
             </label>
             <input
               id="title"
-              name="title"
               required
               minLength={5}
               maxLength={140}
               placeholder={t('propertyTitlePlaceholder')}
-              className="w-full rounded-xl border border-ajin-border px-4 py-2.5 text-sm focus:border-ajin-accent focus:outline-none"
+              value={values.title}
+              onChange={setValue('title')}
+              className={inputCls}
             />
           </div>
 
           <div>
-            <label htmlFor="price_cop" className="mb-1 block text-sm font-semibold text-ajin-text">
-              {t('price')}
+            <label htmlFor="department" className="mb-1 block text-sm font-semibold text-ajin-text">
+              {t('department')}
             </label>
-            <input
-              id="price_cop"
-              name="price_cop"
+            <select
+              id="department"
               required
-              inputMode="numeric"
-              placeholder={t('pricePlaceholder')}
-              className="w-full rounded-xl border border-ajin-border px-4 py-2.5 text-sm focus:border-ajin-accent focus:outline-none"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="area_m2" className="mb-1 block text-sm font-semibold text-ajin-text">
-              {t('area')}
-            </label>
-            <input
-              id="area_m2"
-              name="area_m2"
-              inputMode="numeric"
-              className="w-full rounded-xl border border-ajin-border px-4 py-2.5 text-sm focus:border-ajin-accent focus:outline-none"
-            />
-          </div>
-
-          <div className="grid grid-cols-4 gap-3 sm:col-span-2">
-            <div>
-              <label htmlFor="bedrooms" className="mb-1 block text-sm font-semibold text-ajin-text">
-                {t('bedrooms')}
-              </label>
-              <input
-                id="bedrooms"
-                name="bedrooms"
-                inputMode="numeric"
-                className="w-full rounded-xl border border-ajin-border px-3 py-2.5 text-sm focus:border-ajin-accent focus:outline-none"
-              />
-            </div>
-            <div>
-              <label htmlFor="bathrooms" className="mb-1 block text-sm font-semibold text-ajin-text">
-                {t('bathrooms')}
-              </label>
-              <input
-                id="bathrooms"
-                name="bathrooms"
-                inputMode="numeric"
-                className="w-full rounded-xl border border-ajin-border px-3 py-2.5 text-sm focus:border-ajin-accent focus:outline-none"
-              />
-            </div>
-            <div>
-              <label htmlFor="parking" className="mb-1 block text-sm font-semibold text-ajin-text">
-                {t('parking')}
-              </label>
-              <input
-                id="parking"
-                name="parking"
-                inputMode="numeric"
-                className="w-full rounded-xl border border-ajin-border px-3 py-2.5 text-sm focus:border-ajin-accent focus:outline-none"
-              />
-            </div>
-            <div>
-              <label htmlFor="stratum" className="mb-1 block text-sm font-semibold text-ajin-text">
-                {t('stratum')}
-              </label>
-              <input
-                id="stratum"
-                name="stratum"
-                inputMode="numeric"
-                min={1}
-                max={6}
-                className="w-full rounded-xl border border-ajin-border px-3 py-2.5 text-sm focus:border-ajin-accent focus:outline-none"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label
-              htmlFor="neighborhood"
-              className="mb-1 block text-sm font-semibold text-ajin-text"
+              value={values.department}
+              onChange={(e) =>
+                setValues((prev) => ({ ...prev, department: e.target.value, city: '' }))
+              }
+              className={inputCls}
             >
-              {t('neighborhood')}
-            </label>
-            <input
-              id="neighborhood"
-              name="neighborhood"
-              className="w-full rounded-xl border border-ajin-border px-4 py-2.5 text-sm focus:border-ajin-accent focus:outline-none"
-            />
+              <option value="" disabled>{t('selectDepartment')}</option>
+              {DEPARTMENTS.map((d) => (
+                <option key={d.name} value={d.name}>{d.name}</option>
+              ))}
+            </select>
           </div>
 
           <div>
             <label htmlFor="city" className="mb-1 block text-sm font-semibold text-ajin-text">
               {t('city')}
             </label>
-            <input
+            <select
               id="city"
-              name="city"
-              defaultValue="Bogotá"
-              className="w-full rounded-xl border border-ajin-border px-4 py-2.5 text-sm focus:border-ajin-accent focus:outline-none"
-            />
+              required
+              disabled={!values.department}
+              value={values.city}
+              onChange={setValue('city')}
+              className={`${inputCls} disabled:cursor-not-allowed disabled:bg-ajin-surface`}
+            >
+              <option value="" disabled>
+                {values.department ? t('selectCity') : t('cityDisabledHint')}
+              </option>
+              {cities.map((c) => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="neighborhood" className="mb-1 block text-sm font-semibold text-ajin-text">
+              {t('neighborhood')}
+            </label>
+            <input id="neighborhood" maxLength={140} value={values.neighborhood} onChange={setValue('neighborhood')} className={inputCls} />
+          </div>
+
+          <div>
+            <label htmlFor="price_cop" className="mb-1 block text-sm font-semibold text-ajin-text">
+              {t('price')}
+            </label>
+            <input id="price_cop" required inputMode="numeric" placeholder={t('pricePlaceholder')} value={values.price_cop} onChange={setValue('price_cop')} className={inputCls} />
+          </div>
+
+          <div className="grid grid-cols-4 gap-3 sm:col-span-2">
+            <div>
+              <label htmlFor="area_m2" className="mb-1 block text-xs font-semibold text-ajin-text">{t('area')}</label>
+              <input id="area_m2" inputMode="numeric" value={values.area_m2} onChange={setValue('area_m2')} className={inputCls} />
+            </div>
+            <div>
+              <label htmlFor="bedrooms" className="mb-1 block text-xs font-semibold text-ajin-text">{t('bedrooms')}</label>
+              <input id="bedrooms" inputMode="numeric" value={values.bedrooms} onChange={setValue('bedrooms')} className={inputCls} />
+            </div>
+            <div>
+              <label htmlFor="bathrooms" className="mb-1 block text-xs font-semibold text-ajin-text">{t('bathrooms')}</label>
+              <input id="bathrooms" inputMode="numeric" value={values.bathrooms} onChange={setValue('bathrooms')} className={inputCls} />
+            </div>
+            <div>
+              <label htmlFor="parking" className="mb-1 block text-xs font-semibold text-ajin-text">{t('parking')}</label>
+              <input id="parking" inputMode="numeric" value={values.parking} onChange={setValue('parking')} className={inputCls} />
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="stratum" className="mb-1 block text-sm font-semibold text-ajin-text">
+              {t('stratum')}
+            </label>
+            <select id="stratum" value={values.stratum} onChange={setValue('stratum')} className={inputCls}>
+              <option value="">—</option>
+              {[1, 2, 3, 4, 5, 6].map((s) => (
+                <option key={s} value={s}>{s}</option>
+              ))}
+            </select>
           </div>
 
           <div className="sm:col-span-2">
-            <label
-              htmlFor="description"
-              className="mb-1 block text-sm font-semibold text-ajin-text"
-            >
+            <label htmlFor="description" className="mb-1 block text-sm font-semibold text-ajin-text">
               {t('descriptionField')}
             </label>
+            {preset && !descriptionTouched && (
+              <p className="mb-2 text-xs italic text-ajin-gray-400">{t('descriptionPresetHint')}</p>
+            )}
             <textarea
               id="description"
-              name="description"
-              rows={4}
+              rows={5}
               maxLength={5000}
               placeholder={t('descriptionPlaceholder')}
-              className="w-full resize-y rounded-xl border border-ajin-border px-4 py-2.5 text-sm focus:border-ajin-accent focus:outline-none"
+              value={description}
+              onChange={(e) => {
+                setDescriptionTouched(true);
+                setDescriptionValue(e.target.value);
+              }}
+              className={`${inputCls} resize-y`}
             />
           </div>
         </div>
@@ -314,8 +362,9 @@ export default function PropertySubmissionForm() {
 
         <div className="flex flex-wrap gap-3">
           {photos.map((photo, idx) => (
-            <div key={`${photo.name}-${idx}`} className="relative h-20 w-20 overflow-hidden rounded-lg bg-ajin-surface">
-              <Image src={URL.createObjectURL(photo)} alt={`Foto ${idx + 1}`} fill sizes="80px" className="object-cover" unoptimized />
+            <div key={`${photo.file.name}-${idx}`} className="relative h-20 w-20 overflow-hidden rounded-lg bg-ajin-surface">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={photo.preview} alt={`Foto ${idx + 1}`} className="h-full w-full object-cover" />
               <button
                 type="button"
                 onClick={() => removePhoto(idx)}
@@ -348,10 +397,12 @@ export default function PropertySubmissionForm() {
             </label>
             <input
               id="owner_name"
-              name="owner_name"
               required
               maxLength={120}
-              className="w-full rounded-xl border border-ajin-border px-4 py-2.5 text-sm focus:border-ajin-accent focus:outline-none"
+              autoComplete="name"
+              value={ownerName}
+              onChange={(e) => setOwnerName(e.target.value)}
+              className={inputCls}
             />
           </div>
           <div>
@@ -360,33 +411,25 @@ export default function PropertySubmissionForm() {
             </label>
             <input
               id="owner_phone"
-              name="owner_phone"
               required
               inputMode="tel"
-              className="w-full rounded-xl border border-ajin-border px-4 py-2.5 text-sm focus:border-ajin-accent focus:outline-none"
+              autoComplete="tel"
+              value={ownerPhone}
+              onChange={(e) => setOwnerPhone(e.target.value)}
+              className={inputCls}
             />
           </div>
           <div className="sm:col-span-2">
             <label htmlFor="owner_email" className="mb-1 block text-sm font-semibold text-ajin-text">
               {t('emailField')}
             </label>
-            <input
-              id="owner_email"
-              name="owner_email"
-              type="email"
-              className="w-full rounded-xl border border-ajin-border px-4 py-2.5 text-sm focus:border-ajin-accent focus:outline-none"
-            />
+            <input id="owner_email" name="owner_email" type="email" className={inputCls} />
           </div>
         </div>
       </div>
 
       <div className="mt-8 text-center">
-        <Button
-          type="submit"
-          size="lg"
-          disabled={status === 'sending'}
-          className="min-w-64"
-        >
+        <Button type="submit" size="lg" disabled={status === 'sending'} className="min-w-64">
           {status === 'sending' ? (
             <>
               <Loader2 size={18} className="animate-spin" />

@@ -550,7 +550,12 @@
       "invalidPrice": "Enter a valid price",
       "shortTitle": "The title must be at least 5 characters"
     },
-    "publishButton": "List my property"
+    "publishButton": "List my property",
+    "department": "Department *",
+    "selectDepartment": "Select a department",
+    "selectCity": "Select a city",
+    "cityDisabledHint": "Select a department first",
+    "descriptionPresetHint": "We prepared a description from the form data; you can edit it."
   },
   "admin": {
     "loginTitle": "Admin Panel",
@@ -600,6 +605,7 @@
       "createdByAdmin": "Created from admin panel",
       "clientRequest": "Client request",
       "contactInfo": "Owner contact details"
-    }
+    },
+    "generateDesc": "Generate description"
   }
 }

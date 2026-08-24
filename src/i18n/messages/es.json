@@ -550,7 +550,12 @@
       "invalidPrice": "Ingrese un precio válido",
       "shortTitle": "El título debe tener al menos 5 caracteres"
     },
-    "publishButton": "Publicar mi inmueble"
+    "publishButton": "Publicar mi inmueble",
+    "department": "Departamento *",
+    "selectDepartment": "Seleccione un departamento",
+    "selectCity": "Seleccione una ciudad",
+    "cityDisabledHint": "Seleccione primero un departamento",
+    "descriptionPresetHint": "Hemos preparado una descripción con los datos del formulario; puedes editarla."
   },
   "admin": {
     "loginTitle": "Panel de Administración",
@@ -600,6 +605,7 @@
       "createdByAdmin": "Creado desde el panel",
       "clientRequest": "Solicitud de cliente",
       "contactInfo": "Datos de contacto del propietario"
-    }
+    },
+    "generateDesc": "Generar descripción"
   }
 }

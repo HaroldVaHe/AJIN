@@ -18,6 +18,7 @@ create table if not exists public.properties (
   stratum int check (stratum between 1 and 6),
   neighborhood text not null default '',
   city text not null default 'Bogotá',
+  department text not null default '',
   status text not null default 'pending' check (status in ('pending','approved','rejected')),
   featured boolean not null default false,
   owner_name text not null default '',
@@ -83,4 +84,9 @@ create policy "public read inmuebles"
 --
 --    El acceso al panel también exige que el email de sesión esté
 --    incluido en ADMIN_EMAILS.
+-- ============================================================
+
+-- ============================================================
+-- MIGRACIÓN (si las tablas ya existían antes de esta versión):
+--   alter table properties add column if not exists department text not null default '';
 -- ============================================================

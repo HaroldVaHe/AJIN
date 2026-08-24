@@ -2,10 +2,10 @@ import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { Maximize2, BedDouble, Bath, Car } from 'lucide-react';
-import type { PropertyWithImages } from '@/types/property';
+import type { PublicProperty } from '@/types/property';
 import { cn } from '@/lib/utils';
 
-export default function PropertyCard({ property }: { property: PropertyWithImages }) {
+export default function PropertyCard({ property }: { property: PublicProperty }) {
   const t = useTranslations('inmuebles');
   const cover = property.images.find((i) => i.position === 0) ?? property.images[0];
 

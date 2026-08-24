@@ -19,6 +19,7 @@ export interface PropertyPayload {
   stratum: number | null;
   neighborhood: string;
   city: string;
+  department: string;
   owner_name: string;
   owner_phone: string;
   owner_email: string;
@@ -66,6 +67,7 @@ export function parsePropertyPayload(body: Record<string, unknown>): PropertyPay
     stratum,
     neighborhood: String(body.neighborhood ?? '').trim().slice(0, 140),
     city: String(body.city ?? '').trim().slice(0, 80) || 'Bogotá',
+    department: String(body.department ?? '').trim().slice(0, 80),
     owner_name: ownerName,
     owner_phone: ownerPhone,
     owner_email: ownerEmail.length > 0 && ownerEmail.length <= 160 ? ownerEmail : '',

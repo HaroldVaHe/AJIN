@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import type { Property, PropertyImage, PropertyWithImages } from '@/types/property';
+import type { Property, PropertyImage, PublicProperty } from '@/types/property';
 
 const SUPABASE_URL = process.env.SUPABASE_URL || '';
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || '';
@@ -11,8 +11,10 @@ export function getPublicSupabase() {
   });
 }
 
-function normalize(row: Property & { property_images?: PropertyImage[] }): PropertyWithImages {
-  const { property_images, ...rest } = row;
+function normalize(
+  row: Property & { property_images?: PropertyImage[] }
+): PublicProperty {
+  const { property_images, owner_name: _o, owner_phone: _p, owner_email: _e, ...rest } = row;
   const images = [...(property_images ?? [])].sort((a, b) => a.position - b.position);
   return { ...rest, images };
 }
@@ -20,7 +22,7 @@ function normalize(row: Property & { property_images?: PropertyImage[] }): Prope
 export async function fetchApprovedProperties(
   operation?: string,
   type?: string
-): Promise<PropertyWithImages[]> {
+): Promise<PublicProperty[]> {
   try {
     const supabase = getPublicSupabase();
     if (!supabase) return [];
@@ -43,7 +45,7 @@ export async function fetchApprovedProperties(
 
 export async function fetchApprovedProperty(
   id: string | number
-): Promise<PropertyWithImages | null> {
+): Promise<PublicProperty | null> {
   if (!/^\d+$/.test(String(id))) return null;
   try {
     const supabase = getPublicSupabase();
