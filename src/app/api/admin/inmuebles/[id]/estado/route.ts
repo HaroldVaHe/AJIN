@@ -1,13 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAdminApi } from '@/lib/property-api';
 import { createSupabaseAdminClient } from '@/lib/supabase/admin';
+import { logAudit, getSessionUserEmail } from '@/lib/audit';
 
 type Params = { params: Promise<{ id: string }> };
 
 export async function POST(request: NextRequest, { params }: Params) {
-  if (!(await requireAdminApi())) {
+  const isAdmin = await requireAdminApi();
+  if (!isAdmin) {
+    await logAudit({ request, action: 'admin.unauthorized', entity: 'property' });
     return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
   }
+  const actorEmail = await getSessionUserEmail();
   const id = Number((await params).id);
   if (!Number.isInteger(id) || id <= 0) {
     return NextResponse.json({ success: false, error: 'Invalid id' }, { status: 400 });
@@ -50,6 +54,15 @@ export async function POST(request: NextRequest, { params }: Params) {
   if (error) {
     return NextResponse.json({ success: false, error: 'Update failed' }, { status: 500 });
   }
+
+  await logAudit({
+    request,
+    actorEmail,
+    action: 'property.status',
+    entity: 'property',
+    entityId: id,
+    detail: { status },
+  });
 
   return NextResponse.json({ success: true });
 }

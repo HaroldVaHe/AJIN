@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { parsePropertyPayload, requireAdminApi } from '@/lib/property-api';
 import { createSupabaseAdminClient } from '@/lib/supabase/admin';
+import { logAudit, getSessionUserEmail } from '@/lib/audit';
 
 export async function POST(request: NextRequest) {
-  if (!(await requireAdminApi())) {
+  const isAdmin = await requireAdminApi();
+  if (!isAdmin) {
+    await logAudit({ request, action: 'admin.unauthorized', entity: 'property' });
     return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
   }
+  const actorEmail = await getSessionUserEmail();
 
   let body: Record<string, unknown>;
   try {
@@ -43,6 +47,15 @@ export async function POST(request: NextRequest) {
     console.error('Admin create property error:', error);
     return NextResponse.json({ success: false, error: 'Insert failed' }, { status: 500 });
   }
+
+  await logAudit({
+    request,
+    actorEmail,
+    action: 'property.create',
+    entity: 'property',
+    entityId: data.id,
+    detail: { title: payload.title, operation: payload.operation, type: payload.type, status },
+  });
 
   return NextResponse.json({ success: true, id: data.id });
 }

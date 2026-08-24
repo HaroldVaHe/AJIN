@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
-import { LogOut } from 'lucide-react';
+import { LogOut, ScrollText } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import { createSupabaseBrowserClient } from '@/lib/supabase/browser';
 
@@ -27,6 +27,11 @@ export default function AdminUserBar({ supabaseUrl, supabaseAnonKey, title }: Ad
 
   const handleSignOut = async () => {
     const supabase = createSupabaseBrowserClient(supabaseUrl, supabaseAnonKey);
+    await fetch('/api/admin/login-audit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ logout: true }),
+    }).catch(() => {});
     await supabase.auth.signOut();
     router.replace(`/${locale}/admin/login`);
     router.refresh();
@@ -38,12 +43,20 @@ export default function AdminUserBar({ supabaseUrl, supabaseAnonKey, title }: Ad
         <Link href="/admin/inmuebles" className="text-sm font-semibold text-ajin-primary">
           {title}
         </Link>
-        <button
-          onClick={handleSignOut}
-          className="flex items-center gap-2 text-sm text-ajin-gray-300 transition-colors hover:text-ajin-primary"
-        >
-          <LogOut size={16} /> {t('signOut')}
-        </button>
+        <div className="flex items-center gap-4">
+          <Link
+            href="/admin/auditoria"
+            className="flex items-center gap-1.5 text-sm text-ajin-gray-300 transition-colors hover:text-ajin-primary"
+          >
+            <ScrollText size={16} /> {t('auditLink')}
+          </Link>
+          <button
+            onClick={handleSignOut}
+            className="flex items-center gap-2 text-sm text-ajin-gray-300 transition-colors hover:text-ajin-primary"
+          >
+            <LogOut size={16} /> {t('signOut')}
+          </button>
+        </div>
       </div>
     </div>
   );

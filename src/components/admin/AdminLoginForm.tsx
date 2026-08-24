@@ -32,8 +32,18 @@ export default function AdminLoginForm({ supabaseUrl, supabaseAnonKey }: AdminLo
       });
       if (authError) {
         setError(authError.message);
+        void fetch('/api/admin/login-audit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ok: false, email, reason: authError.message }),
+        }).catch(() => {});
         return;
       }
+      await fetch('/api/admin/login-audit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ok: true, email }),
+      }).catch(() => {});
       router.replace(`/${locale}/admin/inmuebles`);
       router.refresh();
     } catch {

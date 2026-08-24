@@ -612,6 +612,40 @@
       "contactInfo": "Datos de contacto del propietario",
       "generateDesc": "Generar descripción"
     },
-    "generateDesc": "Generar descripción"
+    "generateDesc": "Generar descripción",
+    "auditLink": "Auditoría",
+    "audit": {
+      "title": "Auditoría",
+      "subtitle": "Registro de actividad: inicios de sesión, cambios en inmuebles y solicitudes recibidas.",
+      "searchPlaceholder": "Buscar email, #id o IP…",
+      "allActions": "Todas las acciones",
+      "apply": "Filtrar",
+      "clear": "Limpiar",
+      "loadError": "No se pudo cargar el registro (¿falta configurar Supabase?).",
+      "empty": "Sin registros todavía.",
+      "limitNote": "Se muestran los 300 eventos más recientes. Usa los filtros para acotar.",
+      "colTime": "Fecha y hora",
+      "colAction": "Acción",
+      "colActor": "Usuario",
+      "colEntity": "Inmueble",
+      "colDetail": "Detalle",
+      "colIp": "IP",
+      "colDevice": "Dispositivo",
+      "actions": {
+        "admin_login": "Inicio de sesión",
+        "admin_login_failed": "Login fallido",
+        "admin_logout": "Cierre de sesión",
+        "admin_unauthorized": "Acceso no autorizado",
+        "property_create": "Inmueble creado",
+        "property_update": "Inmueble editado",
+        "property_delete": "Inmueble eliminado",
+        "property_status": "Estado cambiado",
+        "photo_upload": "Foto subida",
+        "photo_delete": "Foto eliminada",
+        "photos_reorder": "Fotos reordenadas",
+        "submission_create": "Solicitud recibida",
+        "cron_cleanup": "Limpieza automática"
+      }
+    }
   }
 }

@@ -90,3 +90,22 @@ create policy "public read inmuebles"
 -- MIGRACIÓN (si las tablas ya existían antes de esta versión):
 --   alter table properties add column if not exists department text not null default '';
 -- ============================================================
+
+-- ============================================================
+-- AUDITORÍA: registro de acciones de admins y solicitudes.
+-- Sin políticas RLS: solo service role lee/escribe; el público no ve nada.
+-- ============================================================
+create table if not exists audit_log (
+  id bigint generated always as identity primary key,
+  actor_email text not null default '',
+  action text not null,
+  entity text not null default '',
+  entity_id text not null default '',
+  detail jsonb not null default '{}'::jsonb,
+  ip text not null default '',
+  user_agent text not null default '',
+  created_at timestamptz not null default now()
+);
+alter table audit_log enable row level security;
+create index if not exists audit_log_created_at_idx on audit_log (created_at desc);
+create index if not exists audit_log_action_idx on audit_log (action);

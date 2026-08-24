@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createSupabaseAdminClient, deletePropertyFolder } from '@/lib/supabase/admin';
 import { sendToTelegram } from '@/lib/n8n';
+import { logAudit } from '@/lib/audit';
 
 export async function GET(request: NextRequest) {
   const auth = request.headers.get('authorization');
@@ -35,6 +36,13 @@ export async function GET(request: NextRequest) {
       console.error(`Cleanup failed for property ${row.id}:`, e);
     }
   }
+
+  await logAudit({
+    request,
+    actorEmail: 'cron@vercel',
+    action: 'cron.cleanup',
+    detail: { purged, candidates: stale?.length ?? 0 },
+  });
 
   if (purged > 0) {
     void sendToTelegram(

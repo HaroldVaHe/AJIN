@@ -612,6 +612,40 @@
       "contactInfo": "Owner contact details",
       "generateDesc": "Generate description"
     },
-    "generateDesc": "Generate description"
+    "generateDesc": "Generate description",
+    "auditLink": "Audit log",
+    "audit": {
+      "title": "Audit log",
+      "subtitle": "Activity record: logins, property changes and incoming submissions.",
+      "searchPlaceholder": "Search email, #id or IP…",
+      "allActions": "All actions",
+      "apply": "Filter",
+      "clear": "Clear",
+      "loadError": "Could not load the log (is Supabase configured?).",
+      "empty": "No entries yet.",
+      "limitNote": "Showing the 300 most recent events. Use filters to narrow down.",
+      "colTime": "Date & time",
+      "colAction": "Action",
+      "colActor": "User",
+      "colEntity": "Property",
+      "colDetail": "Detail",
+      "colIp": "IP",
+      "colDevice": "Device",
+      "actions": {
+        "admin_login": "Sign-in",
+        "admin_login_failed": "Failed login",
+        "admin_logout": "Sign-out",
+        "admin_unauthorized": "Unauthorized access",
+        "property_create": "Property created",
+        "property_update": "Property updated",
+        "property_delete": "Property deleted",
+        "property_status": "Status changed",
+        "photo_upload": "Photo uploaded",
+        "photo_delete": "Photo deleted",
+        "photos_reorder": "Photos reordered",
+        "submission_create": "Submission received",
+        "cron_cleanup": "Automatic cleanup"
+      }
+    }
   }
 }

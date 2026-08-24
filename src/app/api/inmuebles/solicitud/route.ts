@@ -3,6 +3,7 @@ import { MAX_PHOTOS, parsePropertyPayload } from '@/lib/property-api';
 import { createSupabaseAdminClient } from '@/lib/supabase/admin';
 import { rateLimit, clientIp } from '@/lib/rate-limit';
 import { notifyPropertyRequest } from '@/lib/property-notify';
+import { logAudit } from '@/lib/audit';
 
 export async function POST(request: NextRequest) {
   if (!rateLimit(`solicitud:${clientIp(request)}`, 5)) {
@@ -44,19 +45,38 @@ export async function POST(request: NextRequest) {
 
   const propertyId = created.id as number;
 
-  notifyPropertyRequest({
-    id: propertyId,
-    operation: payload.operation,
-    type: payload.type,
-    title: payload.title,
-    price_cop: payload.price_cop,
-    owner_name: payload.owner_name,
-    owner_phone: payload.owner_phone,
-    owner_email: payload.owner_email || undefined,
-    neighborhood: payload.neighborhood || undefined,
-    city: payload.city,
-    photos: photoCount,
-  });
+  await Promise.all([
+    notifyPropertyRequest({
+      id: propertyId,
+      operation: payload.operation,
+      type: payload.type,
+      title: payload.title,
+      price_cop: payload.price_cop,
+      owner_name: payload.owner_name,
+      owner_phone: payload.owner_phone,
+      owner_email: payload.owner_email || undefined,
+      neighborhood: payload.neighborhood || undefined,
+      city: payload.city,
+      photos: photoCount,
+    }),
+    logAudit({
+      request,
+      actorEmail: payload.owner_email || `dueño:${payload.owner_name}`,
+      action: 'submission.create',
+      entity: 'property',
+      entityId: propertyId,
+      detail: {
+        title: payload.title,
+        operation: payload.operation,
+        type: payload.type,
+        city: payload.city,
+        price_cop: payload.price_cop,
+        photos: photoCount,
+        owner_name: payload.owner_name,
+        owner_phone: payload.owner_phone,
+      },
+    }),
+  ]);
 
   return NextResponse.json({ success: true, id: propertyId });
 }
