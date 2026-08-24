@@ -39,14 +39,14 @@ export default function Hero() {
               </Link>
             </div>
           </div>
-          <div className="hidden lg:flex justify-center animate-fade-in">
-            <div className="relative w-full max-w-[400px] aspect-[2/3]">
+          <div className="flex justify-center animate-fade-in mt-10 lg:mt-0">
+            <div className="relative w-full max-w-[400px] aspect-[3/4] sm:aspect-[2/3]">
               <Image
                 src="/images/abogada.webp"
                 alt={t('imageAlt')}
                 fill
-                sizes="400px"
-                className="object-cover rounded-lg drop-shadow-2xl opacity-95"
+                sizes="(min-width: 1024px) 400px, 90vw"
+                className="object-cover object-top rounded-lg drop-shadow-2xl opacity-95"
                 priority
               />
             </div>
