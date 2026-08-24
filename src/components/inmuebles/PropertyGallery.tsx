@@ -39,9 +39,7 @@ export default function PropertyGallery({ images, title }: PropertyGalleryProps)
           <button
             key={img.id}
             onClick={() => setOpenIndex(idx + 1)}
-            className={`relative aspect-[4/3] overflow-hidden rounded-xl bg-ajin-surface ${
-              idx >= 3 ? 'hidden sm:block' : ''
-            }`}
+            className="relative aspect-[4/3] overflow-hidden rounded-xl bg-ajin-surface"
           >
             <Image
               src={img.url}

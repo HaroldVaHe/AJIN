@@ -203,7 +203,7 @@ export default async function PropertyDetailPage({
                 <h2 className="text-xl font-semibold text-ajin-primary">{t('interested')}</h2>
                 <p className="mt-2 text-sm text-ajin-gray-400">{t('contactDesc')}</p>
                 <div className="mt-5">
-                  <LeadForm topic={`${property.title} (#${property.id})`} />
+                  <LeadForm topic={`${property.title} (#${property.id})`} variant="property" />
                 </div>
               </div>
             </aside>

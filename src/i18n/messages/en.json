@@ -560,7 +560,13 @@
     "selectDepartment": "Select a department",
     "selectCity": "Select a city",
     "cityDisabledHint": "Select a department first",
-    "descriptionPresetHint": "We prepared a description from the form data; you can edit it."
+    "descriptionPresetHint": "We prepared a description from the form data; you can edit it.",
+    "leadForm": {
+      "waIntro": "I'm interested in this property",
+      "submit": "I'm interested in this property",
+      "successTitle": "Interest registered!",
+      "successMessage": "We received your details. We'll contact you to arrange a viewing. We also opened WhatsApp with your message to speed things up."
+    }
   },
   "admin": {
     "loginTitle": "Admin Panel",

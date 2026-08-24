@@ -16,10 +16,14 @@ interface LeadFormData {
 
 interface LeadFormProps {
   topic: string;
+  /** 'property' cambia el CTA a interés en un inmueble concreto. */
+  variant?: 'landing' | 'property';
 }
 
-export default function LeadForm({ topic }: LeadFormProps) {
+export default function LeadForm({ topic, variant = 'landing' }: LeadFormProps) {
   const t = useTranslations('landing.form');
+  const tp = useTranslations('inmuebles.leadForm');
+  const isProperty = variant === 'property';
   const [submitted, setSubmitted] = useState(false);
 
   const {
@@ -30,7 +34,7 @@ export default function LeadForm({ topic }: LeadFormProps) {
 
   const whatsappMessage = (data: LeadFormData) =>
     [
-      `💼 Solicitud de asesoría - ${topic}`,
+      isProperty ? `🏠 ${tp('waIntro')} - ${topic}` : `💼 Solicitud de asesoría - ${topic}`,
       '',
       `${t('name')}: ${data.name}`,
       `${t('phone')}: ${data.phone}`,
@@ -61,8 +65,10 @@ export default function LeadForm({ topic }: LeadFormProps) {
         <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-ajin-accent/10">
           <CheckCircle size={32} className="text-ajin-accent" />
         </div>
-        <h3 className="text-xl font-bold text-ajin-primary mb-2">{t('successTitle')}</h3>
-        <p className="text-ajin-gray-400">{t('successMessage')}</p>
+        <h3 className="text-xl font-bold text-ajin-primary mb-2">
+          {isProperty ? tp('successTitle') : t('successTitle')}
+        </h3>
+        <p className="text-ajin-gray-400">{isProperty ? tp('successMessage') : t('successMessage')}</p>
       </div>
     );
   }
@@ -100,6 +106,8 @@ export default function LeadForm({ topic }: LeadFormProps) {
             <Loader2 size={18} className="animate-spin" />
             {t('sending')}
           </span>
+        ) : isProperty ? (
+          tp('submit')
         ) : (
           t('submit')
         )}

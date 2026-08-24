@@ -1,17 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAdminApi } from '@/lib/property-api';
+import { requireAdminApiWithUser } from '@/lib/property-api';
 import { createSupabaseAdminClient, deletePropertyPhotoFile } from '@/lib/supabase/admin';
-import { logAudit, getSessionUserEmail } from '@/lib/audit';
+import { logAudit } from '@/lib/audit';
 
 type Params = { params: Promise<{ id: string; imageId: string }> };
 
 export async function DELETE(request: NextRequest, { params }: Params) {
-  const isAdmin = await requireAdminApi();
+  const { ok: isAdmin, email: actorEmail } = await requireAdminApiWithUser();
   if (!isAdmin) {
     await logAudit({ request, action: 'admin.unauthorized', entity: 'property' });
     return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
   }
-  const actorEmail = await getSessionUserEmail();
   const propertyId = Number((await params).id);
   const imageId = Number((await params).imageId);
   if (!Number.isInteger(propertyId) || !Number.isInteger(imageId)) {

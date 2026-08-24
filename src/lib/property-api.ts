@@ -75,9 +75,15 @@ export function parsePropertyPayload(body: Record<string, unknown>): PropertyPay
 }
 
 export async function requireAdminApi(): Promise<boolean> {
+  return (await requireAdminApiWithUser()).ok;
+}
+
+/** Verifica sesión admin y devuelve el email del actor en la misma llamada. */
+export async function requireAdminApiWithUser(): Promise<{ ok: boolean; email: string }> {
   const supabase = await createSupabaseServerClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  return isAdminEmail(user?.email);
+  const email = user?.email ?? '';
+  return { ok: isAdminEmail(email), email };
 }

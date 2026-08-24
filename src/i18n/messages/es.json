@@ -560,7 +560,13 @@
     "selectDepartment": "Seleccione un departamento",
     "selectCity": "Seleccione una ciudad",
     "cityDisabledHint": "Seleccione primero un departamento",
-    "descriptionPresetHint": "Hemos preparado una descripción con los datos del formulario; puedes editarla."
+    "descriptionPresetHint": "Hemos preparado una descripción con los datos del formulario; puedes editarla.",
+    "leadForm": {
+      "waIntro": "Me interesa esta propiedad",
+      "submit": "Me interesa este inmueble",
+      "successTitle": "¡Interés registrado!",
+      "successMessage": "Hemos recibido tus datos. Te contactaremos para coordinar la visita. También abrimos WhatsApp con tu mensaje para agilizar la atención."
+    }
   },
   "admin": {
     "loginTitle": "Panel de Administración",

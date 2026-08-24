@@ -1,15 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { parsePropertyPayload, requireAdminApi } from '@/lib/property-api';
+import { parsePropertyPayload, requireAdminApiWithUser } from '@/lib/property-api';
 import { createSupabaseAdminClient } from '@/lib/supabase/admin';
-import { logAudit, getSessionUserEmail } from '@/lib/audit';
+import { logAudit } from '@/lib/audit';
 
 export async function POST(request: NextRequest) {
-  const isAdmin = await requireAdminApi();
+  const { ok: isAdmin, email: actorEmail } = await requireAdminApiWithUser();
   if (!isAdmin) {
     await logAudit({ request, action: 'admin.unauthorized', entity: 'property' });
     return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
   }
-  const actorEmail = await getSessionUserEmail();
 
   let body: Record<string, unknown>;
   try {
