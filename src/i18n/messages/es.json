@@ -652,6 +652,7 @@
         "photo_upload": "Foto subida",
         "photo_delete": "Foto eliminada",
         "photos_reorder": "Fotos reordenadas",
+        "photos_delete_all": "Fotos eliminadas (todas)",
         "submission_create": "Solicitud recibida",
         "cron_cleanup": "Limpieza automática"
       }

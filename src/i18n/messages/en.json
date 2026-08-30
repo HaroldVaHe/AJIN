@@ -652,6 +652,7 @@
         "photo_upload": "Photo uploaded",
         "photo_delete": "Photo deleted",
         "photos_reorder": "Photos reordered",
+        "photos_delete_all": "Photos deleted (all)",
         "submission_create": "Submission received",
         "cron_cleanup": "Automatic cleanup"
       }

@@ -29,23 +29,146 @@ const ACTIONS = [
   'photo.upload',
   'photo.delete',
   'photos.reorder',
+  'photos.delete_all',
   'submission.create',
   'cron.cleanup',
 ] as const;
 
-function formatDetail(detail: Record<string, unknown>): string {
+type Locale = 'es' | 'en';
+
+const FIELD_LABELS: Record<Locale, Record<string, string>> = {
+  es: {
+    operation: 'Operación', type: 'Tipo', title: 'Título', description: 'Descripción',
+    price_cop: 'Precio', area_m2: 'Área (m²)', bedrooms: 'Habitaciones', bathrooms: 'Baños',
+    parking: 'Parqueaderos', stratum: 'Estrato', neighborhood: 'Barrio', city: 'Ciudad',
+    department: 'Departamento', owner_name: 'Nombre del dueño', owner_phone: 'Teléfono',
+    owner_email: 'Email', status: 'Estado', featured: 'Destacado',
+  },
+  en: {
+    operation: 'Operation', type: 'Type', title: 'Title', description: 'Description',
+    price_cop: 'Price', area_m2: 'Area (m²)', bedrooms: 'Bedrooms', bathrooms: 'Bathrooms',
+    parking: 'Parking', stratum: 'Stratum', neighborhood: 'Neighborhood', city: 'City',
+    department: 'Department', owner_name: 'Owner name', owner_phone: 'Phone',
+    owner_email: 'Email', status: 'Status', featured: 'Featured',
+  },
+};
+
+function fmtMoney(n: number, locale: Locale): string {
+  return new Intl.NumberFormat(locale === 'es' ? 'es-CO' : 'en-US', {
+    style: 'currency', currency: 'COP', maximumFractionDigits: 0,
+  }).format(n);
+}
+
+function valueLabel(locale: Locale, field: string, value: unknown): string {
+  if (value === null || value === undefined || value === '') return '—';
+  const opLabels: Record<string, string> =
+    locale === 'es' ? { venta: 'Venta', arriendo: 'Arriendo' } : { venta: 'Sale', arriendo: 'Rent' };
+  const typeLabels: Record<string, string> =
+    locale === 'es'
+      ? { apartamento: 'Apartamento', casa: 'Casa', oficina: 'Oficina', lote: 'Lote', bodega: 'Bodega' }
+      : { apartamento: 'Apartment', casa: 'House', oficina: 'Office', lote: 'Lot', bodega: 'Warehouse' };
+  const statusLabels: Record<string, string> =
+    locale === 'es'
+      ? { pending: 'Pendiente', approved: 'Publicado', rejected: 'Rechazado' }
+      : { pending: 'Pending', approved: 'Published', rejected: 'Rejected' };
+
+  if (field === 'price_cop' && typeof value === 'number') return fmtMoney(value, locale);
+  if (field === 'area_m2' && typeof value === 'number') return `${value} m²`;
+  if (typeof value === 'boolean') return value ? (locale === 'es' ? 'Sí' : 'Yes') : (locale === 'es' ? 'No' : 'No');
+  const str = String(value);
+  if (field === 'operation') return opLabels[str] ?? str;
+  if (field === 'type') return typeLabels[str] ?? str;
+  if (field === 'status') return statusLabels[str] ?? str;
+  return str;
+}
+
+function formatChanges(locale: Locale, changes: Record<string, { from: unknown; to: unknown }>): string {
+  const labels = FIELD_LABELS[locale];
+  return Object.entries(changes)
+    .slice(0, 8)
+    .map(([field, c]) => {
+      const name = labels[field] ?? field;
+      const from = valueLabel(locale, field, c.from);
+      const to = valueLabel(locale, field, c.to);
+      if (from === to && String(c.from) === String(c.to)) return `${name}: (sin cambio)`;
+      return `${name}: ${from} → ${to}`;
+    })
+    .join(' · ');
+}
+
+function formatDetail(locale: Locale, action: string, detail: Record<string, unknown>): string {
   if (!detail || Object.keys(detail).length === 0) return '—';
-  if (detail.changes && typeof detail.changes === 'object') {
-    const entries = Object.entries(detail.changes as Record<string, { from: unknown; to: unknown }>);
-    return entries
-      .slice(0, 8)
-      .map(([field, c]) => `${field}: ${String(c.from ?? '—')} → ${String(c.to ?? '—')}`)
-      .join(' | ');
+
+  const t = (es: string, en: string) => (locale === 'es' ? es : en);
+
+  // Inmueble creado / solicitud recibida → resumen legible
+  if (action === 'property.create' || action === 'submission.create') {
+    const op = valueLabel(locale, 'operation', detail.operation);
+    const ty = valueLabel(locale, 'type', detail.type);
+    const bits = [String(detail.title ?? ''), op, ty, String(detail.city ?? '')].filter(Boolean);
+    const summary = bits.join(' · ');
+    const extra = action === 'submission.create' && detail.photo_count != null
+      ? ` · ${t('Fotos', 'Photos')}: ${detail.photo_count}`
+      : ` · ${t('Estado', 'Status')}: ${valueLabel(locale, 'status', detail.status)}`;
+    return summary ? `${summary}${extra}` : extra.trim();
   }
+
+  // Inmueble editado → lista de cambios legible
+  if (action === 'property.update') {
+    if (detail.note) return String(detail.note);
+    if (detail.changes && typeof detail.changes === 'object') {
+      return formatChanges(locale, detail.changes as Record<string, { from: unknown; to: unknown }>);
+    }
+  }
+
+  // Cambio de estado
+  if (action === 'property.status') {
+    return `${t('Estado cambiado a', 'Status changed to')}: ${valueLabel(locale, 'status', detail.status)}`;
+  }
+
+  // Subida de foto
+  if (action === 'photo.upload') {
+    const size = typeof detail.size === 'number' ? Math.round(detail.size / 1024) : null;
+    const file = String(detail.file ?? detail.path ?? '');
+    return `${t('Foto subida', 'Photo uploaded')}: ${file}${size != null ? ` · ${size} KB` : ''}`;
+  }
+
+  // Eliminación de foto
+  if (action === 'photo.delete') {
+    return `${t('Foto eliminada', 'Photo deleted')}: ${String(detail.path ?? detail.image_id ?? '—')}`;
+  }
+
+  // Reordenado
+  if (action === 'photos.reorder') {
+    const n = Array.isArray(detail.order) ? detail.order.length : 0;
+    return `${t('Se reordenaron', 'Reordered')} ${n} ${t('fotos', 'photos')}`;
+  }
+
+  // Eliminar todas las fotos
+  if (action === 'photos.delete_all') {
+    const n = typeof detail.image_count === 'number' ? detail.image_count : 0;
+    return `${t('Se eliminaron todas las fotos', 'All photos deleted')} (${n})`;
+  }
+
+  // Limpieza automática
+  if (action === 'cron.cleanup') {
+    const purged = typeof detail.purged === 'number' ? detail.purged : 0;
+    return `${t('Solicitudes purgadas', 'Purged submissions')}: ${purged}`;
+  }
+
+  // Login / sesión
+  if (action === 'admin.login' || action === 'admin.logout' || action === 'admin.login_failed' ||
+      action === 'admin.unauthorized') {
+    if (detail.session_verified != null) return String(detail.session_verified);
+    if (detail.reason) return String(detail.reason);
+    return '—';
+  }
+
+  // Fallback técnico (los técnicos pueden ver el detalle crudo)
   return Object.entries(detail)
     .slice(0, 6)
-    .map(([k, v]) => `${k}: ${typeof v === 'object' ? JSON.stringify(v) : String(v)}`)
-    .join(' | ');
+    .map(([k, v]) => `${FIELD_LABELS[locale][k] ?? k}: ${typeof v === 'object' ? JSON.stringify(v) : String(v)}`)
+    .join(' · ');
 }
 
 export default async function AuditoriaPage({
@@ -189,7 +312,7 @@ export default async function AuditoriaPage({
                     )}
                   </td>
                   <td className={`${tdCls} max-w-[320px] break-words text-ajin-gray-400`}>
-                    {formatDetail(row.detail)}
+                    {formatDetail(locale as Locale, row.action, row.detail)}
                   </td>
                   <td className={`${tdCls} whitespace-nowrap`}>{row.ip || '—'}</td>
                   <td className={`${tdCls} whitespace-nowrap`}>{deviceLabel(row.user_agent)}</td>
