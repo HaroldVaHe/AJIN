@@ -1,6 +1,6 @@
 ---
 title: "How to Incorporate a SAS in Colombia in 2025"
-description: "Complete guide to creating a Simplified Stock Corporation (SAS) in Colombia: requirements, costs, steps, and benefits."
+description: "Informative guide to creating a Simplified Stock Corporation (SAS) in Colombia: requirements, steps, and benefits."
 date: "2025-04-05"
 category: "Commercial Law"
 author: "AJIN"
@@ -42,14 +42,6 @@ Before a notary public or through a private document.
 
 - Single Tax Registry (RUT)
 - Electronic invoicing
-
-## Approximate Costs 2025
-
-- **Legal fees**: $500,000 - $1,500,000 COP
-- **Commercial registration**: $100,000 - $500,000 COP
-- **Public deed**: $150,000 - $300,000 COP
-
-**Total**: $750,000 - $2,300,000 COP
 
 ## Need to incorporate your company?
 

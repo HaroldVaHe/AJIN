@@ -1,51 +1,50 @@
 ---
-title: "How Much Does a Divorce Cost in Colombia in 2025?"
-description: "Find out the updated costs of divorce in Colombia: attorney fees, notarial costs, process timelines, and legal requirements."
+title: "Divorce Process in Colombia: Types, Methods and Requirements"
+description: "Informative guide on divorce in Colombia: types of divorce, notarial and judicial routes, requirements, and steps of the legal process."
 date: "2025-02-20"
 category: "Family Law"
 author: "AJIN"
 ---
 
-# How Much Does a Divorce Cost in Colombia in 2025?
+# Divorce Process in Colombia: Types, Methods and Requirements
 
-The cost of a divorce in Colombia varies depending on the type of process and whether there is agreement between the parties.
+Divorce dissolves the marital bond and, in Colombia, can be processed through two main routes: notarial (when there is mutual agreement) and judicial (when there is not). Learn what each one involves.
 
-## Mutual Agreement Divorce
+## Types of Divorce
 
-This is the fastest and most economical option.
+### Mutual Agreement Divorce
 
-### Approximate costs:
+This is the fastest and most agile route. Both spouses agree to dissolve the marriage and on the terms of the liquidation of the conjugal partnership, so it can be processed before a notary or at a conciliation center, without the need for a judicial process.
 
-- **Attorney fees**: $800,000 - $2,000,000 COP
-- **Public deed (notary)**: $200,000 - $500,000 COP
-- **Civil registration**: $50,000 - $100,000 COP
+### Contentious Divorce
 
-**Estimated total**: $1,000,000 - $2,500,000 COP
-
-## Contentious Divorce
-
-When there is no agreement, the process is judicial.
-
-### Approximate costs:
-
-- **Attorney fees**: $3,000,000 - $10,000,000 COP
-- **Court costs**: $500,000 - $2,000,000 COP
-- **Expert witnesses (if applicable)**: $1,000,000 - $5,000,000 COP
-
-**Estimated total**: $4,000,000 - $15,000,000 COP
-
-## Process Timelines
-
-- **Mutual agreement**: 1 - 3 months
-- **Contentious**: 6 - 18 months
+When there is no agreement between the parties, the divorce is processed through judicial proceedings. The judge decides on the dissolution of the marital bond and on the disputed matters, such as custody, child support, or the distribution of assets.
 
 ## General Requirements
 
 - Valid citizenship ID
 - Marriage civil registry
-- Property certificate if there are assets
-- Agreement on custody and alimony (if there are children)
+- Agreement on custody and child support (if there are children)
+- Decision on the liquidation of the conjugal partnership, if there are assets
+
+## The Notarial Route
+
+When there is mutual agreement, divorce can be carried out through:
+
+- **Notary**: public divorce deed
+- **Conciliation center**: conciliation record
+
+This is the recommended option when both spouses have reached clear agreements.
+
+## The Judicial Route
+
+If there is no agreement, the process proceeds before family court judges. This may involve:
+
+- Divorce lawsuit
+- Notification of the other party
+- Hearings and submission of evidence
+- Judge's decision on the marital bond and disputed matters
 
 ## How can we help?
 
-At AJIN we advise on both mutual agreement and contentious divorces, with full transparency in fees. [Request a consultation](/contacto).
+At AJIN we advise you on both mutual agreement divorces and contentious processes, accompanying you at every stage and explaining the process before any decision. [Request a consultation](/contacto).

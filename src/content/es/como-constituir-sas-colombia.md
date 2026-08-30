@@ -1,6 +1,6 @@
 ---
 title: "¿Cómo constituir una SAS en Colombia en 2025?"
-description: "Guía completa para crear una Sociedad por Acciones Simplificada (SAS) en Colombia: requisitos, costos, pasos y beneficios."
+description: "Guía informativa para crear una Sociedad por Acciones Simplificada (SAS) en Colombia: requisitos, pasos y beneficios."
 date: "2025-04-05"
 category: "Derecho Comercial"
 author: "AJIN"
@@ -42,14 +42,6 @@ Ante notaría pública o mediante documento privado.
 
 - Registro Único Tributario (RUT)
 - Facturación electrónica
-
-## Costos aproximados 2025
-
-- **Honorarios legales**: $500.000 - $1.500.000 COP
-- **Registro mercantil**: $100.000 - $500.000 COP
-- **Escritura pública**: $150.000 - $300.000 COP
-
-**Total**: $750.000 - $2.300.000 COP
 
 ## ¿Necesita constituir su empresa?
 

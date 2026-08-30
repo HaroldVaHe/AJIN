@@ -1,51 +1,50 @@
 ---
-title: "¿Cuánto cuesta un divorcio en Colombia en 2025?"
-description: "Conozca los costos actualizados del divorcio en Colombia: honorarios de abogados, costos notariales, tiempos del proceso y requisitos legales."
+title: "Proceso de divorcio en Colombia: tipos, vías y requisitos"
+description: "Guía informativa sobre el divorcio en Colombia: tipos de divorcio, vías notarial y judicial, requisitos y pasos del proceso legal."
 date: "2025-02-20"
 category: "Derecho de Familia"
 author: "AJIN"
 ---
 
-# ¿Cuánto cuesta un divorcio en Colombia en 2025?
+# Proceso de divorcio en Colombia: tipos, vías y requisitos
 
-El costo de un divorcio en Colombia varía según el tipo de proceso y si hay acuerdo entre las partes.
+El divorcio disuelve el vínculo matrimonial y, en Colombia, puede tramitarse por dos vías principales: la notarial (cuando hay mutuo acuerdo) y la judicial (cuando no lo hay). Conozca en qué consiste cada una.
 
-## Divorcio por mutuo acuerdo
+## Tipos de divorcio
 
-Es la opción más rápida y económica.
+### Divorcio por mutuo acuerdo
 
-### Costos aproximados:
+Es la vía más rápida y ágil. Ambos cónyuges están de acuerdo en disolver el matrimonio y en las condiciones de la liquidación de la sociedad conyugal, por lo que puede tramitarse ante notario o en centro de conciliación, sin necesidad de un proceso judicial.
 
-- **Honorarios de abogado**: $800.000 - $2.000.000 COP
-- **Escritura pública (notaría)**: $200.000 - $500.000 COP
-- **Registro civil**: $50.000 - $100.000 COP
+### Divorcio contencioso
 
-**Total estimado**: $1.000.000 - $2.500.000 COP
-
-## Divorcio contencioso
-
-Cuando no hay acuerdo, el proceso es judicial.
-
-### Costos aproximados:
-
-- **Honorarios de abogado**: $3.000.000 - $10.000.000 COP
-- **Costas procesales**: $500.000 - $2.000.000 COP
-- **Peritos (si aplica)**: $1.000.000 - $5.000.000 COP
-
-**Total estimado**: $4.000.000 - $15.000.000 COP
-
-## Tiempos del proceso
-
-- **Mutuo acuerdo**: 1 - 3 meses
-- **Contencioso**: 6 - 18 meses
+Cuando no existe acuerdo entre las partes, se tramita a través de un proceso judicial. El juez decide sobre la disolución del vínculo y sobre los aspectos en disputa, como la custodia, los alimentos o la distribución de bienes.
 
 ## Requisitos generales
 
 - Cédula de ciudadanía al día
 - Registro civil de matrimonio
-- Certificado de tradición si hay bienes
 - Acuerdo sobre custodia y alimentos (si hay hijos)
+- Definición sobre la liquidación de la sociedad conyugal, si hay bienes
+
+## La vía notarial
+
+Cuando hay mutuo acuerdo, el divorcio puede realizarse mediante:
+
+- **Notaría**: escritura pública de divorcio
+- **Centro de conciliación**: acta de conciliación
+
+Es la alternativa recomendable cuando ambos cónyuges han llegado a acuerdos claros.
+
+## La vía judicial
+
+Si no hay acuerdo, el proceso se adelanta ante los jueces de familia. Esto puede implicar:
+
+- Demanda de divorcio
+- Notificación a la otra parte
+- Audiencias y aporte de pruebas
+- Decisión del juez sobre el vínculo y los asuntos en disputa
 
 ## ¿Cómo podemos ayudarle?
 
-En AJIN asesoramos tanto divorcios de mutuo acuerdo como contenciosos, con total transparencia en honorarios. [Solicite una consulta](/contacto).
+En AJIN le asesoramos tanto en divorcios por mutuo acuerdo como en procesos contenciosos, acompañándole en cada etapa y explicándole el proceso antes de cualquier decisión. [Solicite una consulta](/contacto).
