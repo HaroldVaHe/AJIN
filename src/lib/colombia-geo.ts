@@ -45,7 +45,8 @@ export const DEPARTMENTS: DepartmentGeo[] = [
 ];
 
 export function getCitiesForDepartment(department: string): string[] {
-  return DEPARTMENTS.find((d) => d.name === department)?.cities ?? [];
+  const cities = DEPARTMENTS.find((d) => d.name === department)?.cities ?? [];
+  return [...cities].sort((a, b) => a.localeCompare(b, 'es'));
 }
 
 export interface DescriptionInput {
@@ -99,4 +100,37 @@ export function composeDescription(v: DescriptionInput): string {
 
 function capitalize(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+const OPERATION_LABELS: Record<string, string> = {
+  venta: 'Venta',
+  arriendo: 'Arriendo',
+};
+
+const TYPE_LABELS: Record<string, string> = {
+  apartamento: 'Apartamento',
+  casa: 'Casa',
+  oficina: 'Oficina',
+  lote: 'Lote',
+  bodega: 'Bodega',
+};
+
+/**
+ * Genera el título del inmueble con el patrón:
+ * `Operación - Tipo - Ciudad - Barrio`.
+ * Omitimos los segmentos que aún no se hayan elegido (ciudad/barrio).
+ */
+export function composeTitle(v: {
+  operation?: string | null;
+  type?: string | null;
+  city?: string | null;
+  neighborhood?: string | null;
+}): string {
+  const op = v.operation ? OPERATION_LABELS[v.operation] : '';
+  const type = v.type ? TYPE_LABELS[v.type] : '';
+  const city = v.city?.trim() || '';
+  const neighborhood = v.neighborhood?.trim() || '';
+
+  const parts = [op, type, city, neighborhood].filter(Boolean);
+  return parts.join(' - ');
 }

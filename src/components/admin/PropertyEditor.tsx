@@ -8,11 +8,10 @@ import { CheckCircle2, AlertCircle, Loader2, ImagePlus, Trash2, ArrowLeft, Arrow
 import Button from '@/components/ui/Button';
 import type { PropertyWithImages } from '@/types/property';
 import { filesToWebp } from '@/lib/image-webp';
-import { DEPARTMENTS, getCitiesForDepartment, composeDescription } from '@/lib/colombia-geo';
+import { DEPARTMENTS, getCitiesForDepartment, composeDescription, composeTitle } from '@/lib/colombia-geo';
 
 const OPERATIONS = ['venta', 'arriendo'] as const;
 const TYPES = ['apartamento', 'casa', 'oficina', 'lote', 'bodega'] as const;
-const MAX_PHOTOS = 15;
 
 interface PropertyEditorProps {
   property?: PropertyWithImages | null;
@@ -38,15 +37,21 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
   const [uploadError, setUploadError] = useState('');
   const [saveState, setSaveState] = useState<SaveState>('idle');
   const [department, setDepartment] = useState(property?.department ?? '');
+  const [operation, setOperation] = useState(property?.operation ?? '');
+  const [type, setType] = useState(property?.type ?? '');
+  const [city, setCity] = useState(property?.city ?? '');
+  const [neighborhood, setNeighborhood] = useState(property?.neighborhood ?? '');
   const cities = getCitiesForDepartment(department);
+  const autoTitle = composeTitle({ operation, type, city, neighborhood });
+  const [dragIndex, setDragIndex] = useState<number | null>(null);
 
   const collectPayload = (form: HTMLFormElement) => {
     const fd = new FormData(form);
     const get = (k: string) => String(fd.get(k) ?? '').trim();
     return {
-      operation: get('operation'),
-      type: get('type'),
-      title: get('title'),
+      operation,
+      type,
+      title: autoTitle || String(fd.get('title') ?? '').trim(),
       description: get('description'),
       price_cop: Number(get('price_cop')),
       area_m2: Number(get('area_m2')) || null,
@@ -54,8 +59,8 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
       bathrooms: Number(get('bathrooms')) || null,
       parking: Number(get('parking')) || null,
       stratum: Number(get('stratum')) || null,
-      neighborhood: get('neighborhood'),
-      city: get('city') || 'Bogotá',
+      neighborhood,
+      city: city || 'Bogotá',
       department,
       owner_name: get('owner_name'),
       owner_phone: get('owner_phone'),
@@ -156,12 +161,10 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
 
       // Modo creación: sin id todavía → se guardan en buffer y se suben al guardar.
       if (id === null) {
-        setPendingPhotos((prev) =>
-          [...prev, ...valid.map((file) => ({ file, preview: URL.createObjectURL(file) }))].slice(
-            0,
-            MAX_PHOTOS
-          )
-        );
+        setPendingPhotos((prev) => [
+          ...prev,
+          ...valid.map((file) => ({ file, preview: URL.createObjectURL(file) })),
+        ]);
         const skippedInvalid = files.filter((f) => !f.type.startsWith('image/')).length;
         const messages: string[] = [];
         if (empty.length > 0) messages.push(`${empty.length} archivo(s) vacío(s) omitido(s)`);
@@ -173,7 +176,7 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
       }
 
       let failed = 0;
-      for (const file of valid.slice(0, MAX_PHOTOS - images.length)) {
+      for (const file of valid) {
         const fd = new FormData();
         fd.append('file', file);
         const res = await fetch(`/api/admin/inmuebles/${id}/foto`, {
@@ -189,7 +192,7 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
       }
       const messages: string[] = [];
       if (empty.length > 0) messages.push(`${empty.length} archivo(s) vacío(s) omitido(s)`);
-      if (files.length - valid.length > 0 && valid.length < MAX_PHOTOS - images.length)
+      if (files.length - valid.length > 0)
         messages.push(`${files.filter((f) => !f.type.startsWith('image/')).length} archivo(s) no reconocidos como imagen`);
       if (failed > 0) messages.push(`${failed} foto(s) no pudieron subirse al servidor`);
       setUploadError(messages.join(' · '));
@@ -256,6 +259,55 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
     const index = images.findIndex((img) => img.id === imageId);
     if (index <= 0) return;
     await movePhoto(index, -index);
+  };
+
+  const deleteAllPhotos = async () => {
+    if (isNew || id === null) {
+      pendingPhotos.forEach((p) => URL.revokeObjectURL(p.preview));
+      setPendingPhotos([]);
+      return;
+    }
+    if (!confirm(t('deleteAllPhotosConfirm'))) return;
+    const res = await fetch(`/api/admin/inmuebles/${id}/fotos`, { method: 'DELETE' });
+    if (res.ok) {
+      setImages([]);
+      router.refresh();
+    }
+  };
+
+  const persistPhotoOrder = async (withPositions: PropertyWithImages['images']) => {
+    if (id === null) return;
+    await fetch(`/api/admin/inmuebles/${id}/fotos`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ order: withPositions.map((i) => i.id) }),
+    });
+    router.refresh();
+  };
+
+  const dropPhoto = (toIndex: number) => {
+    if (dragIndex === null || dragIndex === toIndex) {
+      setDragIndex(null);
+      return;
+    }
+    if (isNew) {
+      setPendingPhotos((prev) => {
+        const next = [...prev];
+        const [moved] = next.splice(dragIndex, 1);
+        next.splice(toIndex, 0, moved);
+        return next;
+      });
+    } else {
+      setImages((prev) => {
+        const next = [...prev];
+        const [moved] = next.splice(dragIndex, 1);
+        next.splice(toIndex, 0, moved);
+        const withPositions = next.map((img, pos) => ({ ...img, position: pos }));
+        void persistPhotoOrder(withPositions);
+        return withPositions;
+      });
+    }
+    setDragIndex(null);
   };
 
   const inputCls =
@@ -334,7 +386,14 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <label className="mb-1 block text-sm font-semibold text-ajin-text">Operación</label>
-                <select name="operation" required defaultValue={property?.operation ?? ''} className={inputCls}>
+                <select
+                  name="operation"
+                  required
+                  value={operation}
+                  onChange={(e) => setOperation(e.target.value)}
+                  className={inputCls}
+                >
+                  <option value="" disabled>—</option>
                   {OPERATIONS.map((op) => (
                     <option key={op} value={op}>{tInm(`operations.${op}`)}</option>
                   ))}
@@ -342,7 +401,14 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
               </div>
               <div>
                 <label className="mb-1 block text-sm font-semibold text-ajin-text">Tipo</label>
-                <select name="type" required defaultValue={property?.type ?? ''} className={inputCls}>
+                <select
+                  name="type"
+                  required
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
+                  className={inputCls}
+                >
+                  <option value="" disabled>—</option>
                   {TYPES.map((ty) => (
                     <option key={ty} value={ty}>{tInm(`types.${ty}`)}</option>
                   ))}
@@ -350,7 +416,14 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
               </div>
               <div className="sm:col-span-2">
                 <label className="mb-1 block text-sm font-semibold text-ajin-text">Título</label>
-                <input name="title" required minLength={5} maxLength={140} defaultValue={property?.title} className={inputCls} />
+                <input
+                  name="title"
+                  required
+                  readOnly
+                  value={autoTitle}
+                  placeholder="Operación - Tipo - Ciudad - Barrio"
+                  className={`${inputCls} bg-ajin-surface text-ajin-gray-400`}
+                />
               </div>
               <div>
                 <label className="mb-1 block text-sm font-semibold text-ajin-text">Precio (COP)</label>
@@ -380,7 +453,12 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
               </div>
               <div>
                 <label className="mb-1 block text-sm font-semibold text-ajin-text">Barrio / Sector</label>
-                <input name="neighborhood" defaultValue={property?.neighborhood} className={inputCls} />
+                <input
+                  name="neighborhood"
+                  value={neighborhood}
+                  onChange={(e) => setNeighborhood(e.target.value)}
+                  className={inputCls}
+                />
               </div>
               <div>
                 <label className="mb-1 block text-sm font-semibold text-ajin-text">Departamento</label>
@@ -388,7 +466,10 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
                   name="department_select"
                   required
                   value={department}
-                  onChange={(e) => setDepartment(e.target.value)}
+                  onChange={(e) => {
+                    setDepartment(e.target.value);
+                    setCity('');
+                  }}
                   className={inputCls}
                 >
                   <option value="" disabled>—</option>
@@ -403,8 +484,8 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
                   name="city"
                   required={!isNew || department !== ''}
                   disabled={!department}
-                  key={department}
-                  defaultValue={property && property.department === department ? property.city : ''}
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
                   className={`${inputCls} disabled:cursor-not-allowed disabled:bg-ajin-surface`}
                 >
                   <option value="" disabled>—</option>
@@ -437,7 +518,18 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
           </div>
 
           <div className="rounded-2xl bg-white p-6 shadow-sm md:p-8">
-            <h2 className="mb-1 text-lg font-semibold text-ajin-primary">{t('photosSection')}</h2>
+            <div className="mb-1 flex items-center justify-between gap-3">
+              <h2 className="text-lg font-semibold text-ajin-primary">{t('photosSection')}</h2>
+              {(images.length > 0 || pendingPhotos.length > 0) && (
+                <button
+                  type="button"
+                  onClick={() => void deleteAllPhotos()}
+                  className="flex items-center gap-1 text-xs font-semibold text-red-600 transition-colors hover:text-red-700"
+                >
+                  <Trash2 size={14} /> {t('deleteAllPhotos')}
+                </button>
+              )}
+            </div>
             <p className="mb-4 text-xs text-ajin-gray-400">{t('photoLimit')}</p>
             {uploadError && <p className="mb-3 text-xs font-medium text-red-600">{uploadError}</p>}
 
@@ -454,7 +546,14 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
               {[...images]
                 .sort((a, b) => a.position - b.position)
                 .map((img, idx) => (
-                  <div key={img.id} className="group relative overflow-hidden rounded-xl bg-ajin-surface">
+                  <div
+                    key={img.id}
+                    draggable
+                    onDragStart={() => setDragIndex(idx)}
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={() => dropPhoto(idx)}
+                    className={`group relative overflow-hidden rounded-xl bg-ajin-surface ${dragIndex === idx ? 'ring-2 ring-ajin-accent' : ''}`}
+                  >
                     <div className="relative aspect-square">
                       <Image src={img.url} alt={`Foto ${idx + 1}`} fill sizes="200px" className="object-cover" unoptimized />
                     </div>
@@ -505,10 +604,17 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
                 ))}
 
               {pendingPhotos.map((photo, idx) => (
-                <div key={photo.preview} className="group relative overflow-hidden rounded-xl bg-ajin-surface">
+                <div
+                  key={photo.preview}
+                  draggable
+                  onDragStart={() => setDragIndex(idx)}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={() => dropPhoto(idx)}
+                  className={`group relative overflow-hidden rounded-xl bg-ajin-surface ${dragIndex === idx ? 'ring-2 ring-ajin-accent' : ''}`}
+                >
                   <div className="relative aspect-square">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={photo.preview} alt={`Foto nueva ${images.length + idx + 1}`} className="h-full w-full object-cover" />
+                    <img src={photo.preview} alt={`Foto nueva ${idx + 1}`} className="h-full w-full object-cover" />
                   </div>
                   <button
                     type="button"
@@ -521,23 +627,42 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
                   >
                     <Trash2 size={12} />
                   </button>
+                  <div className="absolute inset-x-1 bottom-1 flex justify-center opacity-0 transition-opacity group-hover:opacity-100">
+                    <button
+                      type="button"
+                      onClick={() => setPendingPhotos((prev) => {
+                        const next = [...prev];
+                        const [moved] = next.splice(idx, 1);
+                        next.unshift(moved);
+                        return next;
+                      })}
+                      disabled={idx === 0}
+                      className="rounded-full bg-black/60 p-1 text-ajin-accent-light disabled:opacity-30"
+                      title={t('makeCover')}
+                    >
+                      <Star size={12} />
+                    </button>
+                  </div>
+                  {idx === 0 && (
+                    <span className="absolute left-1 top-1 rounded-full bg-ajin-accent px-2 py-0.5 text-[10px] font-bold text-ajin-primary">
+                      {t('cover')}
+                    </span>
+                  )}
                   <span className="absolute inset-x-0 bottom-0 bg-black/50 py-0.5 text-center text-[10px] font-semibold text-white">
-                    {isNew ? 'Se sube al guardar' : ''}
+                    {isNew ? t('pendingUpload') : ''}
                   </span>
                 </div>
               ))}
 
-              {images.length + pendingPhotos.length < MAX_PHOTOS && (
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={uploading || (!isNew && id === null)}
-                  className="flex aspect-square flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-ajin-border text-ajin-gray-400 transition-colors hover:border-ajin-accent hover:text-ajin-accent disabled:opacity-40"
-                >
-                  {uploading ? <Loader2 size={20} className="animate-spin" /> : <ImagePlus size={20} />}
-                  <span className="text-[10px]">{uploading ? t('uploading') : t('addPhoto')}</span>
-                </button>
-              )}
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploading || (!isNew && id === null)}
+                className="flex aspect-square flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-ajin-border text-ajin-gray-400 transition-colors hover:border-ajin-accent hover:text-ajin-accent disabled:opacity-40"
+              >
+                {uploading ? <Loader2 size={20} className="animate-spin" /> : <ImagePlus size={20} />}
+                <span className="text-[10px]">{uploading ? t('uploading') : t('addPhoto')}</span>
+              </button>
             </div>
           </div>
         </div>

@@ -46,3 +46,15 @@ export async function deletePropertyPhotoFile(path: string): Promise<void> {
   if (!supabase) return;
   await supabase.storage.from(PROPERTIES_BUCKET).remove([path]);
 }
+
+/** Elimina todos los archivos del bucket de un inmueble (no toca la tabla). */
+export async function deleteAllPropertyPhotoFiles(propertyId: number): Promise<void> {
+  const supabase = createSupabaseAdminClient();
+  if (!supabase) return;
+  const { data } = await supabase.storage.from(PROPERTIES_BUCKET).list(`${propertyId}/`);
+  if (data && data.length > 0) {
+    await supabase.storage
+      .from(PROPERTIES_BUCKET)
+      .remove(data.map((f) => `${propertyId}/${f.name}`));
+  }
+}

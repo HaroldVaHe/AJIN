@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { CheckCircle2, AlertCircle, Loader2, ImagePlus, X } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { filesToWebp } from '@/lib/image-webp';
-import { DEPARTMENTS, getCitiesForDepartment, composeDescription } from '@/lib/colombia-geo';
+import { DEPARTMENTS, getCitiesForDepartment, composeDescription, composeTitle } from '@/lib/colombia-geo';
 
 const OPERATIONS = ['venta', 'arriendo'] as const;
 const TYPES = ['apartamento', 'casa', 'oficina', 'lote', 'bodega'] as const;
@@ -128,7 +128,12 @@ export default function PropertySubmissionForm() {
     const payload = {
       operation: values.operation,
       type: values.type,
-      title: values.title.trim(),
+      title: composeTitle({
+        operation: values.operation,
+        type: values.type,
+        city: values.city,
+        neighborhood: values.neighborhood,
+      }),
       description: description.slice(0, 5000),
       price_cop: Number(values.price_cop),
       area_m2: Number(values.area_m2) || null,
@@ -237,13 +242,17 @@ export default function PropertySubmissionForm() {
             </label>
             <input
               id="title"
+              name="title"
               required
-              minLength={5}
-              maxLength={140}
+              readOnly
+              value={composeTitle({
+                operation: values.operation,
+                type: values.type,
+                city: values.city,
+                neighborhood: values.neighborhood,
+              })}
               placeholder={t('propertyTitlePlaceholder')}
-              value={values.title}
-              onChange={setValue('title')}
-              className={inputCls}
+              className={`${inputCls} bg-ajin-surface text-ajin-gray-400`}
             />
           </div>
 
