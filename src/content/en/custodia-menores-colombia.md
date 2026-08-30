@@ -1,7 +1,7 @@
 ---
 title: "Everything You Need to Know About Child Custody in Colombia"
 description: "Complete guide on child custody in Colombia: types of custody, requirements, legal process, and how visitation rights are determined."
-date: "2025-03-25"
+date: "2026-03-25"
 category: "Family Law"
 author: "AJIN"
 ---

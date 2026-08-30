@@ -1,12 +1,12 @@
 ---
-title: "¿Cómo constituir una SAS en Colombia en 2025?"
+title: "¿Cómo constituir una SAS en Colombia?"
 description: "Guía informativa para crear una Sociedad por Acciones Simplificada (SAS) en Colombia: requisitos, pasos y beneficios."
-date: "2025-04-05"
+date: "2026-02-03"
 category: "Derecho Comercial"
 author: "AJIN"
 ---
 
-# ¿Cómo constituir una SAS en Colombia en 2025?
+# ¿Cómo constituir una SAS en Colombia?
 
 La Sociedad por Acciones Simplificada (SAS) es el tipo societario más popular en Colombia por su flexibilidad y facilidad de constitución.
 

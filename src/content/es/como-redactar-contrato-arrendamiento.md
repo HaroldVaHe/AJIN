@@ -1,7 +1,7 @@
 ---
 title: "¿Cómo redactar un contrato de arrendamiento en Colombia?"
 description: "Aprenda los elementos esenciales que debe incluir un contrato de arrendamiento en Colombia para proteger sus derechos como arrendador o arrendatario."
-date: "2025-03-10"
+date: "2026-03-10"
 category: "Derecho Civil"
 author: "AJIN"
 ---

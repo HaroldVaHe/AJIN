@@ -1,7 +1,7 @@
 ---
 title: "Divorce Process in Colombia: Types, Methods and Requirements"
 description: "Informative guide on divorce in Colombia: types of divorce, notarial and judicial routes, requirements, and steps of the legal process."
-date: "2025-02-20"
+date: "2026-02-20"
 category: "Family Law"
 author: "AJIN"
 ---

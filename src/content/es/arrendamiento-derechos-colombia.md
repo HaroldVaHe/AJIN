@@ -1,7 +1,7 @@
 ---
 title: "Derechos y obligaciones en el arrendamiento de vivienda en Colombia"
 description: "Guía informativa sobre los derechos y obligaciones de arrendador y arrendatario en Colombia según la Ley 820 de 2003, y cómo resolver conflictos."
-date: "2025-08-05"
+date: "2026-08-05"
 category: "Derecho Inmobiliario"
 author: "AJIN"
 ---

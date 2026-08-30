@@ -1,12 +1,12 @@
 ---
-title: "How to Incorporate a SAS in Colombia in 2025"
+title: "How to Incorporate a SAS in Colombia"
 description: "Informative guide to creating a Simplified Stock Corporation (SAS) in Colombia: requirements, steps, and benefits."
-date: "2025-04-05"
+date: "2026-02-03"
 category: "Commercial Law"
 author: "AJIN"
 ---
 
-# How to Incorporate a SAS in Colombia in 2025
+# How to Incorporate a SAS in Colombia
 
 The Simplified Stock Corporation (SAS) is the most popular corporate type in Colombia due to its flexibility and ease of incorporation.
 

@@ -1,7 +1,7 @@
 ---
 title: "Real Estate Purchase and Sale in Colombia: Steps and Recommendations"
 description: "Informative guide to buying or selling a property in Colombia: process steps, key documents, and legal recommendations."
-date: "2025-06-08"
+date: "2026-06-08"
 category: "Real Estate Law"
 author: "AJIN"
 ---

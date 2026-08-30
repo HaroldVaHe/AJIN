@@ -1,7 +1,7 @@
 ---
 title: "Tenant and Landlord Rights and Obligations in Colombia"
 description: "Informative guide on the rights and obligations of landlords and tenants in Colombia under Law 820 of 2003, and how to resolve conflicts."
-date: "2025-08-05"
+date: "2026-08-05"
 category: "Real Estate Law"
 author: "AJIN"
 ---

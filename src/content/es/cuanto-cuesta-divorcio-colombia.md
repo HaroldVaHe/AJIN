@@ -1,7 +1,7 @@
 ---
 title: "Proceso de divorcio en Colombia: tipos, vías y requisitos"
 description: "Guía informativa sobre el divorcio en Colombia: tipos de divorcio, vías notarial y judicial, requisitos y pasos del proceso legal."
-date: "2025-02-20"
+date: "2026-02-20"
 category: "Derecho de Familia"
 author: "AJIN"
 ---

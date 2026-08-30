@@ -1,7 +1,7 @@
 ---
 title: "The Importance of a Will in Colombia: Protecting Your Assets"
 description: "Informative guide on wills in Colombia: what a will is, types of wills, who can make one, and why it is important to protect your assets."
-date: "2025-07-01"
+date: "2026-07-01"
 category: "Civil Law"
 author: "AJIN"
 ---

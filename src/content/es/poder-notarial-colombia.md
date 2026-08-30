@@ -1,7 +1,7 @@
 ---
 title: "Poder notarial en Colombia: tipos, usos y cómo se otorga"
 description: "Guía informativa sobre el poder notarial en Colombia: qué es, tipos de poder, usos frecuentes y pasos para otorgarlo."
-date: "2025-07-20"
+date: "2026-07-20"
 category: "Derecho Notarial"
 author: "AJIN"
 ---

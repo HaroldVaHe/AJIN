@@ -1,7 +1,7 @@
 ---
 title: "Sucesión y herencia en Colombia: proceso y qué debe saber"
 description: "Guía informativa sobre sucesiones y herencias en Colombia: qué es la sucesión, quiénes son los herederos, tipos de sucesión y pasos del proceso."
-date: "2025-05-12"
+date: "2026-05-12"
 category: "Derecho Civil"
 author: "AJIN"
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Compraventa de inmuebles en Colombia: pasos y recomendaciones"
 description: "Guía informativa para comprar o vender un inmueble en Colombia: pasos del proceso, documentos clave y recomendaciones legales."
-date: "2025-06-08"
+date: "2026-06-08"
 category: "Derecho Inmobiliario"
 author: "AJIN"
 ---

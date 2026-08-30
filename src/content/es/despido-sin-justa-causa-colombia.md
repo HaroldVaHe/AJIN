@@ -1,7 +1,7 @@
 ---
 title: "¿Qué hacer ante un despido sin justa causa en Colombia?"
 description: "Guía completa sobre sus derechos laborales cuando es despedido sin justa causa en Colombia. Sepa qué pasos seguir, qué indemnización le corresponde y cómo proceder legalmente."
-date: "2025-01-15"
+date: "2026-01-15"
 category: "Derecho Laboral"
 author: "AJIN"
 ---

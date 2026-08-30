@@ -1,7 +1,7 @@
 ---
 title: "Notarial Power of Attorney in Colombia: Types, Uses and How to Grant It"
 description: "Informative guide on the notarial power of attorney in Colombia: what it is, types of power, common uses, and steps to grant it."
-date: "2025-07-20"
+date: "2026-07-20"
 category: "Notarial Law"
 author: "AJIN"
 ---

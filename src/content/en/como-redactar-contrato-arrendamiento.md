@@ -1,7 +1,7 @@
 ---
 title: "How to Draft a Lease Agreement in Colombia"
 description: "Learn the essential elements a lease agreement must include in Colombia to protect your rights as landlord or tenant."
-date: "2025-03-10"
+date: "2026-03-10"
 category: "Civil Law"
 author: "AJIN"
 ---

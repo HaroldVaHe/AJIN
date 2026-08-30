@@ -1,7 +1,7 @@
 ---
 title: "Inheritance and Succession in Colombia: Process and What to Know"
 description: "Informative guide on inheritance and succession in Colombia: what succession is, who the heirs are, types of succession, and process steps."
-date: "2025-05-12"
+date: "2026-05-12"
 category: "Civil Law"
 author: "AJIN"
 ---

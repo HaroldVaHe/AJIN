@@ -1,7 +1,7 @@
 ---
 title: "What to Do After Wrongful Termination in Colombia"
 description: "Complete guide on your labor rights when wrongfully terminated in Colombia. Know what steps to take, what compensation you are entitled to, and how to proceed legally."
-date: "2025-01-15"
+date: "2026-01-15"
 category: "Labor Law"
 author: "AJIN"
 ---

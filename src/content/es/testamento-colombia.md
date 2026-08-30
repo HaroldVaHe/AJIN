@@ -1,7 +1,7 @@
 ---
 title: "La importancia del testamento en Colombia: protección de su patrimonio"
 description: "Guía informativa sobre el testamento en Colombia: qué es, tipos de testamento, quiénes pueden testar y por qué es importante proteger su patrimonio."
-date: "2025-07-01"
+date: "2026-07-01"
 category: "Derecho Civil"
 author: "AJIN"
 ---
