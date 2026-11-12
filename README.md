@@ -87,12 +87,12 @@ Security: every write goes through API routes using the service-role key; the an
 
 ## Arriendos (gestión posterior al anuncio)
 
-Módulo para administrar un inmueble cuando ya se arrendó: cobrar el canon, pagar la administración del conjunto, descontar la comisión de la inmobiliaria y girar el saldo al propietario, con soportes (cuentas de cobro, facturas, comprobantes) y recordatorios por Telegram.
+Módulo para administrar un inmueble cuando ya se arrendó: cobrar el canon, descontar la comisión de la inmobiliaria y la administración del conjunto (que paga el propietario) y girar el saldo al propietario, con soportes (cuentas de cobro, facturas, comprobantes) y recordatorios por Telegram.
 
 ### Configuración (una vez)
 
 1. **Respalda la base**: Supabase → Database → Backups.
-2. Ejecutar `supabase-arriendos.sql` en el **SQL Editor**. Solo crea objetos nuevos (`user_roles`, `role_permissions`, `leases`, `lease_concepts`, `lease_periods`, `lease_receipts`), el bucket privado `recibos` (5 MB, JPG/PNG/WebP/PDF) y los permisos iniciales. No borra tablas ni filas; se puede volver a ejecutar.
+2. Ejecutar `supabase-arriendos.sql` en el **SQL Editor**. Solo crea objetos nuevos (`user_roles`, `role_permissions`, `leases`, `lease_concepts`, `lease_periods`, `lease_receipts`), el bucket privado `recibos` (5 MB, solo WebP) y los permisos iniciales. No borra tablas ni filas; se puede volver a ejecutar.
 3. Crear los usuarios del panel en **Authentication → Users** (email/password). Los de `ADMIN_EMAILS` entran como administradores; para el resto, asignar rol en `/es/admin/roles` (o dejar que un admin lo haga).
 4. No hay variables nuevas: se reutilizan `SUPABASE_*`, `ADMIN_EMAILS`, `CRON_SECRET` y `TELEGRAM_*`. El cron de recordatorios necesita `CRON_SECRET` en Vercel.
 
@@ -101,11 +101,11 @@ Módulo para administrar un inmueble cuando ya se arrendó: cobrar el canon, pag
 | Paso | Descripción |
 |---|---|
 | Contrato | Desde `/es/admin/arriendos/nuevo` (o el botón “Administrar arriendo” del inmueble): inmueble, inquilino, propietario, canon, administración, comisión (% por defecto 10 % o monto fijo), día de pago, servicios extras y fechas. |
-| Mensualidades | Se generan al crear el contrato (hasta 11 meses o el fin pactado) y con “Generar meses” en el detalle. Cada mes guarda el cobro (`canon + administración + extras del inquilino`) y el giro (`canon + extras cobrados − comisión − gastos del propietario`). |
+| Mensualidades | Se generan al crear el contrato (hasta 11 meses o el fin pactado) y con “Generar meses” en el detalle. Cada mes guarda el cobro (`canon + extras del inquilino`) y el giro (`canon + extras cobrados − comisión − administración − gastos del propietario`). La administración la paga el propietario. |
 | Pagos | En `/es/admin/arriendos/{id}` se registra el pago (total o abono), la fecha y el giro al propietario. Los meses pagados no se recalculan al editar el contrato. |
-| Soportes | Se suben imágenes o PDF (máx. 5 MB) asociados a un mes y a un tipo: cuenta de cobro, comprobante, administración, servicio público, giro u otro. El bucket es privado: se abren con URL firmada de 1 hora. |
+| Soportes | Se suben imágenes (se convierten a WebP en el navegador, máx. 5 MB) asociadas a un mes y a un tipo: cuenta de cobro, comprobante, administración, servicio público, giro u otro. Se revisan en un visor con navegación. El bucket es privado: se abren con URL firmada de 1 hora. |
 | Roles | `/es/admin/roles` muestra los dos roles (`admin`, `gestor`), sus permisos editables y los usuarios con acceso. El rol `admin` conserva siempre el permiso de roles para no perder el panel. |
-| Recordatorios | Vercel Cron diario (`0 13 * * *`, 8:00 Bogotá) ejecuta `/api/cron/lease-reminders` con `Authorization: Bearer CRON_SECRET`; avisa por Telegram los días configurados (por defecto 5 y 1 antes), el día de pago y al quedar vencido, sin repetir la misma etapa. |
+| Recordatorios | Vercel Cron diario (`0 13 * * *`, 8:00 Bogotá) ejecuta `/api/cron/lease-reminders` con `Authorization: Bearer CRON_SECRET`; avisa por Telegram un día antes, el día de pago y, si está vencido, cada día hasta que se marque como pagado. |
 
 ### Lease flow (EN)
 
@@ -114,9 +114,9 @@ Módulo para administrar un inmueble cuando ya se arrendó: cobrar el canon, pag
 | Contract | Create it at `/en/admin/arriendos/nuevo` (or “Manage lease” from the property editor) with property, tenant, owner, rent, building fee, commission (10 % by default or fixed amount), payment day, extra services and dates. |
 | Monthly periods | Generated on creation (up to 11 months or the agreed end date) and via “Generate months”. Each month stores the amount to collect and the owner payout. |
 | Payments | Record full or partial payments, payment date and owner payout. Paid months are never recalculated when the contract changes. |
-| Receipts | Upload images or PDFs (max 5 MB) linked to a month and a kind (invoice, payment proof, building fee, utility, payout, other). Private bucket, 1-hour signed URLs. |
+| Receipts | Upload images (converted to WebP in the browser, max 5 MB) linked to a month and a kind (invoice, payment proof, building fee, utility, payout, other). Private bucket, 1-hour signed URLs. |
 | Roles | `/en/admin/roles` lists the two roles, editable permissions and users with access. The `admin` role always keeps the roles permission. |
-| Reminders | Daily Vercel cron calls the reminders endpoint with `CRON_SECRET` and sends Telegram notices before the due date, on the due date and when overdue, never repeating the same stage. |
+| Reminders | Daily Vercel cron calls the reminders endpoint with `CRON_SECRET` and sends Telegram notices one day before the due date, on the due date and daily while overdue until marked as paid. |
 
 ---
 

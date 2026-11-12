@@ -10,7 +10,6 @@ interface LeaseJoin {
   tenant_name: string;
   tenant_phone: string;
   owner_name: string;
-  reminder_days: number[];
   properties: { title: string; city: string } | Array<{ title: string; city: string }> | null;
 }
 
@@ -24,6 +23,7 @@ interface Candidate {
   paid_cop: number;
   status: string;
   reminder_stage: number;
+  reminded_on: string | null;
   leases: LeaseJoin | LeaseJoin[];
 }
 
@@ -47,9 +47,9 @@ function isoDay(date: Date): string {
 const STAGE_LABEL = ['', 'Próximo', 'Vence hoy', 'Vencido'] as const;
 
 /**
- * Recordatorios de cobro por Telegram. Se ejecuta a diario (Vercel Cron).
- * Envía un aviso cuando la mensualidad entra en la ventana configurada
- * (reminder_days), el día de pago y al quedar vencida, sin repetir etapa.
+ * Recordatorios de cobro por Telegram. Se ejecuta a diario (Vercel Cron):
+ * un aviso un día antes, otro el día de pago y, si está vencida, uno cada
+ * día hasta que la mensualidad se marque pagada.
  */
 export async function GET(request: NextRequest) {
   const auth = request.headers.get('authorization');
@@ -65,8 +65,8 @@ export async function GET(request: NextRequest) {
 
   const today = new Date();
   const todayISO = isoDay(today);
-  const horizon = new Date(today.getTime() + 10 * 86400000);
-  const candidates = (await fetchReminderCandidates(isoDay(horizon))) as unknown as Candidate[];
+  const tomorrow = new Date(today.getTime() + 86400000);
+  const candidates = (await fetchReminderCandidates(isoDay(tomorrow))) as unknown as Candidate[];
 
   let sent = 0;
   let failed = 0;
@@ -75,8 +75,11 @@ export async function GET(request: NextRequest) {
     const lease = joinLease(candidate.leases);
     if (!lease) continue;
 
-    const stage = reminderStageFor(candidate.due_date, lease.reminder_days ?? [5, 1], todayISO);
-    if (stage === 0 || stage <= Number(candidate.reminder_stage ?? 0)) continue;
+    const stage = reminderStageFor(candidate.due_date, todayISO);
+    if (stage === 0) continue;
+    // Vencido: un recordatorio por día. Próximo / vence hoy: una sola vez por etapa.
+    if (stage === 3 && candidate.reminded_on === todayISO) continue;
+    if (stage !== 3 && stage <= Number(candidate.reminder_stage ?? 0)) continue;
 
     const property = joinProperty(lease.properties);
     const pending = Math.max(0, Number(candidate.total_due_cop) - Number(candidate.paid_cop));
@@ -109,7 +112,7 @@ export async function GET(request: NextRequest) {
     request,
     actorEmail: 'cron@vercel',
     action: 'cron.lease_reminders',
-    detail: { candidates: candidates.length, sent, failed, horizon: isoDay(horizon) },
+    detail: { candidates: candidates.length, sent, failed, horizon: isoDay(tomorrow) },
   });
 
   return NextResponse.json({ success: true, candidates: candidates.length, sent, failed });

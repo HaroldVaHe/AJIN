@@ -4,21 +4,14 @@ import { createSupabaseAdminClient } from '@/lib/supabase/admin';
 import { requirePermissionWithUser } from '@/lib/permissions';
 import { logAudit } from '@/lib/audit';
 import {
-  ALLOWED_RECEIPT_TYPES,
   MAX_RECEIPT_BYTES,
   RECEIPT_KINDS,
+  RECEIPT_MIME,
   RECEIPTS_BUCKET,
   type ReceiptKind,
 } from '@/lib/leases';
 
 type Params = { params: Promise<{ id: string }> };
-
-const EXTENSIONS: Record<string, string> = {
-  'image/jpeg': 'jpg',
-  'image/png': 'png',
-  'image/webp': 'webp',
-  'application/pdf': 'pdf',
-};
 
 export async function POST(request: NextRequest, { params }: Params) {
   const auth = await requirePermissionWithUser('leases.manage');
@@ -53,7 +46,8 @@ export async function POST(request: NextRequest, { params }: Params) {
   if (!(file instanceof File)) {
     return NextResponse.json({ success: false, error: 'Missing file' }, { status: 400 });
   }
-  if (!ALLOWED_RECEIPT_TYPES.includes(file.type)) {
+  // El navegador convierte la imagen a WebP antes de subirla.
+  if (file.type !== RECEIPT_MIME) {
     return NextResponse.json({ success: false, error: 'Invalid file type' }, { status: 400 });
   }
   if (file.size === 0 || file.size > MAX_RECEIPT_BYTES) {
@@ -90,8 +84,7 @@ export async function POST(request: NextRequest, { params }: Params) {
     }
   }
 
-  const ext = EXTENSIONS[file.type] ?? 'bin';
-  const path = `${leaseId}/${Date.now()}-${randomBytes(4).toString('hex')}.${ext}`;
+  const path = `${leaseId}/${Date.now()}-${randomBytes(4).toString('hex')}.webp`;
   const { error: uploadError } = await supabase.storage
     .from(RECEIPTS_BUCKET)
     .upload(path, await file.arrayBuffer(), { contentType: file.type });

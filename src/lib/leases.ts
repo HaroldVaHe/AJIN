@@ -8,13 +8,8 @@ import type {
 export const RECEIPTS_BUCKET = 'recibos';
 export const MAX_RECEIPT_BYTES = 5 * 1024 * 1024;
 
-/** Tipos aceptados como comprobante (imágenes y PDF, sin SVG). */
-export const ALLOWED_RECEIPT_TYPES = [
-  'image/jpeg',
-  'image/png',
-  'image/webp',
-  'application/pdf',
-];
+/** Los soportes se convierten a WebP en el navegador antes de subirse. */
+export const RECEIPT_MIME = 'image/webp';
 
 export const RECEIPT_KINDS = [
   'invoice',
@@ -49,10 +44,11 @@ export interface PeriodTotals {
 
 /**
  * Calcula lo que se cobra al inquilino y lo que se gira al propietario:
- *   cobro  = canon + administración + extras que paga el inquilino
- *   giro   = canon + extras cobrados - comisión - gastos del propietario
- * La administración del conjunto entra y sale (se le paga al conjunto),
- * por eso no afecta el giro salvo que se registre como gasto del propietario.
+ *   cobro = canon + extras que paga el inquilino
+ *   giro  = canon + extras cobrados - comisión - administración del conjunto
+ *           - gastos del propietario
+ * La administración del conjunto la paga el propietario: no se cobra al
+ * inquilino y se descuenta del giro.
  */
 export function periodTotals(
   lease: Pick<Lease, 'rent_cop' | 'building_fee_cop' | 'agency_mode' | 'agency_value'>,
@@ -66,8 +62,9 @@ export function periodTotals(
     .filter((c) => c.deduct_owner)
     .reduce((sum, c) => sum + Math.max(0, Math.round(c.amount_cop)), 0);
   const agency = agencyAmount(lease);
-  const totalDue = lease.rent_cop + lease.building_fee_cop + extrasTenant;
-  const ownerPayout = lease.rent_cop + extrasTenant - agency - extrasOwner;
+  const totalDue = lease.rent_cop + extrasTenant;
+  const ownerPayout =
+    lease.rent_cop + extrasTenant - agency - lease.building_fee_cop - extrasOwner;
 
   return {
     agency,
@@ -122,20 +119,19 @@ export function addMonths(period: string, delta: number): string {
   return `${Math.floor(total / 12)}-${String((total % 12) + 1).padStart(2, '0')}`;
 }
 
-/** Etapa de recordatorio según la fecha de pago. */
-export function reminderStageFor(
-  dueDate: string,
-  reminderDays: number[],
-  todayISO: string
-): 0 | 1 | 2 | 3 {
+/**
+ * Etapa de recordatorio según la fecha de pago:
+ * 1 = un día antes, 2 = día de pago, 3 = vencido (se recuerda cada día
+ * hasta que la mensualidad se marque pagada).
+ */
+export function reminderStageFor(dueDate: string, todayISO: string): 0 | 1 | 2 | 3 {
   const due = Date.parse(`${dueDate}T00:00:00Z`);
   const today = Date.parse(`${todayISO}T00:00:00Z`);
   if (!Number.isFinite(due) || !Number.isFinite(today)) return 0;
   const diff = Math.round((due - today) / 86400000);
   if (diff < 0) return 3;
   if (diff === 0) return 2;
-  const days = reminderDays.length > 0 ? reminderDays : [5, 1];
-  if (days.includes(diff)) return 1;
+  if (diff === 1) return 1;
   return 0;
 }
 

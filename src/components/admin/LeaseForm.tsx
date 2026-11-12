@@ -61,9 +61,6 @@ export default function LeaseForm({ properties, lease, defaultPropertyId }: Leas
   const [agencyMode, setAgencyMode] = useState<AgencyMode>(lease?.agency_mode ?? 'percent');
   const [agencyValue, setAgencyValue] = useState(lease ? String(lease.agency_value) : '10');
   const [paymentDay, setPaymentDay] = useState(lease ? String(lease.payment_day) : '1');
-  const [reminderDays, setReminderDays] = useState(
-    (lease?.reminder_days ?? [5, 1]).join(',')
-  );
   const [startDate, setStartDate] = useState(lease?.start_date ?? new Date().toISOString().slice(0, 10));
   const [endDate, setEndDate] = useState(lease?.end_date ?? '');
   const [notes, setNotes] = useState(lease?.notes ?? '');
@@ -136,10 +133,6 @@ export default function LeaseForm({ properties, lease, defaultPropertyId }: Leas
       agency_mode: agencyMode,
       agency_value: Number(agencyValue) || 0,
       payment_day: Number(paymentDay) || 1,
-      reminder_days: reminderDays
-        .split(',')
-        .map((value) => Number(value.trim()))
-        .filter((value) => Number.isInteger(value) && value >= 0 && value <= 30),
       start_date: startDate,
       end_date: endDate || null,
       notes,
@@ -467,16 +460,10 @@ export default function LeaseForm({ properties, lease, defaultPropertyId }: Leas
               onChange={(event) => setEndDate(event.target.value)}
             />
           </label>
-          <label className="text-sm">
-            <span className="mb-1 block font-semibold text-ajin-text">{t('reminderDays')}</span>
-            <input
-              className={input}
-              value={reminderDays}
-              onChange={(event) => setReminderDays(event.target.value)}
-              placeholder="5,1"
-            />
-            <span className="mt-1 block text-xs text-ajin-gray-400">{t('reminderDaysHint')}</span>
-          </label>
+          <p className="text-sm text-ajin-gray-300">
+            <span className="mb-1 block font-semibold text-ajin-text">{t('reminderRuleTitle')}</span>
+            {t('reminderRule')}
+          </p>
         </div>
         <label className="mt-4 block text-sm">
           <span className="mb-1 block font-semibold text-ajin-text">{t('notes')}</span>

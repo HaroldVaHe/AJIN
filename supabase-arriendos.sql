@@ -64,7 +64,8 @@ create table if not exists public.leases (
   owner_email text not null default '',
   owner_document text not null default '',
 
-  -- Canon mensual y administración del conjunto (ambos los cobra la inmobiliaria).
+  -- Canon mensual. La administración del conjunto la paga el propietario:
+  -- no se cobra al inquilino y se descuenta del giro.
   rent_cop bigint not null check (rent_cop >= 0),
   building_fee_cop bigint not null default 0 check (building_fee_cop >= 0),
 
@@ -73,7 +74,8 @@ create table if not exists public.leases (
   agency_value numeric(12, 2) not null default 10 check (agency_value >= 0),
 
   payment_day int not null default 1 check (payment_day between 1 and 28),
-  reminder_days int[] not null default '{5,1}',
+  -- Recordatorios fijos: 1 día antes, día de pago y diario si está vencido.
+  reminder_days int[] not null default '{1}',
   start_date date not null,
   end_date date,
   status text not null default 'active' check (status in ('active', 'finished')),
@@ -160,7 +162,7 @@ create unique index if not exists leases_one_active_per_property
   where status = 'active';
 
 -- ------------------------------------------------------------
--- 3) Bucket privado para comprobantes (imágenes y PDF)
+-- 3) Bucket privado para soportes (solo imágenes WebP)
 -- ------------------------------------------------------------
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values (
@@ -168,9 +170,14 @@ values (
   'recibos',
   false,
   5242880,
-  array['image/jpeg', 'image/png', 'image/webp', 'application/pdf']
+  array['image/webp']
 )
 on conflict (id) do nothing;
+
+-- Si el bucket ya existía con otros tipos, aplica el filtro actual.
+update storage.buckets
+set allowed_mime_types = array['image/webp'], file_size_limit = 5242880
+where id = 'recibos';
 -- Sin políticas sobre storage.objects: el acceso es solo por URL firmada
 -- generada en el servidor (1 hora) para usuarios del panel.
 

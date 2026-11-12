@@ -5,7 +5,9 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { FileText, Loader2, Plus, Receipt, Trash2, Upload } from 'lucide-react';
 import Button from '@/components/ui/Button';
-import { ALLOWED_RECEIPT_TYPES, periodTotals, reminderLabel } from '@/lib/leases';
+import ReceiptViewer from '@/components/admin/ReceiptViewer';
+import { fileToWebp } from '@/lib/image-webp';
+import { MAX_RECEIPT_BYTES, RECEIPT_MIME, periodTotals, reminderLabel } from '@/lib/leases';
 import type { LeaseDetail, LeasePeriod, LeaseReceipt } from '@/types/lease';
 
 interface LeaseManagerProps {
@@ -34,6 +36,7 @@ export default function LeaseManager({ lease, today, locale, canFinance }: Lease
   const [amount, setAmount] = useState('');
   const [periodId, setPeriodId] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [viewerIndex, setViewerIndex] = useState<number | null>(null);
 
   const run = async (action: () => Promise<void>) => {
     setBusy(true);
@@ -81,19 +84,21 @@ export default function LeaseManager({ lease, today, locale, canFinance }: Lease
   const uploadReceipt = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!file) return;
-    if (!ALLOWED_RECEIPT_TYPES.includes(file.type)) {
-      setError(t('invalidFile'));
-      return;
-    }
-    if (file.size === 0 || file.size > 5 * 1024 * 1024) {
+    if (!file.type.startsWith('image/')) {
       setError(t('invalidFile'));
       return;
     }
     setUploading(true);
     setError('');
     try {
+      // Se optimiza a WebP antes de subir; si el navegador no puede convertirla, se rechaza.
+      const webp = await fileToWebp(file);
+      if (webp.type !== RECEIPT_MIME || webp.size === 0 || webp.size > MAX_RECEIPT_BYTES) {
+        setError(t('invalidFile'));
+        return;
+      }
       const form = new FormData();
-      form.append('file', file);
+      form.append('file', webp);
       form.append('kind', kind);
       form.append('label', label);
       if (amount) form.append('amount_cop', amount);
@@ -122,12 +127,13 @@ export default function LeaseManager({ lease, today, locale, canFinance }: Lease
   };
 
   const receiptsByPeriod = (id: number) => lease.receipts.filter((r) => r.period_id === id);
+  const viewable = lease.receipts.filter((r) => r.signed_url);
 
   return (
     <div className="space-y-6">
       <section className="grid gap-3 rounded-2xl bg-white p-5 shadow-sm sm:grid-cols-2 lg:grid-cols-5">
         <Stat label={t('summary.rent')} value={money(lease.rent_cop)} />
-        <Stat label={t('summary.building')} value={money(lease.building_fee_cop)} />
+        <Stat label={t('summary.building')} value={money(lease.building_fee_cop)} hint={t('summary.buildingHint')} />
         <Stat label={t('summary.agency')} value={money(totals.agency)} />
         <Stat label={t('summary.monthly')} value={money(totals.totalDue)} highlight />
         <Stat label={t('summary.payout')} value={money(totals.ownerPayout)} highlight />
@@ -144,7 +150,7 @@ export default function LeaseManager({ lease, today, locale, canFinance }: Lease
             {t('paymentDay')}: <strong className="text-ajin-text">{lease.payment_day}</strong>
           </span>
           <span>
-            {t('reminders')}: <strong className="text-ajin-text">{lease.reminder_days.join(', ')}</strong>
+            {t('reminders')}: <strong className="text-ajin-text">{t('reminderRule')}</strong>
           </span>
           <span
             className={`rounded-full px-2 py-0.5 font-semibold ${
@@ -234,7 +240,7 @@ export default function LeaseManager({ lease, today, locale, canFinance }: Lease
         <form onSubmit={uploadReceipt} className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
           <input
             type="file"
-            accept="image/jpeg,image/png,image/webp,application/pdf"
+            accept="image/*"
             onChange={(event) => setFile(event.target.files?.[0] ?? null)}
             className={`${input} lg:col-span-2`}
             required
@@ -289,67 +295,105 @@ export default function LeaseManager({ lease, today, locale, canFinance }: Lease
           </div>
         </form>
 
-        <div className="mt-5 space-y-2">
-          {lease.receipts.length === 0 ? (
-            <p className="text-sm text-ajin-gray-400">{t('noReceipts')}</p>
-          ) : (
-            lease.receipts.map((receipt) => (
-              <div
+        {lease.receipts.length === 0 ? (
+          <p className="mt-5 text-sm text-ajin-gray-400">{t('noReceipts')}</p>
+        ) : (
+          <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            {lease.receipts.map((receipt) => (
+              <li
                 key={receipt.id}
-                className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-ajin-border px-3 py-2 text-sm"
+                className="overflow-hidden rounded-xl border border-ajin-border text-sm"
               >
-                <div className="flex min-w-0 items-center gap-2">
-                  <FileText size={16} className="shrink-0 text-ajin-accent" />
-                  <span className="truncate text-ajin-text">
-                    {receipt.label || t(`kinds.${receipt.kind}`)}
-                  </span>
-                  <span className="text-xs text-ajin-gray-400">
-                    {receipt.amount_cop ? money(receipt.amount_cop) : ''}
-                  </span>
-                  {receipt.period_id && (
-                    <span className="rounded-full bg-ajin-surface px-2 py-0.5 text-xs text-ajin-gray-300">
-                      {lease.periods.find((p) => p.id === receipt.period_id)?.period ?? ''}
+                <button
+                  type="button"
+                  onClick={() => receipt.signed_url && setViewerIndex(viewable.indexOf(receipt))}
+                  disabled={!receipt.signed_url}
+                  className="block aspect-[4/3] w-full bg-ajin-surface disabled:cursor-not-allowed"
+                  aria-label={t('openReceipt')}
+                >
+                  {receipt.signed_url ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={receipt.signed_url}
+                      alt={receipt.label || t(`kinds.${receipt.kind}`)}
+                      loading="lazy"
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <span className="flex h-full items-center justify-center text-xs text-ajin-gray-400">
+                      {t('linkExpired')}
                     </span>
                   )}
-                </div>
-                <div className="flex items-center gap-3">
-                  {receipt.signed_url ? (
-                    <a
-                      href={receipt.signed_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs font-semibold text-ajin-accent hover:underline"
-                    >
-                      {t('view')}
-                    </a>
-                  ) : (
-                    <span className="text-xs text-ajin-gray-400">{t('linkExpired')}</span>
-                  )}
+                </button>
+                <div className="flex items-start justify-between gap-2 p-2">
+                  <div className="min-w-0">
+                    <span className="block truncate font-medium text-ajin-text">
+                      {receipt.label || t(`kinds.${receipt.kind}`)}
+                    </span>
+                    <span className="block text-xs text-ajin-gray-400">
+                      {t(`kinds.${receipt.kind}`)}
+                      {receipt.amount_cop ? ` · ${money(receipt.amount_cop)}` : ''}
+                      {receipt.period_id
+                        ? ` · ${lease.periods.find((p) => p.id === receipt.period_id)?.period ?? ''}`
+                        : ''}
+                    </span>
+                  </div>
                   <button
                     type="button"
                     onClick={() => deleteReceipt(receipt)}
-                    className="rounded-lg p-1.5 text-red-500 hover:bg-red-50"
+                    className="shrink-0 rounded-lg p-1.5 text-red-500 hover:bg-red-50"
                     aria-label={t('deleteReceipt')}
                   >
                     <Trash2 size={14} />
                   </button>
                 </div>
-              </div>
-            ))
-          )}
-        </div>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {viewerIndex !== null && viewable.length > 0 && (
+          <ReceiptViewer
+            receipts={viewable.map((r) => ({
+              id: r.id,
+              url: r.signed_url ?? '',
+              title: r.label || t(`kinds.${r.kind}`),
+              meta: [
+                t(`kinds.${r.kind}`),
+                r.amount_cop ? money(r.amount_cop) : '',
+                r.period_id ? lease.periods.find((p) => p.id === r.period_id)?.period ?? '' : '',
+              ]
+                .filter(Boolean)
+                .join(' · '),
+            }))}
+            index={Math.min(viewerIndex, viewable.length - 1)}
+            onIndexChange={setViewerIndex}
+            onClose={() => setViewerIndex(null)}
+          />
+        )}
       </section>
     </div>
   );
 }
 
-function Stat({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
+function Stat({
+  label,
+  value,
+  highlight,
+  hint,
+}: {
+  label: string;
+  value: string;
+  highlight?: boolean;
+  hint?: string;
+}) {
   return (
     <div>
       <span className="block text-[11px] uppercase tracking-wide text-ajin-gray-400">{label}</span>
       <strong className={highlight ? 'text-lg text-ajin-accent-dark' : 'text-ajin-primary'}>
         {value}
       </strong>
+      {hint && <span className="block text-[11px] text-ajin-gray-400">{hint}</span>}
     </div>
   );
 }

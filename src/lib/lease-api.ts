@@ -83,13 +83,6 @@ export function parseLease(body: Record<string, unknown>): LeaseInput | null {
   if (endDateRaw && !endDate) return null;
   if (endDate && endDate < startDate) return null;
 
-  const reminderDays = Array.isArray(body.reminder_days)
-    ? body.reminder_days
-        .map((d) => Number(d))
-        .filter((d) => Number.isInteger(d) && d >= 0 && d <= 30)
-        .slice(0, 6)
-    : [5, 1];
-
   return {
     property_id: propertyId,
     tenant_name: tenantName,
@@ -105,7 +98,7 @@ export function parseLease(body: Record<string, unknown>): LeaseInput | null {
     agency_mode: agencyMode,
     agency_value: agencyMode === 'fixed' ? Math.round(agencyValue) : Math.round(agencyValue * 100) / 100,
     payment_day: paymentDay,
-    reminder_days: reminderDays.length > 0 ? reminderDays : [5, 1],
+    reminder_days: [1],
     start_date: startDate,
     end_date: endDate,
     notes: text(body.notes, 2000),

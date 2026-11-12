@@ -331,8 +331,8 @@ export async function fetchReminderCandidates(horizonISO: string) {
   const { data } = await supabase
     .from('lease_periods')
     .select(
-      `id, lease_id, period, due_date, total_due_cop, owner_payout_cop, paid_cop, status, reminder_stage,
-       leases!inner ( id, status, tenant_name, tenant_phone, owner_name, payment_day, reminder_days,
+      `id, lease_id, period, due_date, total_due_cop, owner_payout_cop, paid_cop, status, reminder_stage, reminded_on,
+       leases!inner ( id, status, tenant_name, tenant_phone, owner_name, payment_day,
          properties ( title, city ) )`
     )
     .neq('status', 'paid')

@@ -733,7 +733,7 @@
         "ownerDocument": "Owner ID number (optional)",
         "amountsSection": "Rent and commission",
         "rent": "Monthly rent (COP)",
-        "buildingFee": "Building association fee (COP)",
+        "buildingFee": "Building association fee (COP) — paid by the owner",
         "paymentDay": "Payment day (1-28)",
         "agencyMode": "Commission mode",
         "agencyModePercent": "Percentage of rent",
@@ -754,8 +754,8 @@
         "datesSection": "Dates and reminders",
         "startDate": "Start date",
         "endDate": "End date (optional)",
-        "reminderDays": "Reminder days",
-        "reminderDaysHint": "Days before the due date, comma separated. E.g.: 5,1",
+        "reminderRuleTitle": "Reminders",
+        "reminderRule": "One day before payment, on the payment day and, if overdue, every day until marked as paid.",
         "notes": "Internal notes",
         "save": "Save contract",
         "saving": "Saving...",
@@ -764,7 +764,8 @@
       "manager": {
         "summary": {
           "rent": "Rent",
-          "building": "Building fee",
+          "building": "Building fee (owner)",
+          "buildingHint": "Paid by the owner",
           "agency": "Commission",
           "monthly": "Monthly collection",
           "payout": "Owner payout"
@@ -773,6 +774,7 @@
         "endDate": "End",
         "paymentDay": "Payment day",
         "reminders": "Reminders",
+        "reminderRule": "One day before payment, on the payment day and, if overdue, every day until marked as paid.",
         "leaseStatus": {
           "active": "Active",
           "finished": "Finished"
@@ -804,7 +806,7 @@
         "saving": "Saving...",
         "markPayout": "Mark payout sent",
         "receiptsTitle": "Invoices and receipts",
-        "receiptsHint": "Images or PDF up to 5 MB (invoices, payment proofs, building fees).",
+        "receiptsHint": "Images are automatically converted to WebP (invoices, payment proofs, building fees).",
         "kinds": {
           "invoice": "Invoice",
           "payment": "Payment proof",
@@ -818,7 +820,14 @@
         "noPeriod": "No linked month",
         "upload": "Upload receipt",
         "uploading": "Uploading...",
-        "invalidFile": "Invalid file. Use JPG, PNG, WebP or PDF up to 5 MB.",
+        "invalidFile": "Invalid file. Use an image (JPG, PNG or WebP) up to 5 MB.",
+        "openReceipt": "View receipt",
+        "viewer": {
+          "close": "Close",
+          "previous": "Previous",
+          "next": "Next",
+          "openOriginal": "Open original"
+        },
         "uploadError": "Could not upload the receipt.",
         "noReceipts": "No receipts uploaded yet.",
         "view": "View",

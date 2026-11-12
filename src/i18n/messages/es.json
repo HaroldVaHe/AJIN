@@ -733,7 +733,7 @@
         "ownerDocument": "Documento del propietario (opcional)",
         "amountsSection": "Canon y comisión",
         "rent": "Canon mensual (COP)",
-        "buildingFee": "Administración del conjunto (COP)",
+        "buildingFee": "Administración del conjunto (COP) — la paga el propietario",
         "paymentDay": "Día de pago (1-28)",
         "agencyMode": "Modo de comisión",
         "agencyModePercent": "Porcentaje del canon",
@@ -754,8 +754,8 @@
         "datesSection": "Fechas y recordatorios",
         "startDate": "Fecha de inicio",
         "endDate": "Fecha de fin (opcional)",
-        "reminderDays": "Días de recordatorio",
-        "reminderDaysHint": "Días antes del vencimiento, separados por coma. Ej.: 5,1",
+        "reminderRuleTitle": "Recordatorios",
+        "reminderRule": "Un día antes del pago, el día de pago y, si está vencido, cada día hasta marcarlo como pagado.",
         "notes": "Notas internas",
         "save": "Guardar contrato",
         "saving": "Guardando...",
@@ -764,7 +764,8 @@
       "manager": {
         "summary": {
           "rent": "Canon",
-          "building": "Administración",
+          "building": "Administración (propietario)",
+          "buildingHint": "Lo paga el propietario",
           "agency": "Comisión",
           "monthly": "Cobro mensual",
           "payout": "Giro propietario"
@@ -773,6 +774,7 @@
         "endDate": "Fin",
         "paymentDay": "Día de pago",
         "reminders": "Recordatorios",
+        "reminderRule": "Un día antes del pago, el día de pago y, si está vencido, cada día hasta marcarlo como pagado.",
         "leaseStatus": {
           "active": "Activo",
           "finished": "Finalizado"
@@ -804,7 +806,7 @@
         "saving": "Guardando...",
         "markPayout": "Marcar giro entregado",
         "receiptsTitle": "Cuentas de cobro y soportes",
-        "receiptsHint": "Imágenes o PDF de hasta 5 MB (facturas, comprobantes, administración).",
+        "receiptsHint": "Imágenes que se convierten a WebP automáticamente (facturas, comprobantes, administración).",
         "kinds": {
           "invoice": "Cuenta de cobro",
           "payment": "Comprobante de pago",
@@ -818,7 +820,14 @@
         "noPeriod": "Sin mes asociado",
         "upload": "Subir soporte",
         "uploading": "Subiendo...",
-        "invalidFile": "Archivo no válido. Usa JPG, PNG, WebP o PDF de máximo 5 MB.",
+        "invalidFile": "Archivo no válido. Usa una imagen (JPG, PNG o WebP) de máximo 5 MB.",
+        "openReceipt": "Ver soporte",
+        "viewer": {
+          "close": "Cerrar",
+          "previous": "Anterior",
+          "next": "Siguiente",
+          "openOriginal": "Abrir original"
+        },
         "uploadError": "No se pudo subir el soporte.",
         "noReceipts": "Todavía no hay soportes cargados.",
         "view": "Ver",
