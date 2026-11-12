@@ -1,7 +1,20 @@
-import { createSupabaseServerClient, isAdminEmail } from '@/lib/supabase/server';
+import { createHmac, timingSafeEqual } from 'crypto';
+import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { resolveRole, type Role } from '@/lib/permissions';
 
 export const MAX_PHOTOS = 15;
 export const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
+
+/** Tipos aceptados en la subida (se evita SVG para no servir contenido activo). */
+export const ALLOWED_PHOTO_TYPES = [
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/heic',
+  'image/heif',
+  'image/avif',
+  'image/gif',
+];
 
 export const OPERATIONS = ['venta', 'arriendo'] as const;
 export const PROPERTY_TYPES = ['apartamento', 'casa', 'oficina', 'lote', 'bodega'] as const;
@@ -78,12 +91,45 @@ export async function requireAdminApi(): Promise<boolean> {
   return (await requireAdminApiWithUser()).ok;
 }
 
-/** Verifica sesión admin y devuelve el email del actor en la misma llamada. */
-export async function requireAdminApiWithUser(): Promise<{ ok: boolean; email: string }> {
+/** Verifica sesión con rol asignado (env o `user_roles`) y devuelve el email. */
+export async function requireAdminApiWithUser(): Promise<{
+  ok: boolean;
+  email: string;
+  role: Role | null;
+}> {
   const supabase = await createSupabaseServerClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
   const email = user?.email ?? '';
-  return { ok: isAdminEmail(email), email };
+  const role = await resolveRole(email);
+  return { ok: role !== null, email, role };
+}
+
+/**
+ * Token HMAC para autorizar la subida de fotos de una solicitud recién
+ * creada: sin él, cualquiera podría añadir fotos a un inmueble ajeno.
+ * No requiere columna nueva en la base de datos.
+ */
+function uploadSecret(): string {
+  return (
+    process.env.UPLOAD_TOKEN_SECRET ||
+    process.env.CRON_SECRET ||
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+    ''
+  );
+}
+
+export function createUploadToken(propertyId: number): string {
+  const secret = uploadSecret();
+  if (!secret) return '';
+  return createHmac('sha256', secret).update(`upload:${propertyId}`).digest('base64url');
+}
+
+export function verifyUploadToken(propertyId: number, token: string | null): boolean {
+  const expected = createUploadToken(propertyId);
+  if (!expected || !token) return false;
+  const a = Buffer.from(expected);
+  const b = Buffer.from(token);
+  return a.length === b.length && timingSafeEqual(a, b);
 }

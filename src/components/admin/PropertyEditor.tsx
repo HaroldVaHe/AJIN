@@ -555,13 +555,14 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
                     className={`group relative overflow-hidden rounded-xl bg-ajin-surface ${dragIndex === idx ? 'ring-2 ring-ajin-accent' : ''}`}
                   >
                     <div className="relative aspect-square">
-                      <Image src={img.url} alt={`Foto ${idx + 1}`} fill sizes="200px" className="object-cover" unoptimized />
+                      <Image src={img.url} alt={t('photoAlt', { index: idx + 1 })} fill sizes="200px" className="object-cover" unoptimized />
                     </div>
                     <button
                       type="button"
                       onClick={() => void deletePhoto(img.id)}
                       className="absolute right-1 top-1 rounded-full bg-black/60 p-1 text-white opacity-0 transition-opacity group-hover:opacity-100"
-                      title="Eliminar foto"
+                      title={t('deletePhoto')}
+                      aria-label={t('deletePhoto')}
                     >
                       <Trash2 size={12} />
                     </button>
@@ -623,7 +624,8 @@ export default function PropertyEditor({ property }: PropertyEditorProps) {
                       setPendingPhotos((prev) => prev.filter((p) => p.preview !== photo.preview));
                     }}
                     className="absolute right-1 top-1 rounded-full bg-black/60 p-1 text-white"
-                    title="Quitar foto"
+                    title={t('removePhoto')}
+                    aria-label={t('removePhoto')}
                   >
                     <Trash2 size={12} />
                   </button>

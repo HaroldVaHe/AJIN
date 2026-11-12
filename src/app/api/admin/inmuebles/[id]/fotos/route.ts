@@ -93,6 +93,6 @@ export async function DELETE(request: NextRequest, { params }: Params) {
     detail: { image_count: images?.length ?? 0 },
   });
 
-  void deleteAllPropertyPhotoFiles(propertyId);
+  await deleteAllPropertyPhotoFiles(propertyId);
   return NextResponse.json({ success: true });
 }

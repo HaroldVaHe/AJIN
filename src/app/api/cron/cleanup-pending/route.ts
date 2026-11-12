@@ -45,9 +45,13 @@ export async function GET(request: NextRequest) {
   });
 
   if (purged > 0) {
-    void sendToTelegram(
-      `🧹 Limpieza de inmuebles: se eliminaron ${purged} solicitudes sin aprobar con más de 30 días.`
-    );
+    try {
+      await sendToTelegram(
+        `🧹 Limpieza de inmuebles: se eliminaron ${purged} solicitudes sin aprobar con más de 30 días.`
+      );
+    } catch (e) {
+      console.error('Cleanup Telegram notification failed:', e);
+    }
   }
 
   return NextResponse.json({ success: true, purged });

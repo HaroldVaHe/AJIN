@@ -111,7 +111,9 @@ export default function Header() {
             <button
               className="lg:hidden p-2 text-white"
               onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="Toggle menu"
+              aria-label={t('common.toggleMenu')}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
             >
               {mobileOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -121,7 +123,11 @@ export default function Header() {
       </header>
 
       {mobileOpen && (
-        <div className="fixed inset-0 z-40 flex flex-col bg-ajin-primary" style={{ height: '100dvh' }}>
+        <div
+          id="mobile-menu"
+          className="fixed inset-0 z-40 flex flex-col bg-ajin-primary"
+          style={{ height: '100dvh' }}
+        >
           <div className="flex flex-col flex-1 px-4 pb-6 overflow-y-auto" style={{ paddingTop: '64px' }}>
             <nav className="flex flex-col gap-2">
               {navItems.map((item) => {

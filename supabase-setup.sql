@@ -60,7 +60,14 @@ drop policy if exists "public read property images" on public.property_images;
 create policy "public read property images"
   on public.property_images for select
   to anon, authenticated
-  using (true);
+  using (
+    exists (
+      select 1
+      from public.properties p
+      where p.id = property_images.property_id
+        and p.status = 'approved'
+    )
+  );
 
 -- 4. Bucket público de imágenes (límite 5MB por archivo)
 insert into storage.buckets (id, name, public, file_size_limit)
@@ -89,6 +96,10 @@ create policy "public read inmuebles"
 -- ============================================================
 -- MIGRACIÓN (si las tablas ya existían antes de esta versión):
 --   alter table properties add column if not exists department text not null default '';
+--
+--   Privacidad de fotos: volver a ejecutar el bloque 3 para que la
+--   política "public read property images" solo exponga fotos de
+--   inmuebles aprobados (antes usaba `using (true)`).
 -- ============================================================
 
 -- ============================================================

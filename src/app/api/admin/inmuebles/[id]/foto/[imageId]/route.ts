@@ -46,6 +46,6 @@ export async function DELETE(request: NextRequest, { params }: Params) {
     detail: { image_id: image.id, path: image.path },
   });
 
-  void deletePropertyPhotoFile(image.path);
+  await deletePropertyPhotoFile(image.path);
   return NextResponse.json({ success: true });
 }

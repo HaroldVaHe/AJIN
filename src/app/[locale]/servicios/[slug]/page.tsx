@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { Section } from '@/components/ui/Section';
@@ -10,6 +11,12 @@ import { ArrowRight, CheckCircle } from 'lucide-react';
 const slugToId: Record<string, string> = {};
 for (const g of serviceGroups) {
   slugToId[g.slug] = g.id;
+}
+
+export function generateStaticParams() {
+  return ['es', 'en'].flatMap((locale) =>
+    serviceGroups.map((group) => ({ locale, slug: group.slug }))
+  );
 }
 
 export async function generateMetadata({
@@ -41,7 +48,7 @@ export default async function ServiceDetailPage({
   const { locale, slug } = await params;
   const id = slugToId[slug];
   const group = serviceGroups.find((g) => g.id === id);
-  if (!group) return null;
+  if (!group) notFound();
 
   const t = await getTranslations({ locale, namespace: `services.${group.id}` });
   const d = await getTranslations({ locale, namespace: 'services' });

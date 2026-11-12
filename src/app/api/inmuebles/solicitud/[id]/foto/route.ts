@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MAX_PHOTO_BYTES } from '@/lib/property-api';
+import {
+  ALLOWED_PHOTO_TYPES,
+  MAX_PHOTO_BYTES,
+  verifyUploadToken,
+} from '@/lib/property-api';
 import {
   createSupabaseAdminClient,
   uploadPropertyPhoto,
@@ -20,15 +24,27 @@ export async function POST(
     return NextResponse.json({ success: false, error: 'Invalid id' }, { status: 400 });
   }
 
-  const form = await request.formData();
+  // Solo quien recibió el token al crear la solicitud puede subir sus fotos.
+  const token = request.headers.get('x-upload-token');
+  if (!verifyUploadToken(propertyId, token)) {
+    return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+  }
+
+  let form: FormData;
+  try {
+    form = await request.formData();
+  } catch {
+    return NextResponse.json({ success: false, error: 'Invalid form data' }, { status: 400 });
+  }
+
   const file = form.get('file');
   if (!(file instanceof File)) {
     return NextResponse.json({ success: false, error: 'Missing file' }, { status: 400 });
   }
-  if (!file.type.startsWith('image/')) {
+  if (!ALLOWED_PHOTO_TYPES.includes(file.type)) {
     return NextResponse.json({ success: false, error: 'Not an image' }, { status: 400 });
   }
-  if (file.size > MAX_PHOTO_BYTES) {
+  if (file.size === 0 || file.size > MAX_PHOTO_BYTES) {
     return NextResponse.json({ success: false, error: 'File too large' }, { status: 400 });
   }
 

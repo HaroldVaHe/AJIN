@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import type { Metadata } from 'next';
@@ -6,7 +7,7 @@ import PropertyGallery from '@/components/inmuebles/PropertyGallery';
 import LeadForm from '@/components/forms/LeadForm';
 import JsonLd from '@/components/ui/JsonLd';
 import { fetchApprovedProperty } from '@/lib/supabase/public';
-import { SITE_URL, OG_IMAGE_URL } from '@/lib/site';
+import { SITE_URL, OG_IMAGE_URL, buildAlternates } from '@/lib/site';
 
 export const revalidate = 60;
 
@@ -38,9 +39,7 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: {
-      canonical: `${SITE_URL}/${locale}/inmuebles/${property.id}`,
-    },
+    alternates: buildAlternates(locale, `/inmuebles/${property.id}`),
     openGraph: {
       title,
       description,
@@ -59,21 +58,7 @@ export default async function PropertyDetailPage({
   const tInm = await getTranslations({ locale, namespace: 'inmuebles' });
   const property = await fetchApprovedProperty(id);
 
-  if (!property || !/^\d+$/.test(id)) {
-    return (
-      <section className="section-padding">
-        <div className="container-ajin text-center">
-          <h1 className="text-3xl font-bold text-ajin-primary">{t('notFound')}</h1>
-          <Link
-            href="/inmuebles"
-            className="mt-6 inline-flex items-center gap-2 text-ajin-accent hover:underline"
-          >
-            <ArrowLeft size={16} /> {t('backToList')}
-          </Link>
-        </div>
-      </section>
-    );
-  }
+  if (!property) notFound();
 
   return (
     <>

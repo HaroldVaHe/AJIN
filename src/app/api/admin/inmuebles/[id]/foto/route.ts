@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MAX_PHOTOS, MAX_PHOTO_BYTES, requireAdminApiWithUser } from '@/lib/property-api';
+import {
+  ALLOWED_PHOTO_TYPES,
+  MAX_PHOTOS,
+  MAX_PHOTO_BYTES,
+  requireAdminApiWithUser,
+} from '@/lib/property-api';
 import { createSupabaseAdminClient, uploadPropertyPhoto } from '@/lib/supabase/admin';
 import { logAudit } from '@/lib/audit';
 
@@ -18,7 +23,7 @@ export async function POST(request: NextRequest, { params }: Params) {
 
   const form = await request.formData();
   const file = form.get('file');
-  if (!(file instanceof File) || !file.type.startsWith('image/')) {
+  if (!(file instanceof File) || !ALLOWED_PHOTO_TYPES.includes(file.type)) {
     return NextResponse.json({ success: false, error: 'Invalid file' }, { status: 400 });
   }
   if (file.size > MAX_PHOTO_BYTES) {

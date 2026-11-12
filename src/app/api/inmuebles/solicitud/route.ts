@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MAX_PHOTOS, parsePropertyPayload } from '@/lib/property-api';
+import { MAX_PHOTOS, createUploadToken, parsePropertyPayload } from '@/lib/property-api';
 import { createSupabaseAdminClient } from '@/lib/supabase/admin';
 import { rateLimit, clientIp } from '@/lib/rate-limit';
 import { notifyPropertyRequest } from '@/lib/property-notify';
@@ -78,5 +78,5 @@ export async function POST(request: NextRequest) {
     }),
   ]);
 
-  return NextResponse.json({ success: true, id: propertyId });
+  return NextResponse.json({ success: true, id: propertyId, upload_token: createUploadToken(propertyId) });
 }

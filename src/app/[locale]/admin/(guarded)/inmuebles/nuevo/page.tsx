@@ -1,7 +1,8 @@
 import { getTranslations } from 'next-intl/server';
-import { Link } from '@/i18n/navigation';
+import { Link, redirect } from '@/i18n/navigation';
 import { ArrowLeft } from 'lucide-react';
 import PropertyEditor from '@/components/admin/PropertyEditor';
+import { getSessionAuth, hasPermission } from '@/lib/permissions';
 
 export default async function NewPropertyPage({
   params,
@@ -9,6 +10,11 @@ export default async function NewPropertyPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const auth = await getSessionAuth();
+  if (!hasPermission(auth, 'properties.manage')) {
+    redirect({ href: '/admin/arriendos', locale });
+    return null;
+  }
   const t = await getTranslations({ locale, namespace: 'admin.editor' });
 
   return (

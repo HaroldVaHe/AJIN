@@ -13,6 +13,16 @@ export function createSupabaseAdminClient() {
   });
 }
 
+const PHOTO_EXTENSIONS: Record<string, string> = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+  'image/heic': 'heic',
+  'image/heif': 'heif',
+  'image/avif': 'avif',
+  'image/gif': 'gif',
+};
+
 export async function uploadPropertyPhoto(
   propertyId: number,
   file: File,
@@ -20,7 +30,7 @@ export async function uploadPropertyPhoto(
 ): Promise<{ path: string; url: string } | null> {
   const supabase = createSupabaseAdminClient();
   if (!supabase) return null;
-  const ext = file.type === 'image/webp' ? 'webp' : 'jpg';
+  const ext = PHOTO_EXTENSIONS[file.type] ?? 'jpg';
   const path = `${propertyId}/${Date.now()}-${index}.${ext}`;
   const { error } = await supabase.storage
     .from(PROPERTIES_BUCKET)

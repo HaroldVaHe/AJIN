@@ -5,7 +5,7 @@ Next.js 15.5.18 + Tailwind CSS 4 + next-intl bilingual (ES/EN) site for AJIN Ase
 ## Commands
 
 - `npm run dev` — dev server on port 3000
-- `npm run build` — lint + typecheck + SSG build (36 routes). This is the only verification step (no test framework exists).
+- `npm run build` — typecheck + SSG build (78 prerendered pages). This is the only verification step (no test framework exists). Note: ESLint is **not** configured in the repo, so the build does not lint.
 - `npm run start` — production server
 
 ## Architecture
@@ -14,20 +14,31 @@ Next.js 15.5.18 + Tailwind CSS 4 + next-intl bilingual (ES/EN) site for AJIN Ase
 - Tailwind v4 — no `tailwind.config.*`. Theme in `src/app/globals.css` via `@import "tailwindcss"` + `@theme` block.
 - Blog: markdown files in `src/content/{es,en}/` with gray-matter frontmatter (title, description, date, category, author). Read at build time via `src/lib/blog.ts`.
 - Forms POST to `/api/{contact,poderes,asesoria}` → Telegram + email (SMTP) in parallel + n8n (future, silently skipped if `NEXT_PUBLIC_N8N_WEBHOOK_BASE` unset). WhatsApp personal: on submit the form also opens `wa.me` with the message prefilled (client-side, via `src/lib/whatsapp.ts`).
-- Sitemap: `src/app/sitemap.ts` — includes static pages, landings and blog posts (via `src/lib/blog.ts`), using `SITE_URL` from `src/lib/site.ts`. 44 URLs (17 static pages × 2 locales + 10 blog posts). Submit at Search Console → Sitemaps.
+- Sitemap: `src/app/sitemap.ts` — includes static pages, landings, blog posts (via `src/lib/blog.ts`) and approved property details, using `SITE_URL` from `src/lib/site.ts`. 56 fixed URLs (18 static pages × 2 locales + 10 blog posts × 2 locales) plus every approved property in both locales. Submit at Search Console → Sitemaps.
 - SEO: metadata (canonical + hreflang `alternates`, OG image, Twitter card) via `buildAlternates()` and `OG_IMAGE_URL` from `src/lib/site.ts`. JSON-LD structured data rendered with `<JsonLd>` component (LegalService global, BlogPosting, Service). Full rationale in `README.md` §SEO.
 - Body scroll locked on mobile menu open (`useEffect` toggles `document.body.style.overflow`).
 - `<Analytics />` from `@vercel/analytics/next` must be added to layout. Package already in deps.
 
 ## Marketplace de Inmuebles (Supabase)
 
-- **Stack:** Supabase (Postgres + Storage + Auth). Setup DDL en `supabase-setup.sql` (tablas `properties` / `property_images`, RLS solo lectura pública de `approved`, bucket público `inmuebles` límite 5 MB). Ejecutar una vez en SQL Editor; los 3 usuarios admin se crean manualmente en Authentication (email/password).
-- **Seguridad:** TODAS las escrituras pasan por rutas API con la service-role key (`src/lib/supabase/admin.ts`); el anon key nunca escribe. Sin tabla `admins`: un usuario es admin si su email de sesión está en `ADMIN_EMAILS` (env, coma-separada). Guard doble: middleware (`/es|en/admin/*` → login si no sesión+admin) y `requireAdminApi()` en cada ruta `/api/admin/*`.
-- **Flujo cliente:** `/inmuebles/publicar` (`PropertySubmissionForm`) → POST `/api/inmuebles/solicitud` (JSON metadata, rate-limit 5/h) crea fila `pending source=client` → sube fotos una a una a POST `/api/inmuebles/solicitud/[id]/foto` (máx 15, 40/h). Fotos se convierten a WebP client-side (`src/lib/image-webp.ts`, OffscreenCanvas máx 1600 px q0.8) para esquivar el límite de body de 4.5 MB de Vercel. Notificación Telegram+email vía `src/lib/property-notify.ts`.
+- **Stack:** Supabase (Postgres + Storage + Auth). Setup DDL en `supabase-setup.sql` (tablas `properties` / `property_images`, RLS de lectura pública solo de `properties.status='approved'` **y** de las fotos cuyo inmueble está aprobado, bucket público `inmuebles` límite 5 MB). Ejecutar una vez en SQL Editor; los 3 usuarios admin se crean manualmente en Authentication (email/password).
+- **Seguridad:** TODAS las escrituras pasan por rutas API con la service-role key (`src/lib/supabase/admin.ts`); el anon key nunca escribe. El acceso al panel se resuelve por rol: los emails de `ADMIN_EMAILS` (env) son siempre `admin`; el resto entra si tiene fila en `user_roles` (roles `admin` / `gestor`). El middleware solo exige sesión; el rol y los permisos se validan en el layout `admin/(guarded)` y en cada ruta `/api/admin/*` (`getSessionAuth()` / `requirePermissionWithUser()`).
+- **Flujo cliente:** `/inmuebles/publicar` (`PropertySubmissionForm`) → POST `/api/inmuebles/solicitud` (JSON metadata, rate-limit 5/h) crea fila `pending source=client` y devuelve `upload_token` (HMAC de `UPLOAD_TOKEN_SECRET`) → sube fotos una a una a POST `/api/inmuebles/solicitud/[id]/foto` con header `x-upload-token` (máx 15, 40/h, MIME whitelist). Sin ese token la subida responde 401, así nadie puede añadir fotos a un inmueble ajeno. Fotos se convierten a WebP client-side (`src/lib/image-webp.ts`, OffscreenCanvas máx 1600 px q0.8) para esquivar el límite de body de 4.5 MB de Vercel. Notificación Telegram+email vía `src/lib/property-notify.ts`.
 - **Purga:** Vercel Cron diario (`vercel.json`) llama GET `/api/cron/cleanup-pending` con header `Authorization: Bearer CRON_SECRET`; elimina solicitudes `pending|rejected` >30 días (fotos del bucket primero, luego fila cascade) y avisa por Telegram.
-- **Admin:** `/[locale]/admin/login` (client, `signInWithPassword`) y panel bajo route group `admin/(guarded)/` — lista con tabs por estado (`?estado=pending|approved|rejected`), aprobar/rechazar/eliminar inline (`AdminRowActions`), editor completo con gestión de fotos (subir/borrar/reordenar/portada, `PropertyEditor`) en `/admin/inmuebles/[id]` y creación en `/admin/inmuebles/nuevo`. Layout protegido cierra sesión y redirige.
+- **Admin:** `/[locale]/admin/login` (client, `signInWithPassword`) y panel bajo route group `admin/(guarded)/` — `/admin` redirige a la primera sección permitida; lista de inmuebles con tabs por estado (`?estado=pending|approved|rejected`), aprobar/rechazar/eliminar inline (`AdminRowActions`), editor completo con gestión de fotos (subir/borrar/reordenar/portada, `PropertyEditor`) en `/admin/inmuebles/[id]` y creación en `/admin/inmuebles/nuevo`. Desde el editor se enlaza a `/admin/arriendos/nuevo?property={id}`. Barra superior (`AdminUserBar`) muestra Inmuebles / Arriendos / Roles / Auditoría según permisos. Layout protegido cierra sesión y redirige.
 - **Público:** listado `/inmuebles` con filtros por operación/tipo (query params, ISR 60s), detalle `/inmuebles/[id]` (galería lightbox + `LeadForm` → `/api/asesoria` con topic = título #id), JSON-LD `ItemList`/`Product`. Sitemap async incluye IDs aprobados (fail-safe sin Supabase).
 - **next.config.mjs** tiene `images.remotePatterns` para `*.supabase.co` (storage público).
+
+## Arriendos (gestión posterior al anuncio)
+
+- **Setup:** ejecutar `supabase-arriendos.sql` en el SQL Editor **después de respaldar** (Database → Backups). Solo crea objetos nuevos (`create table if not exists`, `on conflict do nothing`): `user_roles`, `role_permissions`, `leases`, `lease_concepts`, `lease_periods`, `lease_receipts`, bucket privado `recibos` (5 MB; JPG/PNG/WebP/PDF) y siembra de permisos. No borra datos existentes.
+- **Roles/permisos:** catálogo en `src/lib/permission-catalog.ts` (seguro para cliente) — `properties.manage`, `properties.delete`, `leases.manage`, `leases.finance`, `audit.view`, `roles.manage`; roles `admin` y `gestor`. La resolución y los guards viven en `src/lib/permissions.ts`. El rol `admin` conserva siempre `roles.manage`. La UI es `/admin/roles` (`RolesManager`): checkboxes por rol y alta/cambio/borrado de `email → rol`. Los usuarios se crean en Authentication; después se les asigna rol.
+- **Contrato (`leases`):** inmueble, inquilino, propietario, canon, administración del conjunto, comisión (`agency_mode` `percent` 10% por defecto o `fixed`), día de pago (1-28), `reminder_days` (default `{5,1}`), fechas y notas. Un inmueble solo puede tener un contrato `active` (índice único parcial). Conceptos en `lease_concepts`: `charge_tenant` (se suma al cobro) y `deduct_owner` (se descuenta del giro).
+- **Cálculo por mes (`src/lib/leases.ts`):** `cobro = canon + administración + extras del inquilino`; `giro = canon + extras cobrados − comisión − gastos del propietario`. La administración entra y sale (no afecta el giro salvo que se marque como gasto del propietario). Las mensualidades se generan desde el inicio hasta el fin del contrato o 11 meses vista; los meses ya pagados conservan su foto histórica y al editar el contrato solo se recalculan los pendientes.
+- **Mensualidades (`lease_periods`):** estado `pending|partial|paid`, `paid_cop`, `paid_at`, `payout_paid_at`, notas y etapa de recordatorio (`0` ninguno, `1` próximo, `2` vence hoy, `3` vencido; no repite etapa).
+- **Soportes (`lease_receipts`):** cuentas de cobro, comprobantes, administración, servicios, giros u otros; se suben a `POST /api/admin/arriendos/[id]/recibos` (máx 5 MB, MIME whitelist) y se sirven con URL firmada de 1 hora generada en el servidor (bucket privado, sin políticas públicas).
+- **Recordatorios:** Vercel Cron diario (`vercel.json`, `0 13 * * *` = 8:00 Bogotá) llama `GET /api/cron/lease-reminders` con `Authorization: Bearer CRON_SECRET`; envía Telegram con inmueble, mes, inquilino, valor pendiente y giro, y marca `reminder_stage`/`reminded_on`. Se puede probar con curl usando el mismo header (evitar hacerlo con contratos reales: envía Telegram).
+- **APIs:** `/api/admin/arriendos` (POST), `/api/admin/arriendos/[id]` (PUT/POST estado/DELETE), `/api/admin/arriendos/[id]/periodos` (POST generar), `/api/admin/arriendos/[id]/periodos/[periodId]` (PATCH pago/giro), `/api/admin/arriendos/[id]/recibos` (POST) y `/[receiptId]` (DELETE), `/api/admin/roles` (PUT permisos, POST asignar, DELETE quitar). Todas con `requirePermissionWithUser()` y auditoría (`lease.*`, `role.*`, `cron.lease_reminders`).
 
 ## SEO (rationale)
 
@@ -36,7 +47,7 @@ Next.js 15.5.18 + Tailwind CSS 4 + next-intl bilingual (ES/EN) site for AJIN Ase
 - **Open Graph / Twitter** — layout + pages emit `og:title`, `og:description`, `og:image` (1200×630 brand image, generated with PIL) and `twitter:card = summary_large_image` so shared links render as rich cards (WhatsApp, Facebook, X).
 - **JSON-LD structured data** — `<JsonLd data={...}>` component (in `src/components/ui/JsonLd.tsx`) renders `application/ld+json` for rich results: `LegalService` (global, in layout: real address Chía, phone, geo, openingHours, areaServed), `Service` (`servicios/[slug]`), `Blog` (blog list) and `BlogPosting` (each post: headline, description, datePublished, author, publisher, image, mainEntityOfPage).
 - **Google site verification** — layout emits `<meta name="google-site-verification">` only when `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` is set. The property is currently verified via the **Domain method (DNS TXT record in Alibaba Cloud)** so the meta tag is NOT required — it only matters if the property is ever reverted to the HTML-tag method.
-- **Sitemap + robots** — `src/app/sitemap.ts` (44 URLs) and `src/app/robots.ts` (`disallow: /api/, /_next/`, `sitemap: SITE_URL/sitemap.xml`), both keyed off `SITE_URL`.
+- **Sitemap + robots** — `src/app/sitemap.ts` (56 fixed URLs + approved properties in both locales) and `src/app/robots.ts` (`disallow: /api/, /_next/`, `sitemap: SITE_URL/sitemap.xml`), both keyed off `SITE_URL`.
 
 ## Env Vars (`.env.local`, gitignored)
 
@@ -54,11 +65,12 @@ NEXT_PUBLIC_N8N_WEBHOOK_BASE=   # optional, future
 SUPABASE_URL=https://<project-ref>.supabase.co        # SIN prefijo NEXT_PUBLIC_ (permite Sensitive en Vercel); valor real en .env.local / Vercel
 SUPABASE_ANON_KEY=<anon key>
 SUPABASE_SERVICE_ROLE_KEY=<service role key — NUNCA exponer al cliente>
-ADMIN_EMAILS=<emails admin coma-separados>
-CRON_SECRET=<secreto del cron de limpieza>
+ADMIN_EMAILS=<emails admin coma-separados>   # siempre rol admin (no necesitan fila en user_roles)
+CRON_SECRET=<secreto de los crons: limpieza de pendientes y recordatorios de arriendo>
+UPLOAD_TOKEN_SECRET=<secreto HMAC para autorizar subida de fotos; opcional>  # fallback: CRON_SECRET → SUPABASE_SERVICE_ROLE_KEY
 ```
 
-Set in Vercel dashboard for production (todas las de Supabase + ADMIN_EMAILS + CRON_SECRET también).
+Set in Vercel dashboard for production (todas las de Supabase + ADMIN_EMAILS + CRON_SECRET también). `UPLOAD_TOKEN_SECRET` es opcional pero recomendada en producción para no reutilizar el secreto del cron.
 
 ## Key Conventions
 

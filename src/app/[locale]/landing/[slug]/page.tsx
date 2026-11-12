@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { Section } from '@/components/ui/Section';
@@ -13,6 +14,12 @@ const slugToLandingKey: Record<string, string> = {
   'asesoria-juridica-empresas': 'empresas',
   'abogado-cobro-cartera': 'cobro',
 };
+
+export function generateStaticParams() {
+  return ['es', 'en'].flatMap((locale) =>
+    Object.keys(slugToLandingKey).map((slug) => ({ locale, slug }))
+  );
+}
 
 const itemCounts: Record<string, number> = {
   laboral: 6,
@@ -50,7 +57,7 @@ export default async function LandingPage({
 }) {
   const { locale, slug } = await params;
   const key = slugToLandingKey[slug];
-  if (!key) return null;
+  if (!key) notFound();
 
   const t = await getTranslations({ locale, namespace: `landing.${key}` });
   const d = await getTranslations({ locale, namespace: 'landing' });

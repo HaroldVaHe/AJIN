@@ -1,5 +1,5 @@
 import { getTranslations } from 'next-intl/server';
-import { Link } from '@/i18n/navigation';
+import { Link, redirect } from '@/i18n/navigation';
 import { Plus } from 'lucide-react';
 import {
   fetchAllPropertiesForAdmin,
@@ -7,6 +7,7 @@ import {
 } from '@/lib/supabase/admin-queries';
 import type { PropertyStatus } from '@/types/property';
 import AdminRowActions from '@/components/admin/AdminRowActions';
+import { getSessionAuth, hasPermission } from '@/lib/permissions';
 
 const TABS: PropertyStatus[] = ['pending', 'approved', 'rejected'];
 
@@ -19,6 +20,11 @@ export default async function AdminPropertiesPage({
 }) {
   const { locale } = await params;
   const { estado } = await searchParams;
+  const auth = await getSessionAuth();
+  if (!hasPermission(auth, 'properties.manage')) {
+    redirect({ href: '/admin', locale });
+    return null;
+  }
   const activeTab = TABS.includes(estado as PropertyStatus)
     ? (estado as PropertyStatus)
     : 'pending';

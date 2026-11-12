@@ -8,15 +8,16 @@ const intlMiddleware = createMiddleware({
   localePrefix: 'always',
 });
 
-const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || '')
-  .split(',')
-  .map((e) => e.trim().toLowerCase())
-  .filter(Boolean);
-
 function supabaseConfigured(): boolean {
   return Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_ANON_KEY);
 }
 
+/**
+ * Guard del panel: exige sesión, pero no decide el rol.
+ * El rol y los permisos se resuelven en el layout `admin/(guarded)` y en
+ * cada ruta /api/admin/*, porque viven en la base de datos (user_roles) y
+ * no se pueden consultar aquí sin añadir latencia a cada request.
+ */
 async function handleAdminGuard(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const locale = pathname.split('/')[1] || 'es';
@@ -53,16 +54,11 @@ async function handleAdminGuard(request: NextRequest) {
       data: { user },
     } = await supabase.auth.getUser();
 
-    const email = user?.email?.toLowerCase() ?? null;
-    const isAdmin = email !== null && ADMIN_EMAILS.includes(email);
+    // La página de login decide si redirige (sesión con rol) o muestra el
+    // formulario, así un usuario autenticado sin rol no cae en un bucle.
+    if (isLoginPage) return response;
 
-    if (isLoginPage) {
-      if (isAdmin)
-        return NextResponse.redirect(new URL(`/${locale}/admin/inmuebles`, request.url), 302);
-      return response;
-    }
-
-    if (!isAdmin) {
+    if (!user) {
       return NextResponse.redirect(new URL(`/${locale}/admin/login`, request.url), 302);
     }
 
@@ -78,11 +74,6 @@ export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   try {
-    if (pathname === '/') {
-      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://ajinabogados.online';
-      return NextResponse.redirect(`${siteUrl}/es`, { status: 301 });
-    }
-
     if (/^\/(es|en)\/admin(\/|$)/.test(pathname)) {
       return await handleAdminGuard(request);
     }
@@ -90,6 +81,8 @@ export default async function middleware(request: NextRequest) {
     console.error('Middleware error:', e);
   }
 
+  // next-intl redirige `/` al locale correspondiente usando la ruta actual
+  // (antes se redirigía a NEXT_PUBLIC_SITE_URL, lo que sacaba del entorno local).
   return intlMiddleware(request);
 }
 

@@ -11,6 +11,12 @@ const SMTP_TO = process.env.SMTP_TO || '';
 export interface EmailPayload {
   subject: string;
   html: string;
+  replyTo?: string;
+}
+
+/** Evita inyección de cabeceras en el asunto (CR/LF). */
+function singleLine(value: string): string {
+  return String(value ?? '').replace(/[\r\n]+/g, ' ').trim();
 }
 
 function escapeHtml(value: string): string {
@@ -40,7 +46,8 @@ function emailLayout(rows: Array<{ label: string; value: string }>): string {
 
 export function formatContactEmail(data: ContactData): EmailPayload {
   return {
-    subject: `📩 Nuevo contacto - ${data.name}`,
+    subject: singleLine(`📩 Nuevo contacto - ${data.name}`),
+    replyTo: data.email || undefined,
     html: emailLayout([
       { label: 'Nombre', value: escapeHtml(data.name) },
       { label: 'Email', value: escapeHtml(data.email) },
@@ -53,7 +60,8 @@ export function formatContactEmail(data: ContactData): EmailPayload {
 
 export function formatPowerEmail(data: PowerData): EmailPayload {
   return {
-    subject: `📄 Solicitud de Poder - ${data.name}`,
+    subject: singleLine(`📄 Solicitud de Poder - ${data.name}`),
+    replyTo: data.email || undefined,
     html: emailLayout([
       { label: 'Nombre', value: escapeHtml(data.name) },
       { label: 'Email', value: escapeHtml(data.email) },
@@ -74,7 +82,7 @@ export function formatLeadEmail(data: LeadData): EmailPayload {
     { label: 'Mensaje', value: escapeHtml(data.message) },
   ];
   return {
-    subject: `${leadHeadline(data)} - ${data.name}`,
+    subject: singleLine(`${leadHeadline(data)} - ${data.name}`),
     html: emailLayout(rows),
   };
 }
@@ -96,7 +104,7 @@ export function formatPropertyRequestEmail(data: PropertyRequestData): EmailPayl
   );
   if (data.owner_email) rows.push({ label: 'Email', value: escapeHtml(data.owner_email) });
   return {
-    subject: `🏠 Nueva propiedad para publicar - ${data.title}`,
+    subject: singleLine(`🏠 Nueva propiedad para publicar - ${data.title}`),
     html: emailLayout(rows),
   };
 }
@@ -114,6 +122,7 @@ export async function sendToEmail(payload: EmailPayload) {
   await transporter.sendMail({
     from: `"AJIN Web" <${SMTP_USER}>`,
     to: SMTP_TO,
+    replyTo: payload.replyTo,
     subject: payload.subject,
     html: payload.html,
   });

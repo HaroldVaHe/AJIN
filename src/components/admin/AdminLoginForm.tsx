@@ -44,7 +44,7 @@ export default function AdminLoginForm({ supabaseUrl, supabaseAnonKey }: AdminLo
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ok: true, email }),
       }).catch(() => {});
-      router.replace(`/${locale}/admin/inmuebles`);
+      router.replace(`/${locale}/admin`);
       router.refresh();
     } catch {
       setError('Unexpected error');

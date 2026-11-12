@@ -58,6 +58,7 @@ export default function PropertySubmissionForm() {
   const [status, setStatus] = useState<Status>('idle');
   const [photos, setPhotos] = useState<Array<{ file: File; preview: string }>>([]);
   const [photoError, setPhotoError] = useState('');
+  const [failedPhotos, setFailedPhotos] = useState(0);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState('');
 
@@ -89,26 +90,31 @@ export default function PropertySubmissionForm() {
       const usable = incoming.filter((f) => f.size > 0);
       const converted = usable.length > 0 ? await filesToWebp(usable) : [];
       const valid = converted.filter((f) => f.type.startsWith('image/'));
-      if (valid.length > 0) {
+      const room = Math.max(0, MAX_PHOTOS - photos.length);
+      const accepted = valid.slice(0, room);
+
+      if (accepted.length > 0) {
         setPhotoError('');
         setPhotos((prev) =>
-          [...prev, ...valid.map((file) => ({ file, preview: URL.createObjectURL(file) }))].slice(
-            0,
-            MAX_PHOTOS
-          )
+          [
+            ...prev,
+            ...accepted.map((file) => ({ file, preview: URL.createObjectURL(file) })),
+          ].slice(0, MAX_PHOTOS)
         );
       }
+
       const skippedInvalid = converted.length - valid.length;
       const messages: string[] = [];
-      if (empty.length > 0) messages.push(`${empty.length} archivo(s) vacío(s) omitido(s)`);
-      if (skippedInvalid > 0) messages.push(`${skippedInvalid} archivo(s) no reconocidos como imagen`);
-      if (valid.length === 0 && incoming.length > 0) {
-        messages.unshift('No se pudo adjuntar ninguna foto. Verifica que sean imágenes (JPG, PNG, WebP o HEIC).');
+      if (empty.length > 0) messages.push(t('photoEmpty', { count: empty.length }));
+      if (skippedInvalid > 0) messages.push(t('photoNotImage', { count: skippedInvalid }));
+      if (valid.length > room) messages.push(t('photoLimitReached', { max: MAX_PHOTOS }));
+      if (accepted.length === 0 && incoming.length > 0 && valid.length === 0) {
+        messages.unshift(t('photoNoneValid'));
       }
       setPhotoError(messages.join(' · '));
     } catch (err) {
       console.error('Photo processing failed:', err);
-      setPhotoError('No se pudieron procesar las fotos. Intenta de nuevo o prueba con otras imágenes.');
+      setPhotoError(t('photoProcessError'));
     } finally {
       if (fileInputRef.current) fileInputRef.current.value = '';
     }
@@ -161,19 +167,25 @@ export default function PropertySubmissionForm() {
         throw new Error(data.error || 'request-failed');
       }
 
+      const uploadToken = typeof data.upload_token === 'string' ? data.upload_token : '';
+      let failed = 0;
+
       for (let i = 0; i < photos.length; i += 1) {
         setUploadProgress(i + 1);
         const fd = new FormData();
         fd.append('file', photos[i].file);
         const photoRes = await fetch(`/api/inmuebles/solicitud/${data.id}/foto`, {
           method: 'POST',
+          headers: uploadToken ? { 'x-upload-token': uploadToken } : undefined,
           body: fd,
         });
         if (!photoRes.ok) {
+          failed += 1;
           console.error(`Photo ${i + 1} failed`);
         }
       }
 
+      setFailedPhotos(failed);
       setStatus('success');
     } catch (err) {
       console.error(err);
@@ -188,6 +200,11 @@ export default function PropertySubmissionForm() {
         <CheckCircle2 size={56} className="mx-auto text-ajin-accent" />
         <h2 className="mt-4 text-2xl font-bold text-ajin-primary">{t('successTitle')}</h2>
         <p className="mt-2 text-ajin-gray-300">{t('successMessage')}</p>
+        {failedPhotos > 0 && (
+          <p className="mt-4 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-800">
+            {t('photosWarning', { count: failedPhotos })}
+          </p>
+        )}
       </div>
     );
   }

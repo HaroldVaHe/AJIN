@@ -1,8 +1,9 @@
 import { getTranslations } from 'next-intl/server';
-import { Link } from '@/i18n/navigation';
-import { ArrowLeft } from 'lucide-react';
+import { Link, redirect } from '@/i18n/navigation';
+import { ArrowLeft, KeyRound } from 'lucide-react';
 import PropertyEditor from '@/components/admin/PropertyEditor';
 import { fetchPropertyForAdmin } from '@/lib/supabase/admin-queries';
+import { getSessionAuth, hasPermission } from '@/lib/permissions';
 
 export default async function EditPropertyPage({
   params,
@@ -10,6 +11,11 @@ export default async function EditPropertyPage({
   params: Promise<{ locale: string; id: string }>;
 }) {
   const { locale, id } = await params;
+  const auth = await getSessionAuth();
+  if (!hasPermission(auth, 'properties.manage')) {
+    redirect({ href: '/admin/arriendos', locale });
+    return null;
+  }
   const t = await getTranslations({ locale, namespace: 'admin.editor' });
   const property = await fetchPropertyForAdmin(id);
 
@@ -23,7 +29,17 @@ export default async function EditPropertyPage({
       </Link>
       <div className="mt-6">
         {property ? (
-          <PropertyEditor property={property} />
+          <>
+            <div className="mb-4 flex justify-end">
+              <Link
+                href={`/admin/arriendos/nuevo?property=${property.id}`}
+                className="inline-flex items-center gap-2 rounded-xl border border-ajin-border bg-white px-4 py-2 text-sm font-semibold text-ajin-primary transition-colors hover:border-ajin-accent hover:text-ajin-accent"
+              >
+                <KeyRound size={16} /> {t('manageLease')}
+              </Link>
+            </div>
+            <PropertyEditor property={property} />
+          </>
         ) : (
           <p className="text-ajin-gray-400">{t('saveError')}</p>
         )}

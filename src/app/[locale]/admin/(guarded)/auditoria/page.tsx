@@ -2,6 +2,8 @@ import { ScrollText, ShieldQuestion } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import { createSupabaseAdminClient } from '@/lib/supabase/admin';
 import { deviceLabel } from '@/lib/audit';
+import { redirect } from '@/i18n/navigation';
+import { getSessionAuth, hasPermission } from '@/lib/permissions';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,6 +34,18 @@ const ACTIONS = [
   'photos.delete_all',
   'submission.create',
   'cron.cleanup',
+  'lease.create',
+  'lease.update',
+  'lease.status',
+  'lease.delete',
+  'lease.periods_generate',
+  'lease.period_update',
+  'lease.receipt_upload',
+  'lease.receipt_delete',
+  'role.permissions',
+  'role.assign',
+  'role.remove',
+  'cron.lease_reminders',
 ] as const;
 
 type Locale = 'es' | 'en';
@@ -156,6 +170,58 @@ function formatDetail(locale: Locale, action: string, detail: Record<string, unk
     return `${t('Solicitudes purgadas', 'Purged submissions')}: ${purged}`;
   }
 
+  // Contratos de arriendo
+  if (action === 'lease.create' || action === 'lease.update') {
+    const rent = typeof detail.rent_cop === 'number' ? fmtMoney(detail.rent_cop, locale) : '';
+    const periods = typeof detail.periods === 'number' ? `${t('Meses', 'Months')}: ${detail.periods}` : '';
+    const concepts = typeof detail.concepts === 'number' ? `${t('Extras', 'Extras')}: ${detail.concepts}` : '';
+    const recalculated =
+      typeof detail.recalculated === 'number'
+        ? `${t('Recalculados', 'Recalculated')}: ${detail.recalculated}`
+        : '';
+    return [rent, periods, concepts, recalculated].filter(Boolean).join(' · ') || '—';
+  }
+
+  if (action === 'lease.status') {
+    const status = String(detail.status ?? '—');
+    return `${t('Nuevo estado', 'New status')}: ${status === 'active' ? t('activo', 'active') : t('finalizado', 'finished')}`;
+  }
+
+  if (action === 'lease.periods_generate') {
+    return `${t('Generados', 'Inserted')}: ${String(detail.inserted ?? 0)} · ${t('Omitidos', 'Skipped')}: ${String(detail.skipped ?? 0)}`;
+  }
+
+  if (action === 'lease.period_update') {
+    const amount = typeof detail.paid_cop === 'number' ? fmtMoney(detail.paid_cop, locale) : '';
+    return [String(detail.period ?? ''), amount, String(detail.status ?? '')]
+      .filter(Boolean)
+      .join(' · ');
+  }
+
+  if (action === 'lease.receipt_upload') {
+    const amount = typeof detail.amount_cop === 'number' ? fmtMoney(detail.amount_cop, locale) : '';
+    return [String(detail.kind ?? ''), amount].filter(Boolean).join(' · ') || '—';
+  }
+
+  if (action === 'lease.receipt_delete') {
+    return String(detail.path ?? '—');
+  }
+
+  // Roles
+  if (action === 'role.permissions') {
+    return Array.isArray(detail.permissions) ? detail.permissions.join(', ') : '—';
+  }
+
+  if (action === 'role.assign') {
+    return `${t('Rol', 'Role')}: ${String(detail.role ?? '—')}`;
+  }
+
+  // Recordatorios automáticos
+  if (action === 'cron.lease_reminders') {
+    const candidates = typeof detail.candidates === 'number' ? detail.candidates : 0;
+    return `${t('Candidatos', 'Candidates')}: ${candidates} · ${t('Enviados', 'Sent')}: ${String(detail.sent ?? 0)} · ${t('Fallidos', 'Failed')}: ${String(detail.failed ?? 0)}`;
+  }
+
   // Login / sesión
   if (action === 'admin.login' || action === 'admin.logout' || action === 'admin.login_failed' ||
       action === 'admin.unauthorized') {
@@ -180,6 +246,11 @@ export default async function AuditoriaPage({
 }) {
   const { locale } = await params;
   const { q = '', action = '' } = await searchParams;
+  const auth = await getSessionAuth();
+  if (!hasPermission(auth, 'audit.view')) {
+    redirect({ href: '/admin', locale });
+    return null;
+  }
   const t = await getTranslations({ locale, namespace: 'admin.audit' });
 
   const supabase = createSupabaseAdminClient();
@@ -301,12 +372,23 @@ export default async function AuditoriaPage({
                   <td className={tdCls}>{row.actor_email || '—'}</td>
                   <td className={`${tdCls} whitespace-nowrap`}>
                     {row.entity_id ? (
-                      <a
-                        href={`/${locale}/admin/inmuebles/${row.entity_id}`}
-                        className="font-semibold text-ajin-primary underline decoration-ajin-accent underline-offset-2"
-                      >
-                        #{row.entity_id}
-                      </a>
+                      row.action.startsWith('lease.') ? (
+                        <a
+                          href={`/${locale}/admin/arriendos/${row.entity_id}`}
+                          className="font-semibold text-ajin-primary underline decoration-ajin-accent underline-offset-2"
+                        >
+                          #{row.entity_id}
+                        </a>
+                      ) : row.action.startsWith('role.') || row.action.startsWith('cron.') ? (
+                        <span className="font-medium text-ajin-gray-400">{row.entity_id}</span>
+                      ) : (
+                        <a
+                          href={`/${locale}/admin/inmuebles/${row.entity_id}`}
+                          className="font-semibold text-ajin-primary underline decoration-ajin-accent underline-offset-2"
+                        >
+                          #{row.entity_id}
+                        </a>
+                      )
                     ) : (
                       '—'
                     )}

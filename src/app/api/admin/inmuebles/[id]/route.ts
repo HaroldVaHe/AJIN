@@ -88,6 +88,10 @@ export async function DELETE(request: NextRequest, { params }: Params) {
     return NextResponse.json({ success: false, error: 'Delete failed' }, { status: 500 });
   }
 
+  // Se espera el borrado del bucket antes de responder: en serverless las
+  // promesas sin await mueren cuando la función se congela.
+  await deletePropertyFolder(id);
+
   await logAudit({
     request,
     actorEmail,
@@ -96,6 +100,5 @@ export async function DELETE(request: NextRequest, { params }: Params) {
     entityId: id,
   });
 
-  void deletePropertyFolder(id);
   return NextResponse.json({ success: true });
 }
