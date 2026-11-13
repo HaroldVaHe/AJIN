@@ -47,7 +47,17 @@ export async function chatJson(turns: ChatTurn[]): Promise<{ text: string }> {
           parts: [{ text: turn.content }],
         }));
 
-      const response = await fetch(
+      const requestBody = (jsonMode: boolean) => ({
+        ...(system ? { systemInstruction: { parts: [{ text: system }] } } : {}),
+        contents,
+        generationConfig: {
+          temperature: 0.2,
+          maxOutputTokens: 1400,
+          ...(jsonMode ? { responseMimeType: 'application/json' } : {}),
+        },
+      });
+
+      let response = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
           config.chatModel
         )}:generateContent`,
@@ -57,22 +67,34 @@ export async function chatJson(turns: ChatTurn[]): Promise<{ text: string }> {
             'x-goog-api-key': config.apiKey,
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            ...(system ? { systemInstruction: { parts: [{ text: system }] } } : {}),
-            contents,
-            generationConfig: {
-              temperature: 0.2,
-              maxOutputTokens: 1400,
-              responseMimeType: 'application/json',
-            },
-          }),
+          body: JSON.stringify(requestBody(true)),
           signal: AbortSignal.timeout(60000),
         }
       );
 
       if (!response.ok) {
         const detail = await response.text().catch(() => '');
-        throw new AiRequestError(`Gemini ${response.status}: ${detail.slice(0, 300)}`);
+        // Algunos modelos o versiones no aceptan responseMimeType/systemInstruction: reintentar sin JSON forzado.
+        if (response.status === 400 && /response.?mime|json/i.test(detail)) {
+          response = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
+              config.chatModel
+            )}:generateContent`,
+            {
+              method: 'POST',
+              headers: {
+                'x-goog-api-key': config.apiKey,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(requestBody(false)),
+              signal: AbortSignal.timeout(60000),
+            }
+          );
+        }
+        if (!response.ok) {
+          const detail2 = response === undefined ? detail : await response.text().catch(() => detail);
+          throw new AiRequestError(`Gemini ${response.status}: ${detail2.slice(0, 300)}`, 502);
+        }
       }
 
       const data = (await response.json()) as {

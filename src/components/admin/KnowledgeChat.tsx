@@ -112,6 +112,7 @@ export default function KnowledgeChat({ status: initialStatus, canSync }: Knowle
         | {
             success?: boolean;
             code?: string;
+            error?: string;
             answer?: string;
             sources?: KnowledgeSource[];
             cached?: boolean;
@@ -121,7 +122,7 @@ export default function KnowledgeChat({ status: initialStatus, canSync }: Knowle
         | null;
 
       if (!response.ok || !data?.success) {
-        const message =
+        const base =
           data?.code === 'not_configured'
             ? t('notConfiguredHint')
             : data?.code === 'needs_setup'
@@ -131,6 +132,11 @@ export default function KnowledgeChat({ status: initialStatus, canSync }: Knowle
                 : data?.code === 'ai_error'
                   ? t('aiError')
                   : t('requestFailed');
+        const detail =
+          data?.code === 'ai_error' || data?.code === 'error' || data?.code === 'needs_setup'
+            ? String(data?.error ?? '').trim().slice(0, 500)
+            : '';
+        const message = detail && detail !== base ? `${base}\n\nDetalle: ${detail}` : base;
         setMessages((current) => [
           ...current,
           { id: nextId++, role: 'assistant', text: message, error: true },
