@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
-import { Building2, KeyRound, LogOut, ScrollText, ShieldCheck } from 'lucide-react';
+import { Brain, Building2, KeyRound, LogOut, ScrollText, ShieldCheck } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import { createSupabaseBrowserClient } from '@/lib/supabase/browser';
 import type { Permission, Role } from '@/lib/permission-catalog';
@@ -69,6 +69,11 @@ export default function AdminUserBar({
           {permissions.includes('leases.manage') && (
             <Link href="/admin/arriendos" className={linkClass}>
               <KeyRound size={16} /> <span className="hidden sm:inline">{t('nav.leases')}</span>
+            </Link>
+          )}
+          {permissions.includes('knowledge.view') && (
+            <Link href="/admin/cerebro" className={linkClass}>
+              <Brain size={16} /> <span className="hidden sm:inline">{t('nav.cerebro')}</span>
             </Link>
           )}
           {permissions.includes('roles.manage') && (

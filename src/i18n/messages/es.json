@@ -645,7 +645,8 @@
     "nav": {
       "properties": "Inmuebles",
       "leases": "Arriendos",
-      "roles": "Roles"
+      "roles": "Roles",
+      "cerebro": "Cerebro"
     },
     "roles": {
       "admin": "Administrador",
@@ -685,7 +686,11 @@
         "audit_view": "Ver auditoría",
         "audit_viewDesc": "Consultar el registro de actividad del panel.",
         "roles_manage": "Gestionar roles y permisos",
-        "roles_manageDesc": "Asignar roles y cambiar los permisos de cada rol."
+        "roles_manageDesc": "Asignar roles y cambiar los permisos de cada rol.",
+        "knowledge_view": "Usar el cerebro",
+        "knowledge_viewDesc": "Preguntar al asistente interno y consultar sus fuentes.",
+        "knowledge_manage": "Actualizar el índice",
+        "knowledge_manageDesc": "Reindexar los datos y ver el estado del cerebro."
       }
     },
     "leases": {
@@ -881,8 +886,69 @@
         "role_permissions": "Permisos actualizados",
         "role_assign": "Rol asignado",
         "role_remove": "Rol retirado",
-        "cron_lease_reminders": "Recordatorios de arriendo"
+        "cron_lease_reminders": "Recordatorios de arriendo",
+        "knowledge_ask": "Consulta al cerebro",
+        "knowledge_sync": "Índice del cerebro actualizado",
+        "cron_knowledge_sync": "Sincronización automática del cerebro"
       }
+    },
+    "cerebro": {
+      "title": "Cerebro AJIN",
+      "subtitle": "Pregunta sobre inmuebles, contratos, mensualidades, pagos, soportes o el contenido del sitio. Cada respuesta cita las fuentes que consultó.",
+      "placeholder": "Ej.: ¿Qué mensualidades están pendientes este mes?",
+      "send": "Preguntar",
+      "thinking": "Buscando en el índice...",
+      "emptyTitle": "Pregúntale al cerebro",
+      "emptyDesc": "Busca en los datos del panel y del sitio. Cada respuesta cita sus fuentes.",
+      "suggestionsTitle": "Prueba con:",
+      "suggestions": {
+        "one": "¿Qué inmuebles están publicados en arriendo?",
+        "two": "¿Qué mensualidades están pendientes y cuánto suman?",
+        "three": "¿Cuánto se le debe girar al propietario del contrato #1?",
+        "four": "¿Qué servicios ofrece AJIN en derecho de familia?"
+      },
+      "sources": "Fuentes",
+      "cached": "En caché",
+      "insufficient": "No encontré información suficiente en el índice. Prueba con otras palabras o actualiza el índice.",
+      "disclaimer": "El asistente solo lee el índice interno y no modifica datos. Verifica montos y fechas antes de actuar.",
+      "clear": "Limpiar",
+      "statusTitle": "Estado del índice",
+      "statusDocuments": "Documentos",
+      "statusChunks": "Fragmentos",
+      "statusCache": "En caché",
+      "lastSync": "Última actualización",
+      "never": "Nunca",
+      "indexPending": "Sin indexar",
+      "sync": "Actualizar índice",
+      "syncing": "Actualizando...",
+      "syncDone": "Índice actualizado",
+      "syncError": "No se pudo actualizar el índice.",
+      "notConfigured": "Falta la llave del proveedor de IA",
+      "notConfiguredHint": "Configura OPENAI_API_KEY o GEMINI_API_KEY en Vercel (y AI_PROVIDER si quieres forzar uno). Mientras tanto el resto del panel funciona normal.",
+      "notIndexed": "El índice está vacío",
+      "notIndexedHint": "Pulsa «Actualizar índice» para vectorizar los datos actuales.",
+      "needsSetup": "Falta crear las tablas del cerebro",
+      "needsSetupHint": "Ejecuta supabase-cerebro.sql en el SQL Editor de Supabase (después de respaldar).",
+      "aiError": "El proveedor de IA no respondió. Intenta de nuevo en un momento.",
+      "rateLimited": "Demasiadas preguntas seguidas. Espera unos minutos.",
+      "requestFailed": "No se pudo obtener la respuesta.",
+      "questionTooShort": "Escribe una pregunta un poco más larga.",
+      "provider": "Proveedor",
+      "model": "Modelo",
+      "piiOn": "Incluye datos de contacto",
+      "piiOff": "Sin datos de contacto",
+      "viewSource": "Abrir",
+      "cachedSimilarity": "Similitud",
+      "sourceTypes": {
+        "property": "Inmueble",
+        "lease": "Contrato",
+        "lease_period": "Mensualidad",
+        "blog": "Blog",
+        "service": "Servicio",
+        "landing": "Página",
+        "site": "Sitio"
+      },
+      "askAdminSync": "Pide a un administrador que actualice el índice."
     }
   }
 }

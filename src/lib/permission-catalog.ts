@@ -8,6 +8,8 @@ export const PERMISSIONS = [
   'properties.delete',
   'leases.manage',
   'leases.finance',
+  'knowledge.view',
+  'knowledge.manage',
   'audit.view',
   'roles.manage',
 ] as const;
@@ -25,6 +27,7 @@ export const DEFAULT_ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     'properties.delete',
     'leases.manage',
     'leases.finance',
+    'knowledge.view',
     'audit.view',
   ],
 };

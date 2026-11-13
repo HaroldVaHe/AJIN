@@ -645,7 +645,8 @@
     "nav": {
       "properties": "Properties",
       "leases": "Leases",
-      "roles": "Roles"
+      "roles": "Roles",
+      "cerebro": "Brain"
     },
     "roles": {
       "admin": "Administrator",
@@ -685,7 +686,11 @@
         "audit_view": "View audit log",
         "audit_viewDesc": "Read the panel activity log.",
         "roles_manage": "Manage roles and permissions",
-        "roles_manageDesc": "Assign roles and change each role's permissions."
+        "roles_manageDesc": "Assign roles and change each role's permissions.",
+        "knowledge_view": "Use the brain",
+        "knowledge_viewDesc": "Ask the internal assistant and review its sources.",
+        "knowledge_manage": "Refresh the index",
+        "knowledge_manageDesc": "Reindex data and inspect the brain status."
       }
     },
     "leases": {
@@ -881,8 +886,69 @@
         "role_permissions": "Permissions updated",
         "role_assign": "Role assigned",
         "role_remove": "Role removed",
-        "cron_lease_reminders": "Lease reminders"
+        "cron_lease_reminders": "Lease reminders",
+        "knowledge_ask": "Brain query",
+        "knowledge_sync": "Brain index updated",
+        "cron_knowledge_sync": "Automatic brain sync"
       }
+    },
+    "cerebro": {
+      "title": "AJIN Brain",
+      "subtitle": "Ask about properties, leases, monthly dues, payments, receipts or the site content. Every answer cites the sources it used.",
+      "placeholder": "E.g.: Which monthly dues are pending this month?",
+      "send": "Ask",
+      "thinking": "Searching the index...",
+      "emptyTitle": "Ask the brain",
+      "emptyDesc": "Searches panel and site data. Every answer cites its sources.",
+      "suggestionsTitle": "Try:",
+      "suggestions": {
+        "one": "Which properties are listed for rent?",
+        "two": "Which monthly dues are pending and how much do they add up to?",
+        "three": "How much should be paid out to the owner of lease #1?",
+        "four": "What family law services does AJIN offer?"
+      },
+      "sources": "Sources",
+      "cached": "Cached",
+      "insufficient": "I could not find enough information in the index. Try other words or refresh the index.",
+      "disclaimer": "The assistant only reads the internal index and never changes data. Verify amounts and dates before acting.",
+      "clear": "Clear",
+      "statusTitle": "Index status",
+      "statusDocuments": "Documents",
+      "statusChunks": "Chunks",
+      "statusCache": "Cached",
+      "lastSync": "Last update",
+      "never": "Never",
+      "indexPending": "Not indexed",
+      "sync": "Refresh index",
+      "syncing": "Refreshing...",
+      "syncDone": "Index updated",
+      "syncError": "The index could not be updated.",
+      "notConfigured": "AI provider key is missing",
+      "notConfiguredHint": "Set OPENAI_API_KEY or GEMINI_API_KEY in Vercel (and AI_PROVIDER to force one). The rest of the panel keeps working.",
+      "notIndexed": "The index is empty",
+      "notIndexedHint": "Press “Refresh index” to vectorize the current data.",
+      "needsSetup": "Brain tables are missing",
+      "needsSetupHint": "Run supabase-cerebro.sql in the Supabase SQL Editor (after backing up).",
+      "aiError": "The AI provider did not respond. Try again in a moment.",
+      "rateLimited": "Too many questions in a row. Wait a few minutes.",
+      "requestFailed": "The answer could not be retrieved.",
+      "questionTooShort": "Write a slightly longer question.",
+      "provider": "Provider",
+      "model": "Model",
+      "piiOn": "Includes contact data",
+      "piiOff": "No contact data",
+      "viewSource": "Open",
+      "cachedSimilarity": "Similarity",
+      "sourceTypes": {
+        "property": "Property",
+        "lease": "Lease",
+        "lease_period": "Monthly due",
+        "blog": "Blog",
+        "service": "Service",
+        "landing": "Landing",
+        "site": "Site"
+      },
+      "askAdminSync": "Ask an administrator to refresh the index."
     }
   }
 }

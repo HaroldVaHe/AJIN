@@ -59,9 +59,12 @@ export async function getRolePermissions(role: Role): Promise<Permission[]> {
     const permissions = data
       .map((row) => row.permission)
       .filter(isPermission);
-    // El rol admin siempre conserva roles.manage: evita bloquear el panel.
-    if (role === 'admin' && !permissions.includes('roles.manage')) {
-      permissions.push('roles.manage');
+    // El rol admin siempre conserva el acceso al panel y al cerebro, incluso
+    // si la siembra de permisos todavía no incluye las claves nuevas.
+    if (role === 'admin') {
+      if (!permissions.includes('roles.manage')) permissions.push('roles.manage');
+      if (!permissions.includes('knowledge.view')) permissions.push('knowledge.view');
+      if (!permissions.includes('knowledge.manage')) permissions.push('knowledge.manage');
     }
     return permissions;
   } catch {

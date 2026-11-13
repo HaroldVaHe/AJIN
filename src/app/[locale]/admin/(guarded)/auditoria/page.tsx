@@ -46,6 +46,9 @@ const ACTIONS = [
   'role.assign',
   'role.remove',
   'cron.lease_reminders',
+  'knowledge.ask',
+  'knowledge.sync',
+  'cron.knowledge_sync',
 ] as const;
 
 type Locale = 'es' | 'en';
@@ -220,6 +223,29 @@ function formatDetail(locale: Locale, action: string, detail: Record<string, unk
   if (action === 'cron.lease_reminders') {
     const candidates = typeof detail.candidates === 'number' ? detail.candidates : 0;
     return `${t('Candidatos', 'Candidates')}: ${candidates} · ${t('Enviados', 'Sent')}: ${String(detail.sent ?? 0)} · ${t('Fallidos', 'Failed')}: ${String(detail.failed ?? 0)}`;
+  }
+
+  // Cerebro interno
+  if (action === 'knowledge.ask') {
+    return [
+      `${t('En caché', 'Cached')}: ${detail.cached ? t('sí', 'yes') : t('no', 'no')}`,
+      `${t('Fuentes', 'Sources')}: ${String(detail.sources ?? 0)}`,
+      typeof detail.latency_ms === 'number' ? `${detail.latency_ms} ms` : '',
+    ]
+      .filter(Boolean)
+      .join(' · ');
+  }
+
+  if (action === 'knowledge.sync' || action === 'cron.knowledge_sync') {
+    return [
+      `${t('Documentos', 'Documents')}: ${String(detail.documents ?? 0)}`,
+      `${t('Fragmentos', 'Chunks')}: ${String(detail.chunks ?? 0)}`,
+      `${t('Vectorizados', 'Embedded')}: ${String(detail.embedded ?? 0)}`,
+      `${t('Omitidos', 'Skipped')}: ${String(detail.skipped ?? 0)}`,
+      typeof detail.duration_ms === 'number' ? `${detail.duration_ms} ms` : '',
+    ]
+      .filter(Boolean)
+      .join(' · ');
   }
 
   // Login / sesión

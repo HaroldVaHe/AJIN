@@ -22,6 +22,10 @@ export default async function AdminIndexPage({
     redirect({ href: '/admin/arriendos', locale });
     return null;
   }
+  if (hasPermission(auth, 'knowledge.view')) {
+    redirect({ href: '/admin/cerebro', locale });
+    return null;
+  }
   if (hasPermission(auth, 'roles.manage')) {
     redirect({ href: '/admin/roles', locale });
     return null;

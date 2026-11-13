@@ -93,8 +93,9 @@ Módulo para administrar un inmueble cuando ya se arrendó: cobrar el canon, des
 
 1. **Respalda la base**: Supabase → Database → Backups.
 2. Ejecutar `supabase-arriendos.sql` en el **SQL Editor**. Solo crea objetos nuevos (`user_roles`, `role_permissions`, `leases`, `lease_concepts`, `lease_periods`, `lease_receipts`), el bucket privado `recibos` (5 MB, solo WebP) y los permisos iniciales. No borra tablas ni filas; se puede volver a ejecutar.
-3. Crear los usuarios del panel en **Authentication → Users** (email/password). Los de `ADMIN_EMAILS` entran como administradores; para el resto, asignar rol en `/es/admin/roles` (o dejar que un admin lo haga).
-4. No hay variables nuevas: se reutilizan `SUPABASE_*`, `ADMIN_EMAILS`, `CRON_SECRET` y `TELEGRAM_*`. El cron de recordatorios necesita `CRON_SECRET` en Vercel.
+3. Para el **cerebro interno**, ejecutar `supabase-cerebro.sql` (después de respaldar). Crea la extensión `vector`, las tablas del índice/caché (`knowledge_documents`, `knowledge_chunks`, `knowledge_cache`, `knowledge_sync_runs`) y los permisos `knowledge.view`/`knowledge.manage`.
+4. Crear los usuarios del panel en **Authentication → Users** (email/password). Los de `ADMIN_EMAILS` entran como administradores; para el resto, asignar rol en `/es/admin/roles` (o dejar que un admin lo haga).
+5. Variables del cerebro (opcionales): `AI_PROVIDER=openai|gemini` (auto-detección si se omite), `OPENAI_API_KEY` o `GEMINI_API_KEY`, y opcionalmente `AI_EMBEDDING_MODEL`, `AI_CHAT_MODEL`, `AI_CACHE_ENABLED`, `AI_CACHE_THRESHOLD=0.97`, `AI_CACHE_TTL_DAYS=14`, `KNOWLEDGE_INCLUDE_PII=false`. Sin llave el panel sigue funcionando y el cerebro queda desactivado. Los crons (`/api/cron/cleanup-pending`, `/api/cron/lease-reminders`, `/api/cron/knowledge-sync`) necesitan `CRON_SECRET` en Vercel.
 
 ### Flujo de gestión (ES)
 
