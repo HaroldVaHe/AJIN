@@ -1,6 +1,15 @@
 import { getAiConfig } from './config';
 import { AiNotConfiguredError, AiRequestError } from './embeddings';
 
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function isTransient(error: unknown): boolean {
+  if (!(error instanceof AiRequestError)) return false;
+  return [429, 500, 502, 503, 504].includes(error.status);
+}
+
 export interface ChatTurn {
   role: 'system' | 'user' | 'assistant';
   content: string;
@@ -153,5 +162,15 @@ export async function chatJson(turns: ChatTurn[]): Promise<{ text: string }> {
     return text;
   };
 
-  return { text: await run() };
+  let lastError: unknown;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      return { text: await run() };
+    } catch (error) {
+      lastError = error;
+      if (!isTransient(error) || attempt === 2) throw error;
+      await sleep(900 * 2 ** attempt);
+    }
+  }
+  throw lastError;
 }

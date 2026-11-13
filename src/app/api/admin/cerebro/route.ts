@@ -98,8 +98,9 @@ export async function POST(request: NextRequest) {
       );
     }
     console.error('Knowledge ask failed:', error);
+    const message = error instanceof Error ? error.message : 'No se pudo responder la pregunta';
     return NextResponse.json(
-      { success: false, code: 'error', error: 'No se pudo responder la pregunta' },
+      { success: false, code: 'error', error: message.slice(0, 500) },
       { status: 500 }
     );
   }
