@@ -57,43 +57,62 @@ export async function chatJson(turns: ChatTurn[]): Promise<{ text: string }> {
         },
       });
 
-      let response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
-          config.chatModel
-        )}:generateContent`,
-        {
-          method: 'POST',
-          headers: {
-            'x-goog-api-key': config.apiKey,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(requestBody(true)),
-          signal: AbortSignal.timeout(60000),
-        }
-      );
+      const call = async (model: string, jsonMode: boolean) =>
+        fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
+            model
+          )}:generateContent`,
+          {
+            method: 'POST',
+            headers: {
+              'x-goog-api-key': config.apiKey,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody(jsonMode)),
+            signal: AbortSignal.timeout(60000),
+          }
+        );
+
+      const suggested = (detail: string): string[] => {
+        const names = [...detail.matchAll(/models\/([a-z0-9][a-z0-9.\-]*)/gi)].map((m) => m[1]);
+        return names.filter((n, i) => names.indexOf(n) === i);
+      };
+
+      const models = [config.chatModel];
+      let response = await call(models[0], true);
+      let detail = '';
 
       if (!response.ok) {
-        const detail = await response.text().catch(() => '');
-        // Algunos modelos o versiones no aceptan responseMimeType/systemInstruction: reintentar sin JSON forzado.
+        detail = await response.text().catch(() => '');
+        // Algunos modelos/versiones no aceptan responseMimeType: reintentar sin JSON forzado.
         if (response.status === 400 && /response.?mime|json/i.test(detail)) {
-          response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
-              config.chatModel
-            )}:generateContent`,
-            {
-              method: 'POST',
-              headers: {
-                'x-goog-api-key': config.apiKey,
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(requestBody(false)),
-              signal: AbortSignal.timeout(60000),
+          response = await call(models[0], false);
+          if (!response.ok) detail = await response.text().catch(() => detail);
+        }
+        // Modelo retirado o no disponible: probar el sugerido por la API y alternativas comunes.
+        if (!response.ok && response.status === 404) {
+          const fallbacks = [
+            ...suggested(detail),
+            'gemini-2.0-flash',
+            'gemini-2.0-flash-lite',
+            'gemini-1.5-flash',
+            'gemini-1.5-flash-latest',
+          ].filter((m, i, arr) => m && arr.indexOf(m) === i && !models.includes(m));
+          for (const model of fallbacks.slice(0, 3)) {
+            models.push(model);
+            response = await call(model, true);
+            if (!response.ok) {
+              detail = await response.text().catch(() => '');
+              if (response.status === 400 && /response.?mime|json/i.test(detail)) {
+                response = await call(model, false);
+                if (!response.ok) detail = await response.text().catch(() => detail);
+              }
             }
-          );
+            if (response.ok) break;
+          }
         }
         if (!response.ok) {
-          const detail2 = response === undefined ? detail : await response.text().catch(() => detail);
-          throw new AiRequestError(`Gemini ${response.status}: ${detail2.slice(0, 300)}`, 502);
+          throw new AiRequestError(`Gemini ${response.status}: ${detail.slice(0, 300)}`, 502);
         }
       }
 

@@ -42,7 +42,8 @@ function clamp(value: number, min: number, max: number): number {
 
 const DEFAULT_MODELS: Record<AiProviderName, { embedding: string; chat: string }> = {
   openai: { embedding: 'text-embedding-3-small', chat: 'gpt-4o-mini' },
-  gemini: { embedding: 'gemini-embedding-001', chat: 'gemini-2.5-flash' },
+  // gemini-2.0-flash es estable y ampliamente disponible; se puede cambiar con AI_CHAT_MODEL.
+  gemini: { embedding: 'gemini-embedding-001', chat: 'gemini-2.0-flash' },
   mock: { embedding: 'mock-1536', chat: 'mock' },
 };
 
